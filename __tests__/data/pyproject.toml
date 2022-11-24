@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "demo"
+version = "1.0.0"
+description = "This is demo."
+authors = ["Yunosuke Ohsugi <63651161+5yutan5@users.noreply.github.com>"]
+packages = [{ include = "test_python_app" }]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.12"
+
+[tool.poetry.group.dev.dependencies]
+pyqtdarktheme = "*"

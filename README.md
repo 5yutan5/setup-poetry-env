@@ -1,105 +1,152 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# setup-poetry-env
 
-# Create a JavaScript Action using TypeScript
+This action allows setting up Python and Poetry, installing dependencies,
+and caching dependencies and Poetry installation all at once.
+You can simplify the troublesome poetry setup.
+Also this action wraps around
+[actions/setup-python](https://github.com/actions/setup-python).
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+## Features
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+- Setup Python and Poetry
+- Cache Python dependencies and Poetry installation
+- Auto install Python dependencies
+- Generate different caches of python dependencies depending on the arguments (--only, --with and etc) you enter in the `poetry install` command.
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+## Usage
 
-## Create an action from this template
+### Basic usage
 
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Main
-
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
-
-Install the dependencies  
-```bash
-$ npm install
+```yml
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Poetry env
+        uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: 3.x
 ```
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
+Also you can check all inputs and outputs.
+
+### Set up a specific Poetry version
+
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          poetry-version: '1.2.0'
 ```
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
+### Disable to install dependency
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          poetry-install-dependencies: 'false'
 ```
 
-## Change action.yml
+### Disable to cache dependencies
 
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          cache-dependencies: 'false'
 ```
 
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+### Use wrapper around `poetry config` commands
 
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          poetry-virtualenvs-in-project: 'true'
 ```
 
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
+### Use wrapper around `poetry install` commands
 
-Your action is now published! :rocket: 
+This step will install only some libraries.
+Optimize each install by creating a different cache than just `poetry install`.
 
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          poetry-install--only-root: 'true'
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
+### Use wrapper around `poetry install` additional command
 
-## Usage:
+```yml
+      - uses: 5yutan5/setup-poetry-env@v1
+        with:
+          python-version: '3.x'
+          poetry-install-additional-args: '-vvv'
+```
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+## Action Inputs
+
+All inputs are optional. If not set, sensible defaults will be used.
+
+| Name | Description | Default |
+| --- | --- | --- |
+| `cache-dependencies` | Whether to cache installed dependencies. | `true` |
+| `poetry-version` | The Poetry version to install. | `latest version` |
+| `poetry-install-dependencies` | Whether Poetry should install dependencies after completing all setup. | `true` |
+
+### Wrapper around `actions/setup-python` inputs
+
+You can use some `actions/setup-python` inputs.
+For more information about these inputs, see the [actions/setup-python](https://github.com/actions/setup-python).
+
+| Name | Description |
+| --- | --- |
+| `token` | Wrapper around `token` input. |
+| `python-architecture` | Wrapper around `architecture` input. |
+| `python-cache-dependency-path` | Wrapper around `cache-dependency-path` input. |
+| `python-check-latest` | Wrapper around `check-latest` input. |
+| `python-update-environment` | Wrapper around `update-environment` input. |
+| `python-version` | Wrapper around `version` input. |
+| `python-version-file` | Wrapper around `version-file` input. |
+
+### Wrapper around `poetry config` commands
+
+You can access `poetry config` commands.
+For more information about `poetry config` command, see the [Poetry Configuration](https://python-poetry.org/docs/configuration/).
+
+| Name | Description |
+| --- | --- |
+| `poetry-cache-dir` | Wrapper around setting `cache-dir`. |
+| `poetry-installer-max-workers` | Wrapper around setting `cache-dir`. |
+| `poetry-installer-parallel` | Wrapper around setting `installer.parallel`. |
+| `poetry-pypi-token` | Wrapper around setting `pypi-token`. |
+| `poetry-virtualenvs-create` | Wrapper around setting `virtualenvs.create`. |
+| `poetry-virtualenvs-in-project` | Wrapper around setting `virtualenvs.in-project`. |
+| `poetry-virtualenvs-path` | Wrapper around setting `virtualenvs-path`. |
+
+### Wrapper around `poetry install` commands
+
+You can access `poetry install` commands.
+For more information about `poetry install` command, see the [Poetry Commands/install](https://python-poetry.org/docs/cli/#install).
+
+| Name | Description | Type |
+| --- | --- | --- |
+| `poetry-install-additional-args` | Arguments passed directly to the `poetry install` command. | `string` |
+| `poetry-install--all-extras` | Whether use `--all-extras` option. | `boolean string` |
+| `poetry-install--extras` | Wrapper around argument of `poetry install --extras`. | `string` |
+| `poetry-install--no-root` | Whether use `--no-root` option to `poetry install`. | `boolean string` |
+| `poetry-install--only` | Wrapper around argument of `poetry install --only`. | `string` |
+| `poetry-install--only-root` | Whether use `--only-root` option to `poetry install`. | `boolean string` |
+| `poetry-install--with` | Wrapper around argument of `poetry install --with`. | `string` |
+| `poetry-install--with` | Wrapper around argument of `poetry install --with`. | `string` |
+| `poetry-install--without` | Wrapper around argument of `poetry install --without`. | `string` |
+
+## Action Outputs
+
+| Name | Description | Type |
+| --- | --- | --- |
+| `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | boolean |
+| `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | boolean |
+| `python-path` | Wrapper around `python-path` output of actions/setup-python. | string |
+| `python-version` | Wrapper around `python-version` output of actions/setup-python. | string |

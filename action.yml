@@ -1,11 +1,98 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+---
+name: 'Setup Poetry environment'
+description: >-
+  This action allows setting up Python and Poetry, installing dependencies,
+  and caching dependencies and Poetry installation all at once.
+author: 'Yunosuke Ohsugi'
+branding:
+  icon: 'code'
+  color: 'green'
+
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  cache-dependencies:
+    description: 'Whether to cache installed dependencies.'
+    default: 'true'
+  poetry-version:
+    description: 'The Poetry version to install.'
+    # {{ poetry-version }}
+    default: '1.2.2'
+  poetry-install-dependencies:
+    description: |
+      'Whether Poetry should install dependencies after completing all setup.'
+    default: 'true'
+
+  # Wrapper around setup-python input.
+  token:
+    description: 'Wrapper around `token` input of actions/setup-python.'
+    default: |
+      ${{ github.server_url == 'https://github.com' && github.token || '' }}
+  python-architecture:
+    description: 'Wrapper around `architecture` input of actions/setup-python.'
+  python-cache-dependency-path:
+    description: |
+      'Wrapper around `cache-dependency-path` input of actions/setup-python.'
+  python-check-latest:
+    description: 'Wrapper around `check-latest` input of actions/setup-python.'
+    default: 'false'
+  python-update-environment:
+    description: |
+      'Wrapper around `update-environment` input of actions/setup-python.'
+    default: 'true'
+  python-version:
+    description: 'Wrapper around `version` input of actions/setup-python.'
+  python-version-file:
+    description: 'Wrapper around `version-file` input of actions/setup-python.'
+
+  # Wrapper around `poetry config` command.
+  poetry-cache-dir:
+    description: 'Wrapper around Poetry setting `cache-dir`'
+  poetry-installer-max-workers:
+    description: 'Wrapper around Poetry setting `installer.max-workers`.'
+  poetry-installer-parallel:
+    description: 'Wrapper around Poetry setting `installer.parallel`.'
+  poetry-pypi-token:
+    description: 'Wrapper around Poetry setting `pypi-token`.'
+  poetry-virtualenvs-create:
+    description: 'Wrapper around Poetry setting `virtualenvs.create`.'
+  poetry-virtualenvs-in-project:
+    description: 'Wrapper around Poetry setting `virtualenvs.in-project`.'
+  poetry-virtualenvs-path:
+    description: 'Wrapper around Poetry setting `virtualenvs-path`.'
+
+  # Wrapper around `poetry install` command.
+  poetry-install-additional-args:
+    description: 'Arguments passed directly to the `poetry install` command.'
+  poetry-install--all-extras:
+    description: Whether use `--all-extras` option to `poetry install`.
+  poetry-install--extras:
+    description: Wrapper around argument of `poetry install --extras`.
+  poetry-install--no-root:
+    description: Whether use `--no-root` option to `poetry install`.
+  poetry-install--only:
+    description: Wrapper around argument of `poetry install --only`.
+  poetry-install--only-root:
+    description: Whether use `--only-root` option to `poetry install`.
+  poetry-install--with:
+    description: 'Wrapper around argument of `poetry install --with`.'
+  poetry-install--without:
+    description: Wrapper around argument of `poetry install --without`.
+
+outputs:
+  poetry-cache-hit:
+    description: |
+      'A boolean value to indicate a cache entry of poetry installation was found'
+
+  # Wrapper around `setup-python`
+  cache-hit:
+    description: 'Wrapper around `cache-hit` output of actions/setup-python.'
+  python-path:
+    description: 'Wrapper around `python-path` output of actions/setup-python.'
+  python-version:
+    description: |
+      'Wrapper around `python-version` output of actions/setup-python.'
+
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'dist/setup/index.js'
+  post: 'dist/cache-save/index.js'
+  post-if: success()

@@ -1,6 +1,9 @@
 # Dependency directory
 node_modules
 
+# Ignore js files that are transpiled from ts files in src/
+lib/
+
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs

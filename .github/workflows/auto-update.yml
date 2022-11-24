@@ -1,0 +1,84 @@
+---
+name: Automated update GitHub dependencies
+
+on:  # yamllint disable-line rule:truthy
+  schedule:
+    - cron: '23 2 * * *' # Runs at 02:23 UTC every day
+  workflow_dispatch:
+
+jobs:
+  update-actions-setup-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: npm ci
+      - name: Get last version of actions/setup-python
+        id: setup-python
+        run: |
+          pip install lastversion
+          VERSION=$(python -m lastversion actions/setup-python)
+          echo version=$VERSION >> $GITHUB_OUTPUT
+          echo $VERSION
+      - name: Update actions/setup-python
+        run: |
+          VERSION=${{ steps.setup-python.outputs.version }}
+          npm i git+https://git@github.com/actions/setup-python.git#v$VERSION
+
+      - name: Edit actions/setup-python
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("./node_modules/setup-python/src/setup-python.ts")
+          text_changed = path.read_text().replace("run();", "")
+          text_changed = text_changed.replace(
+            "async function run()", "export async function run()"
+          )
+          path.write_text(text_changed)
+
+      - run: npm run build
+
+      - uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: Update actions/setup-python
+          title: Automated update of actions/setup-python
+          body: This is an auto-generated PR with external GitHub repo updates.
+          branch: auto-update-setup-python
+
+  update-poetry-latest-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get last version of Poetry
+        id: poetry
+        run: |
+          pip install lastversion
+          VERSION=$(python -m lastversion python-poetry/poetry)
+          echo version=$VERSION >> $GITHUB_OUTPUT
+          echo $VERSION
+      - name: Edit and update inputs.poetry-version in action.yml
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path("action.yml")
+          source = path.read_text()
+          target = source.split("{{ poetry-version }}")[1]
+          target = target.split("\n")[1]
+          match = re.search(r"default: '.*?'", target)
+          version = "${{ steps.poetry.outputs.version }}"
+          result = source.replace(match.group(), f"default: '{version}'")
+          path.write_text(result)
+
+      - uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: Update poetry latest version
+          title: Automated update of inputs.poetry-version in action.yml
+          body: This is an auto-generated PR with poetry latest version updates.
+          branch: auto-update-poetry-latest

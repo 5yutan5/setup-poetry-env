@@ -1,0 +1,18 @@
+[[package]]
+name = "pyqtdarktheme"
+version = "1.2.1"
+description = "Flat dark theme for PySide and PyQt."
+category = "dev"
+optional = false
+python-versions = ">=3.7,<3.12"
+
+[metadata]
+lock-version = "1.1"
+python-versions = ">=3.7,<3.12"
+content-hash = "448dae847d088434e56ce46f7854571cccde90161ffd7e828437980e7d8c5b59"
+
+[metadata.files]
+pyqtdarktheme = [
+    {file = "pyqtdarktheme-1.2.1-py3-none-any.whl", hash = "sha256:d9b790c7eb5b955dac9c01789e833838815b3e399be89ba8cc3306041d4e00a2"},
+    {file = "pyqtdarktheme-1.2.1.tar.gz", hash = "sha256:1b85e679175413fb1e7375d821178a25e1e7e2943e1dd1d1e8b630385c759933"},
+]
