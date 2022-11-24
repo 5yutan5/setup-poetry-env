@@ -1,7 +1,7 @@
 ---
 name: 'Setup Poetry environment'
 description: >-
-  This action allows setting up Python and Poetry, installing dependencies,
+  This action allows setup Python/Poetry, installing dependencies,
   and caching dependencies and Poetry installation all at once.
 author: 'Yunosuke Ohsugi'
 branding:
