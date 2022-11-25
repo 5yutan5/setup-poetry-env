@@ -4,8 +4,12 @@ updates:
     directory: /
     schedule:
       interval: daily
+    commit-message:
+      prefix: ⬆
 
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: daily
+    commit-message:
+      prefix: ⬆
