@@ -26,19 +26,6 @@ jobs:
         with:
           node-version: 18.x
       - run: npm ci
-
-      - name: Edit actions/setup-python
-        shell: python
-        run: |
-          from pathlib import Path
-
-          path = Path("./node_modules/setup-python/src/setup-python.ts")
-          text_changed = path.read_text().replace("run();", "")
-          text_changed = text_changed.replace(
-            "async function run()", "export async function run()"
-          )
-          path.write_text(text_changed)
-
       - run: npm run build
 
       - name: Compare the expected and actual dist/ directories

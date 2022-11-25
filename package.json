@@ -7,7 +7,7 @@
   "scripts": {
     "build-setup": "esbuild src/main.ts --bundle --platform=node --outfile=dist/setup/index.js",
     "build-cache": "esbuild src/cache-save.ts --bundle --platform=node --outfile=dist/cache-save/index.js",
-    "build": "npm run build-setup & npm run build-cache",
+    "build": "node tools/edit-setup-python.js & npm run build-setup & npm run build-cache",
     "format": "prettier --write '**/*.ts'",
     "lint": "eslint src/**/*.ts",
     "test": "jest"
