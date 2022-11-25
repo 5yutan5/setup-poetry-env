@@ -1,5 +1,5 @@
 ---
-name: Automated update GitHub dependencies
+name: Check external dependency repo changes
 
 on:  # yamllint disable-line rule:truthy
   schedule:
@@ -19,9 +19,8 @@ jobs:
         id: setup-python
         run: |
           pip install lastversion
-          VERSION=$(python -m lastversion actions/setup-python)
-          echo version=$VERSION >> $GITHUB_OUTPUT
-          echo $VERSION
+          echo version=$(python -m lastversion actions/setup-python)
+            >> $GITHUB_OUTPUT
       - name: Update actions/setup-python
         run: |
           VERSION=${{ steps.setup-python.outputs.version }}
@@ -44,8 +43,8 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Update actions/setup-python
-          title: Automated update of actions/setup-python
+          commit-message: :arrow_up:Update actions/setup-python
+          title: ⬆[Automated] Update of actions/setup-python
           body: This is an auto-generated PR with external GitHub repo updates.
           branch: auto-update-setup-python
 
@@ -53,13 +52,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get last version of Poetry
+      - name: Get latest Poetry version
         id: poetry
         run: |
           pip install lastversion
-          VERSION=$(python -m lastversion python-poetry/poetry)
-          echo version=$VERSION >> $GITHUB_OUTPUT
-          echo $VERSION
+          echo version=$(python -m lastversion python-poetry/poetry)
+            >> $GITHUB_OUTPUT
       - name: Edit and update inputs.poetry-version in action.yml
         shell: python
         run: |
@@ -68,8 +66,7 @@ jobs:
 
           path = Path("action.yml")
           source = path.read_text()
-          target = source.split("{{ poetry-version }}")[1]
-          target = target.split("\n")[1]
+          target = source.split("{{ poetry-version }}")[1].split("\n")[1]
           match = re.search(r"default: '.*?'", target)
           version = "${{ steps.poetry.outputs.version }}"
           result = source.replace(match.group(), f"default: '{version}'")
@@ -78,7 +75,7 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Update poetry latest version
-          title: Automated update of inputs.poetry-version in action.yml
+          commit-message: :arrow_up:Update poetry latest version
+          title: ⬆[Automated] Update inputs.poetry-version in action.yml
           body: This is an auto-generated PR with poetry latest version updates.
           branch: auto-update-poetry-latest
