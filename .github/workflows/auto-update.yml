@@ -44,8 +44,8 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Update actions/setup-python
-          title: Automated update of actions/setup-python
+          commit-message: :arrow_up:Update actions/setup-python
+          title: ⬆[Automated] Update of actions/setup-python
           body: This is an auto-generated PR with external GitHub repo updates.
           branch: auto-update-setup-python
 
@@ -78,7 +78,7 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Update poetry latest version
-          title: Automated update of inputs.poetry-version in action.yml
+          commit-message: :arrow_up:Update poetry latest version
+          title: ⬆[Automated] Update inputs.poetry-version in action.yml
           body: This is an auto-generated PR with poetry latest version updates.
           branch: auto-update-poetry-latest
