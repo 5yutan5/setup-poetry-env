@@ -21,7 +21,7 @@ Also this action wraps around
     steps:
       - uses: actions/checkout@v3
       - name: Setup Poetry env
-        uses: 5yutan5/setup-poetry-env@v1
+        uses: 5yutan5/setup-poetry-env@v1.1.0
         with:
           python-version: 3.x
 ```
@@ -29,7 +29,7 @@ Also this action wraps around
 ### Set up a specific Poetry version
 
 ```yml
-      - uses: 5yutan5/setup-poetry-env@v1
+      - uses: 5yutan5/setup-poetry-env@v1.1.0
         with:
           python-version: '3.x'
           poetry-version: '1.2.0'
@@ -38,7 +38,7 @@ Also this action wraps around
 ### Use wrapper around `poetry config` commands
 
 ```yml
-      - uses: 5yutan5/setup-poetry-env@v1
+      - uses: 5yutan5/setup-poetry-env@v1.1.0
         with:
           python-version: '3.x'
           poetry-virtualenvs-in-project: 'true'
@@ -49,7 +49,7 @@ Also this action wraps around
 `poetry-install--only: 'docs'` is the same as `poetry install --only docs`.
 
 ```yml
-      - uses: 5yutan5/setup-poetry-env@v1
+      - uses: 5yutan5/setup-poetry-env@v1.1.0
         with:
           python-version: '3.x'
           poetry-install--only: 'docs'
@@ -58,7 +58,7 @@ Also this action wraps around
 ### Use wrapper around `poetry install` additional command
 
 ```yml
-      - uses: 5yutan5/setup-poetry-env@v1
+      - uses: 5yutan5/setup-poetry-env@v1.1.0
         with:
           python-version: '3.x'
           poetry-install-additional-args: '-vvv'
