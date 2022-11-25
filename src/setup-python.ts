@@ -19,7 +19,8 @@ interface Inputs {
 }
 
 async function createHackDependencyFile(
-  option: InstallOption
+  option: InstallOption,
+  additionalKey: string
 ): Promise<string> {
   let key = "";
   if (option.allExtras == "true") key += option.allExtras;
@@ -30,11 +31,12 @@ async function createHackDependencyFile(
   if (option.without && !option.only) key += option.without;
 
   if (option.onlyRoot == "true") key = option.onlyRoot;
+  if (additionalKey) key += additionalKey;
 
   if (key) {
     const githubWorkspace = process.env["GITHUB_WORKSPACE"] ?? process.cwd();
     const tempDir = core.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`);
-    await await io.mkdirP(tempDir);
+    await io.mkdirP(tempDir);
     const keyPath = core.toPlatformPath(`${tempDir}/temp-key.txt`);
     fs.writeFileSync(keyPath, key);
     return keyPath;
@@ -60,18 +62,27 @@ function overrideInput(inputs: Inputs, hackPath: string): void {
 
 async function hackActionSetupPython(
   option: InstallOption,
-  inputs: Inputs
+  inputs: Inputs,
+  additionalCacheKey: string
 ): Promise<string> {
-  const hackDependencyPath = await createHackDependencyFile(option);
+  const hackDependencyPath = await createHackDependencyFile(
+    option,
+    additionalCacheKey
+  );
   overrideInput(inputs, hackDependencyPath);
   return hackDependencyPath;
 }
 
 export async function setupPython(
   poetryInstallOption: InstallOption,
+  additionalCacheKey: string,
   inputs: Inputs
 ): Promise<void> {
-  const hackFile = await hackActionSetupPython(poetryInstallOption, inputs);
+  const hackFile = await hackActionSetupPython(
+    poetryInstallOption,
+    inputs,
+    additionalCacheKey
+  );
   // Run `actions/setup-python`.
   await run();
   // Remove resources generated for hack.

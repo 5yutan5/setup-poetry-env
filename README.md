@@ -92,6 +92,7 @@ All inputs are optional. If not set, sensible defaults will be used.
 | Name | Description | Default |
 | --- | --- | --- |
 | `cache-dependencies` | Whether to cache installed dependencies. | `true` |
+| `additional-dependency-cache-key` | Additional dependency cache key. | `string` |
 | `poetry-version` | The Poetry version to install. | `latest version` |
 | `poetry-install-dependencies` | Whether Poetry should install dependencies after completing all setup. | `true` |
 
@@ -146,7 +147,7 @@ For more information about `poetry install` command, see the [Poetry Commands/in
 
 | Name | Description | Type |
 | --- | --- | --- |
-| `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | boolean |
-| `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | boolean |
-| `python-path` | Wrapper around `python-path` output of actions/setup-python. | string |
-| `python-version` | Wrapper around `python-version` output of actions/setup-python. | string |
+| `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | `boolean` |
+| `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | `boolean` |
+| `python-path` | Wrapper around `python-path` output of actions/setup-python. | `string` |
+| `python-version` | Wrapper around `python-version` output of actions/setup-python. | `string` |

@@ -29,16 +29,20 @@ async function run(): Promise<void> {
     };
 
     core.info("----Run actions/setup-python----");
-    await setupPython(poetryInstallOption, {
-      architecture: core.getInput("python-architecture"),
-      cache: core.getInput("cache-dependencies") == "true" ? "poetry" : "",
-      cacheDependencyPath: core.getInput("python-cache-dependency-path"),
-      checkLatest: core.getInput("python-check-latest"),
-      token: core.getInput("token"),
-      updateEnvironment: core.getInput("python-update-environment"),
-      version: core.getInput("python-version"),
-      versionFile: core.getInput("python-version-file"),
-    });
+    await setupPython(
+      poetryInstallOption,
+      core.getInput("additional-dependency-cache-key"),
+      {
+        architecture: core.getInput("python-architecture"),
+        cache: core.getInput("cache-dependencies") == "true" ? "poetry" : "",
+        cacheDependencyPath: core.getInput("python-cache-dependency-path"),
+        checkLatest: core.getInput("python-check-latest"),
+        token: core.getInput("token"),
+        updateEnvironment: core.getInput("python-update-environment"),
+        version: core.getInput("python-version"),
+        versionFile: core.getInput("python-version-file"),
+      }
+    );
 
     if (core.getInput("poetry-install-dependencies") == "true") {
       core.info("----Installing dependencies----");

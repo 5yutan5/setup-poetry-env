@@ -12,6 +12,8 @@ inputs:
   cache-dependencies:
     description: 'Whether to cache installed dependencies.'
     default: 'true'
+  additional-dependency-cache-key:
+    description: 'Additional dependency cache key.'
   poetry-version:
     description: 'The Poetry version to install.'
     # {{ poetry-version }}
