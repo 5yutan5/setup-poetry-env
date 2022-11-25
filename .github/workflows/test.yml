@@ -120,3 +120,19 @@ jobs:
           python-version: 3.x
           poetry-install-additional-args: '-vvv'
       - run: poetry run python test_python_app/__init__.py
+
+  test-this-action-additional-key:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Move test app to cwd
+        run: |
+          mv ./__tests__/data/pyproject.toml .
+          mv ./__tests__/data/poetry.lock .
+          mv ./__tests__/data/test_python_app .
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
+          additional-dependency-cache-key: 'test'
+      - run: poetry run python test_python_app/__init__.py

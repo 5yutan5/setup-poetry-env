@@ -70996,7 +70996,7 @@ async function run() {
 }
 
 // src/setup-python.ts
-function createHackDependencyFile(option) {
+function createHackDependencyFile(option, additionalKey) {
   return __async(this, null, function* () {
     var _a;
     let key = "";
@@ -71014,10 +71014,12 @@ function createHackDependencyFile(option) {
       key += option.without;
     if (option.onlyRoot == "true")
       key = option.onlyRoot;
+    if (additionalKey)
+      key += additionalKey;
     if (key) {
       const githubWorkspace = (_a = process.env["GITHUB_WORKSPACE"]) != null ? _a : process.cwd();
       const tempDir = core13.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`);
-      yield yield io3.mkdirP(tempDir);
+      yield io3.mkdirP(tempDir);
       const keyPath = core13.toPlatformPath(`${tempDir}/temp-key.txt`);
       import_node_fs.default.writeFileSync(keyPath, key);
       return keyPath;
@@ -71040,16 +71042,23 @@ function overrideInput(inputs, hackPath) {
   setInput("version", inputs.version);
   setInput("version-file", inputs.versionFile);
 }
-function hackActionSetupPython(option, inputs) {
+function hackActionSetupPython(option, inputs, additionalCacheKey) {
   return __async(this, null, function* () {
-    const hackDependencyPath = yield createHackDependencyFile(option);
+    const hackDependencyPath = yield createHackDependencyFile(
+      option,
+      additionalCacheKey
+    );
     overrideInput(inputs, hackDependencyPath);
     return hackDependencyPath;
   });
 }
-function setupPython(poetryInstallOption, inputs) {
+function setupPython(poetryInstallOption, additionalCacheKey, inputs) {
   return __async(this, null, function* () {
-    const hackFile = yield hackActionSetupPython(poetryInstallOption, inputs);
+    const hackFile = yield hackActionSetupPython(
+      poetryInstallOption,
+      inputs,
+      additionalCacheKey
+    );
     yield run();
     if (hackFile) {
       import_node_fs.default.unlinkSync(hackFile);
@@ -71083,16 +71092,20 @@ function run2() {
         without: core14.getInput("poetry-install--without")
       };
       core14.info("----Run actions/setup-python----");
-      yield setupPython(poetryInstallOption, {
-        architecture: core14.getInput("python-architecture"),
-        cache: core14.getInput("cache-dependencies") == "true" ? "poetry" : "",
-        cacheDependencyPath: core14.getInput("python-cache-dependency-path"),
-        checkLatest: core14.getInput("python-check-latest"),
-        token: core14.getInput("token"),
-        updateEnvironment: core14.getInput("python-update-environment"),
-        version: core14.getInput("python-version"),
-        versionFile: core14.getInput("python-version-file")
-      });
+      yield setupPython(
+        poetryInstallOption,
+        core14.getInput("additional-dependency-cache-key"),
+        {
+          architecture: core14.getInput("python-architecture"),
+          cache: core14.getInput("cache-dependencies") == "true" ? "poetry" : "",
+          cacheDependencyPath: core14.getInput("python-cache-dependency-path"),
+          checkLatest: core14.getInput("python-check-latest"),
+          token: core14.getInput("token"),
+          updateEnvironment: core14.getInput("python-update-environment"),
+          version: core14.getInput("python-version"),
+          versionFile: core14.getInput("python-version-file")
+        }
+      );
       if (core14.getInput("poetry-install-dependencies") == "true") {
         core14.info("----Installing dependencies----");
         yield installDependencies(poetryInstallOption);

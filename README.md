@@ -1,6 +1,6 @@
 # setup-poetry-env
 
-This action allows setting up Python and Poetry, installing dependencies,
+This action allows to setup Python and Poetry, installing dependencies,
 and caching dependencies and Poetry installation all at once.
 You can simplify the troublesome poetry setup.
 Also this action wraps around
@@ -11,7 +11,7 @@ Also this action wraps around
 - Setup Python and Poetry
 - Cache Python dependencies and Poetry installation
 - Auto install Python dependencies
-- Generate different caches of python dependencies depending on the arguments (--only, --with and etc) you enter in the `poetry install` command.
+- Cache only specific groups, if you use [Poetry Dependency groups](https://python-poetry.org/docs/managing-dependencies/).
 
 ## Usage
 
@@ -26,8 +26,6 @@ Also this action wraps around
           python-version: 3.x
 ```
 
-Also you can check all inputs and outputs.
-
 ### Set up a specific Poetry version
 
 ```yml
@@ -35,24 +33,6 @@ Also you can check all inputs and outputs.
         with:
           python-version: '3.x'
           poetry-version: '1.2.0'
-```
-
-### Disable to install dependency
-
-```yml
-      - uses: 5yutan5/setup-poetry-env@v1
-        with:
-          python-version: '3.x'
-          poetry-install-dependencies: 'false'
-```
-
-### Disable to cache dependencies
-
-```yml
-      - uses: 5yutan5/setup-poetry-env@v1
-        with:
-          python-version: '3.x'
-          cache-dependencies: 'false'
 ```
 
 ### Use wrapper around `poetry config` commands
@@ -66,14 +46,13 @@ Also you can check all inputs and outputs.
 
 ### Use wrapper around `poetry install` commands
 
-This step will install only some libraries.
-Optimize each install by creating a different cache than just `poetry install`.
+`poetry-install--only: 'docs'` is the same as `poetry install --only docs`.
 
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
           python-version: '3.x'
-          poetry-install--only-root: 'true'
+          poetry-install--only: 'docs'
 ```
 
 ### Use wrapper around `poetry install` additional command
@@ -92,6 +71,7 @@ All inputs are optional. If not set, sensible defaults will be used.
 | Name | Description | Default |
 | --- | --- | --- |
 | `cache-dependencies` | Whether to cache installed dependencies. | `true` |
+| `additional-dependency-cache-key` | Additional dependency cache key. | `string` |
 | `poetry-version` | The Poetry version to install. | `latest version` |
 | `poetry-install-dependencies` | Whether Poetry should install dependencies after completing all setup. | `true` |
 
@@ -146,7 +126,7 @@ For more information about `poetry install` command, see the [Poetry Commands/in
 
 | Name | Description | Type |
 | --- | --- | --- |
-| `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | boolean |
-| `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | boolean |
-| `python-path` | Wrapper around `python-path` output of actions/setup-python. | string |
-| `python-version` | Wrapper around `python-version` output of actions/setup-python. | string |
+| `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | `boolean` |
+| `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | `boolean` |
+| `python-path` | Wrapper around `python-path` output of actions/setup-python. | `string` |
+| `python-version` | Wrapper around `python-version` output of actions/setup-python. | `string` |
