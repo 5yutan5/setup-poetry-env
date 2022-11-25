@@ -46,7 +46,7 @@ Also this action wraps around
 
 ### Use wrapper around `poetry install` commands
 
-`poetry-install--only: 'docs'` is the same as poetry install --only docs.
+`poetry-install--only: 'docs'` is the same as `poetry install --only docs`.
 
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
