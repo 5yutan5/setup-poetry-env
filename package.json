@@ -31,7 +31,7 @@
     "setup-python": "git+https://git@github.com/actions/setup-python.git#v4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.10",
+    "@types/node": "^18.14.2",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "esbuild": "^0.15.16",
