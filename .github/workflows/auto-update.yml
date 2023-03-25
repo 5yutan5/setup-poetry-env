@@ -19,8 +19,7 @@ jobs:
         id: setup-python
         run: |
           pip install lastversion
-          echo version=$(python -m lastversion actions/setup-python)
-            >> $GITHUB_OUTPUT
+          echo version=$(python -m lastversion actions/setup-python) >> $GITHUB_OUTPUT
       - name: Update actions/setup-python
         run: |
           VERSION=${{ steps.setup-python.outputs.version }}
@@ -44,8 +43,7 @@ jobs:
         id: poetry
         run: |
           pip install lastversion
-          echo version=$(python -m lastversion python-poetry/poetry)
-            >> $GITHUB_OUTPUT
+          echo version=$(python -m lastversion python-poetry/poetry) >> $GITHUB_OUTPUT
       - name: Edit and update inputs.poetry-version in action.yml
         shell: python
         run: |
