@@ -17,7 +17,7 @@ inputs:
   poetry-version:
     description: 'The Poetry version to install.'
     # {{ poetry-version }}
-    default: '1.2.2'
+    default: '1.4.1'
   poetry-install-dependencies:
     description: |
       'Whether Poetry should install dependencies after completing all setup.'
