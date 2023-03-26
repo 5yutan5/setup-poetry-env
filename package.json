@@ -28,7 +28,7 @@
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/io": "^1.1.2",
-    "setup-python": "git+https://git@github.com/actions/setup-python.git#v4.3.0"
+    "setup-python": "git+https://git@github.com/actions/setup-python.git#v4.5.0"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",

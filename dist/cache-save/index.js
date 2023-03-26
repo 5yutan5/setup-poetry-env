@@ -24,6 +24,10 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -85,7 +89,7 @@ var require_utils = __commonJS({
 var require_command = __commonJS({
   "node_modules/@actions/core/lib/command.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -96,26 +100,26 @@ var require_command = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issue = exports.issueCommand = void 0;
-    var os = __importStar(require("os"));
+    var os = __importStar2(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, properties, message) {
       const cmd = new Command(command, properties, message);
@@ -168,494 +172,336 @@ var require_command = __commonJS({
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/rng.js
-var require_rng = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/rng.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = rng;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var rnds8Pool = new Uint8Array(256);
-    var poolPtr = rnds8Pool.length;
-    function rng() {
-      if (poolPtr > rnds8Pool.length - 16) {
-        _crypto.default.randomFillSync(rnds8Pool);
-        poolPtr = 0;
-      }
-      return rnds8Pool.slice(poolPtr, poolPtr += 16);
-    }
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/rng.js
+function rng() {
+  if (poolPtr > rnds8Pool.length - 16) {
+    import_crypto.default.randomFillSync(rnds8Pool);
+    poolPtr = 0;
+  }
+  return rnds8Pool.slice(poolPtr, poolPtr += 16);
+}
+var import_crypto, rnds8Pool, poolPtr;
+var init_rng = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/rng.js"() {
+    import_crypto = __toESM(require("crypto"));
+    rnds8Pool = new Uint8Array(256);
+    poolPtr = rnds8Pool.length;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/regex.js
-var require_regex = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/regex.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/regex.js
+var regex_default;
+var init_regex = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/regex.js"() {
+    regex_default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/validate.js
-var require_validate = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/validate.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _regex = _interopRequireDefault(require_regex());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function validate(uuid) {
-      return typeof uuid === "string" && _regex.default.test(uuid);
-    }
-    var _default = validate;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/validate.js
+function validate(uuid) {
+  return typeof uuid === "string" && regex_default.test(uuid);
+}
+var validate_default;
+var init_validate = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/validate.js"() {
+    init_regex();
+    validate_default = validate;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/stringify.js
-var require_stringify = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/stringify.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var byteToHex = [];
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/stringify.js
+function stringify(arr, offset = 0) {
+  const uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+  if (!validate_default(uuid)) {
+    throw TypeError("Stringified UUID is invalid");
+  }
+  return uuid;
+}
+var byteToHex, stringify_default;
+var init_stringify = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/stringify.js"() {
+    init_validate();
+    byteToHex = [];
     for (let i = 0; i < 256; ++i) {
       byteToHex.push((i + 256).toString(16).substr(1));
     }
-    function stringify(arr, offset = 0) {
-      const uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Stringified UUID is invalid");
-      }
-      return uuid;
-    }
-    var _default = stringify;
-    exports.default = _default;
+    stringify_default = stringify;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/v1.js
-var require_v1 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/v1.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/v1.js
+function v1(options, buf, offset) {
+  let i = buf && offset || 0;
+  const b = buf || new Array(16);
+  options = options || {};
+  let node = options.node || _nodeId;
+  let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
+  if (node == null || clockseq == null) {
+    const seedBytes = options.random || (options.rng || rng)();
+    if (node == null) {
+      node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
     }
-    var _nodeId;
-    var _clockseq;
-    var _lastMSecs = 0;
-    var _lastNSecs = 0;
-    function v1(options, buf, offset) {
-      let i = buf && offset || 0;
-      const b = buf || new Array(16);
-      options = options || {};
-      let node = options.node || _nodeId;
-      let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
-      if (node == null || clockseq == null) {
-        const seedBytes = options.random || (options.rng || _rng.default)();
-        if (node == null) {
-          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
-        }
-        if (clockseq == null) {
-          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
-        }
-      }
-      let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
-      let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
-      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-      if (dt < 0 && options.clockseq === void 0) {
-        clockseq = clockseq + 1 & 16383;
-      }
-      if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
-        nsecs = 0;
-      }
-      if (nsecs >= 1e4) {
-        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
-      }
-      _lastMSecs = msecs;
-      _lastNSecs = nsecs;
-      _clockseq = clockseq;
-      msecs += 122192928e5;
-      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
-      b[i++] = tl >>> 24 & 255;
-      b[i++] = tl >>> 16 & 255;
-      b[i++] = tl >>> 8 & 255;
-      b[i++] = tl & 255;
-      const tmh = msecs / 4294967296 * 1e4 & 268435455;
-      b[i++] = tmh >>> 8 & 255;
-      b[i++] = tmh & 255;
-      b[i++] = tmh >>> 24 & 15 | 16;
-      b[i++] = tmh >>> 16 & 255;
-      b[i++] = clockseq >>> 8 | 128;
-      b[i++] = clockseq & 255;
-      for (let n = 0; n < 6; ++n) {
-        b[i + n] = node[n];
-      }
-      return buf || (0, _stringify.default)(b);
+    if (clockseq == null) {
+      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
     }
-    var _default = v1;
-    exports.default = _default;
+  }
+  let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
+  let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
+  const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+  if (dt < 0 && options.clockseq === void 0) {
+    clockseq = clockseq + 1 & 16383;
+  }
+  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
+    nsecs = 0;
+  }
+  if (nsecs >= 1e4) {
+    throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+  }
+  _lastMSecs = msecs;
+  _lastNSecs = nsecs;
+  _clockseq = clockseq;
+  msecs += 122192928e5;
+  const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+  b[i++] = tl >>> 24 & 255;
+  b[i++] = tl >>> 16 & 255;
+  b[i++] = tl >>> 8 & 255;
+  b[i++] = tl & 255;
+  const tmh = msecs / 4294967296 * 1e4 & 268435455;
+  b[i++] = tmh >>> 8 & 255;
+  b[i++] = tmh & 255;
+  b[i++] = tmh >>> 24 & 15 | 16;
+  b[i++] = tmh >>> 16 & 255;
+  b[i++] = clockseq >>> 8 | 128;
+  b[i++] = clockseq & 255;
+  for (let n = 0; n < 6; ++n) {
+    b[i + n] = node[n];
+  }
+  return buf || stringify_default(b);
+}
+var _nodeId, _clockseq, _lastMSecs, _lastNSecs, v1_default;
+var init_v1 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/v1.js"() {
+    init_rng();
+    init_stringify();
+    _lastMSecs = 0;
+    _lastNSecs = 0;
+    v1_default = v1;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/parse.js
-var require_parse = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/parse.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function parse(uuid) {
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Invalid UUID");
-      }
-      let v;
-      const arr = new Uint8Array(16);
-      arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
-      arr[1] = v >>> 16 & 255;
-      arr[2] = v >>> 8 & 255;
-      arr[3] = v & 255;
-      arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
-      arr[5] = v & 255;
-      arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
-      arr[7] = v & 255;
-      arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
-      arr[9] = v & 255;
-      arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
-      arr[11] = v / 4294967296 & 255;
-      arr[12] = v >>> 24 & 255;
-      arr[13] = v >>> 16 & 255;
-      arr[14] = v >>> 8 & 255;
-      arr[15] = v & 255;
-      return arr;
-    }
-    var _default = parse;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/parse.js
+function parse(uuid) {
+  if (!validate_default(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  let v;
+  const arr = new Uint8Array(16);
+  arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v >>> 16 & 255;
+  arr[2] = v >>> 8 & 255;
+  arr[3] = v & 255;
+  arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v & 255;
+  arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v & 255;
+  arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v & 255;
+  arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
+  arr[11] = v / 4294967296 & 255;
+  arr[12] = v >>> 24 & 255;
+  arr[13] = v >>> 16 & 255;
+  arr[14] = v >>> 8 & 255;
+  arr[15] = v & 255;
+  return arr;
+}
+var parse_default;
+var init_parse = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/parse.js"() {
+    init_validate();
+    parse_default = parse;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/v35.js
-var require_v35 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/v35.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = _default;
-    exports.URL = exports.DNS = void 0;
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/v35.js
+function stringToBytes(str) {
+  str = unescape(encodeURIComponent(str));
+  const bytes = [];
+  for (let i = 0; i < str.length; ++i) {
+    bytes.push(str.charCodeAt(i));
+  }
+  return bytes;
+}
+function v35_default(name, version3, hashfunc) {
+  function generateUUID(value, namespace, buf, offset) {
+    if (typeof value === "string") {
+      value = stringToBytes(value);
     }
-    function stringToBytes(str) {
-      str = unescape(encodeURIComponent(str));
-      const bytes = [];
-      for (let i = 0; i < str.length; ++i) {
-        bytes.push(str.charCodeAt(i));
-      }
-      return bytes;
+    if (typeof namespace === "string") {
+      namespace = parse_default(namespace);
     }
-    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-    exports.DNS = DNS;
-    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-    exports.URL = URL2;
-    function _default(name, version, hashfunc) {
-      function generateUUID(value, namespace, buf, offset) {
-        if (typeof value === "string") {
-          value = stringToBytes(value);
-        }
-        if (typeof namespace === "string") {
-          namespace = (0, _parse.default)(namespace);
-        }
-        if (namespace.length !== 16) {
-          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
-        }
-        let bytes = new Uint8Array(16 + value.length);
-        bytes.set(namespace);
-        bytes.set(value, namespace.length);
-        bytes = hashfunc(bytes);
-        bytes[6] = bytes[6] & 15 | version;
-        bytes[8] = bytes[8] & 63 | 128;
-        if (buf) {
-          offset = offset || 0;
-          for (let i = 0; i < 16; ++i) {
-            buf[offset + i] = bytes[i];
-          }
-          return buf;
-        }
-        return (0, _stringify.default)(bytes);
-      }
-      try {
-        generateUUID.name = name;
-      } catch (err) {
-      }
-      generateUUID.DNS = DNS;
-      generateUUID.URL = URL2;
-      return generateUUID;
+    if (namespace.length !== 16) {
+      throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
     }
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
+    bytes[6] = bytes[6] & 15 | version3;
+    bytes[8] = bytes[8] & 63 | 128;
+    if (buf) {
+      offset = offset || 0;
+      for (let i = 0; i < 16; ++i) {
+        buf[offset + i] = bytes[i];
+      }
+      return buf;
+    }
+    return stringify_default(bytes);
+  }
+  try {
+    generateUUID.name = name;
+  } catch (err) {
+  }
+  generateUUID.DNS = DNS;
+  generateUUID.URL = URL2;
+  return generateUUID;
+}
+var DNS, URL2;
+var init_v35 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/v35.js"() {
+    init_stringify();
+    init_parse();
+    DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/md5.js
-var require_md5 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/md5.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function md5(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
-      }
-      return _crypto.default.createHash("md5").update(bytes).digest();
-    }
-    var _default = md5;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/md5.js
+function md5(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto2.default.createHash("md5").update(bytes).digest();
+}
+var import_crypto2, md5_default;
+var init_md5 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/md5.js"() {
+    import_crypto2 = __toESM(require("crypto"));
+    md5_default = md5;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/v3.js
-var require_v3 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/v3.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _md = _interopRequireDefault(require_md5());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var v3 = (0, _v.default)("v3", 48, _md.default);
-    var _default = v3;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/v3.js
+var v3, v3_default;
+var init_v3 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/v3.js"() {
+    init_v35();
+    init_md5();
+    v3 = v35_default("v3", 48, md5_default);
+    v3_default = v3;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/v4.js
-var require_v4 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/v4.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/v4.js
+function v4(options, buf, offset) {
+  options = options || {};
+  const rnds = options.random || (options.rng || rng)();
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset = offset || 0;
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
     }
-    function v4(options, buf, offset) {
-      options = options || {};
-      const rnds = options.random || (options.rng || _rng.default)();
-      rnds[6] = rnds[6] & 15 | 64;
-      rnds[8] = rnds[8] & 63 | 128;
-      if (buf) {
-        offset = offset || 0;
-        for (let i = 0; i < 16; ++i) {
-          buf[offset + i] = rnds[i];
-        }
-        return buf;
-      }
-      return (0, _stringify.default)(rnds);
-    }
-    var _default = v4;
-    exports.default = _default;
+    return buf;
+  }
+  return stringify_default(rnds);
+}
+var v4_default;
+var init_v4 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/v4.js"() {
+    init_rng();
+    init_stringify();
+    v4_default = v4;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/sha1.js
-var require_sha1 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/sha1.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function sha1(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
-      }
-      return _crypto.default.createHash("sha1").update(bytes).digest();
-    }
-    var _default = sha1;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/sha1.js
+function sha1(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto3.default.createHash("sha1").update(bytes).digest();
+}
+var import_crypto3, sha1_default;
+var init_sha1 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/sha1.js"() {
+    import_crypto3 = __toESM(require("crypto"));
+    sha1_default = sha1;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/v5.js
-var require_v5 = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/v5.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _sha = _interopRequireDefault(require_sha1());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var v5 = (0, _v.default)("v5", 80, _sha.default);
-    var _default = v5;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/v5.js
+var v5, v5_default;
+var init_v5 = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/v5.js"() {
+    init_v35();
+    init_sha1();
+    v5 = v35_default("v5", 80, sha1_default);
+    v5_default = v5;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/nil.js
-var require_nil = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/nil.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _default = "00000000-0000-0000-0000-000000000000";
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/nil.js
+var nil_default;
+var init_nil = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/nil.js"() {
+    nil_default = "00000000-0000-0000-0000-000000000000";
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/version.js
-var require_version = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/version.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function version(uuid) {
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Invalid UUID");
-      }
-      return parseInt(uuid.substr(14, 1), 16);
-    }
-    var _default = version;
-    exports.default = _default;
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/version.js
+function version(uuid) {
+  if (!validate_default(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  return parseInt(uuid.substr(14, 1), 16);
+}
+var version_default;
+var init_version = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/version.js"() {
+    init_validate();
+    version_default = version;
   }
 });
 
-// node_modules/@actions/core/node_modules/uuid/dist/index.js
-var require_dist = __commonJS({
-  "node_modules/@actions/core/node_modules/uuid/dist/index.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    Object.defineProperty(exports, "v1", {
-      enumerable: true,
-      get: function() {
-        return _v.default;
-      }
-    });
-    Object.defineProperty(exports, "v3", {
-      enumerable: true,
-      get: function() {
-        return _v2.default;
-      }
-    });
-    Object.defineProperty(exports, "v4", {
-      enumerable: true,
-      get: function() {
-        return _v3.default;
-      }
-    });
-    Object.defineProperty(exports, "v5", {
-      enumerable: true,
-      get: function() {
-        return _v4.default;
-      }
-    });
-    Object.defineProperty(exports, "NIL", {
-      enumerable: true,
-      get: function() {
-        return _nil.default;
-      }
-    });
-    Object.defineProperty(exports, "version", {
-      enumerable: true,
-      get: function() {
-        return _version.default;
-      }
-    });
-    Object.defineProperty(exports, "validate", {
-      enumerable: true,
-      get: function() {
-        return _validate.default;
-      }
-    });
-    Object.defineProperty(exports, "stringify", {
-      enumerable: true,
-      get: function() {
-        return _stringify.default;
-      }
-    });
-    Object.defineProperty(exports, "parse", {
-      enumerable: true,
-      get: function() {
-        return _parse.default;
-      }
-    });
-    var _v = _interopRequireDefault(require_v1());
-    var _v2 = _interopRequireDefault(require_v3());
-    var _v3 = _interopRequireDefault(require_v4());
-    var _v4 = _interopRequireDefault(require_v5());
-    var _nil = _interopRequireDefault(require_nil());
-    var _version = _interopRequireDefault(require_version());
-    var _validate = _interopRequireDefault(require_validate());
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
+// node_modules/@actions/core/node_modules/uuid/dist/esm-node/index.js
+var esm_node_exports = {};
+__export(esm_node_exports, {
+  NIL: () => nil_default,
+  parse: () => parse_default,
+  stringify: () => stringify_default,
+  v1: () => v1_default,
+  v3: () => v3_default,
+  v4: () => v4_default,
+  v5: () => v5_default,
+  validate: () => validate_default,
+  version: () => version_default
+});
+var init_esm_node = __esm({
+  "node_modules/@actions/core/node_modules/uuid/dist/esm-node/index.js"() {
+    init_v1();
+    init_v3();
+    init_v4();
+    init_v5();
+    init_nil();
+    init_version();
+    init_validate();
+    init_stringify();
+    init_parse();
   }
 });
 
@@ -663,7 +509,7 @@ var require_dist = __commonJS({
 var require_file_command = __commonJS({
   "node_modules/@actions/core/lib/file-command.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -674,28 +520,28 @@ var require_file_command = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.prepareKeyValueMessage = exports.issueFileCommand = void 0;
-    var fs2 = __importStar(require("fs"));
-    var os = __importStar(require("os"));
-    var uuid_1 = require_dist();
+    var fs2 = __importStar2(require("fs"));
+    var os = __importStar2(require("os"));
+    var uuid_1 = (init_esm_node(), __toCommonJS(esm_node_exports));
     var utils_1 = require_utils();
     function issueFileCommand(command, message) {
       const filePath = process.env[`GITHUB_${command}`];
@@ -1022,7 +868,7 @@ var require_tunnel2 = __commonJS({
 var require_lib = __commonJS({
   "node_modules/@actions/http-client/lib/index.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -1033,24 +879,24 @@ var require_lib = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -1079,10 +925,10 @@ var require_lib = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.HttpClient = exports.isHttps = exports.HttpClientResponse = exports.HttpClientError = exports.getProxyUrl = exports.MediaTypes = exports.Headers = exports.HttpCodes = void 0;
-    var http = __importStar(require("http"));
-    var https = __importStar(require("https"));
-    var pm = __importStar(require_proxy());
-    var tunnel = __importStar(require_tunnel2());
+    var http = __importStar2(require("http"));
+    var https = __importStar2(require("https"));
+    var pm = __importStar2(require_proxy());
+    var tunnel = __importStar2(require_tunnel2());
     var HttpCodes;
     (function(HttpCodes2) {
       HttpCodes2[HttpCodes2["OK"] = 200] = "OK";
@@ -1156,8 +1002,8 @@ var require_lib = __commonJS({
         this.message = message;
       }
       readBody() {
-        return __awaiter(this, void 0, void 0, function* () {
-          return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
+          return new Promise((resolve) => __awaiter2(this, void 0, void 0, function* () {
             let output = Buffer.alloc(0);
             this.message.on("data", (chunk) => {
               output = Buffer.concat([output, chunk]);
@@ -1214,54 +1060,58 @@ var require_lib = __commonJS({
         }
       }
       options(requestUrl, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("OPTIONS", requestUrl, null, additionalHeaders || {});
         });
       }
       get(requestUrl, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("GET", requestUrl, null, additionalHeaders || {});
         });
       }
       del(requestUrl, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("DELETE", requestUrl, null, additionalHeaders || {});
         });
       }
       post(requestUrl, data, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("POST", requestUrl, data, additionalHeaders || {});
         });
       }
       patch(requestUrl, data, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("PATCH", requestUrl, data, additionalHeaders || {});
         });
       }
       put(requestUrl, data, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("PUT", requestUrl, data, additionalHeaders || {});
         });
       }
       head(requestUrl, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request("HEAD", requestUrl, null, additionalHeaders || {});
         });
       }
       sendStream(verb, requestUrl, stream, additionalHeaders) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.request(verb, requestUrl, stream, additionalHeaders);
         });
       }
+      /**
+       * Gets a typed object from an endpoint
+       * Be aware that not found returns a null.  Other errors (4xx, 5xx) reject the promise
+       */
       getJson(requestUrl, additionalHeaders = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
           const res = yield this.get(requestUrl, additionalHeaders);
           return this._processResponse(res, this.requestOptions);
         });
       }
       postJson(requestUrl, obj, additionalHeaders = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
           additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -1270,7 +1120,7 @@ var require_lib = __commonJS({
         });
       }
       putJson(requestUrl, obj, additionalHeaders = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
           additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -1279,7 +1129,7 @@ var require_lib = __commonJS({
         });
       }
       patchJson(requestUrl, obj, additionalHeaders = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
           additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -1287,8 +1137,13 @@ var require_lib = __commonJS({
           return this._processResponse(res, this.requestOptions);
         });
       }
+      /**
+       * Makes a raw http request.
+       * All other methods such as get, post, patch, and request ultimately call this.
+       * Prefer get, del, post and patch
+       */
       request(verb, requestUrl, data, headers) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           if (this._disposed) {
             throw new Error("Client has already been disposed.");
           }
@@ -1347,14 +1202,22 @@ var require_lib = __commonJS({
           return response;
         });
       }
+      /**
+       * Needs to be called if keepAlive is set to true in request options.
+       */
       dispose() {
         if (this._agent) {
           this._agent.destroy();
         }
         this._disposed = true;
       }
+      /**
+       * Raw request.
+       * @param info
+       * @param data
+       */
       requestRaw(info4, data) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return new Promise((resolve, reject) => {
             function callbackForResult(err, res) {
               if (err) {
@@ -1369,6 +1232,12 @@ var require_lib = __commonJS({
           });
         });
       }
+      /**
+       * Raw request with callback.
+       * @param info
+       * @param data
+       * @param onResult
+       */
       requestRawWithCallback(info4, data, onResult) {
         if (typeof data === "string") {
           if (!info4.options.headers) {
@@ -1412,6 +1281,11 @@ var require_lib = __commonJS({
           req.end();
         }
       }
+      /**
+       * Gets an http agent. This function is useful when you need an http agent that handles
+       * routing through a proxy server - depending upon the url and proxy environment variables.
+       * @param serverUrl  The server URL where the request will be sent. For example, https://api.github.com
+       */
       getAgent(serverUrl) {
         const parsedUrl = new URL(serverUrl);
         return this._getAgent(parsedUrl);
@@ -1504,15 +1378,15 @@ var require_lib = __commonJS({
         return agent;
       }
       _performExponentialBackoff(retryNumber) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           retryNumber = Math.min(ExponentialBackoffCeiling, retryNumber);
           const ms = ExponentialBackoffTimeSlice * Math.pow(2, retryNumber);
           return new Promise((resolve) => setTimeout(() => resolve(), ms));
         });
       }
       _processResponse(res, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-          return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
+          return new Promise((resolve, reject) => __awaiter2(this, void 0, void 0, function* () {
             const statusCode = res.message.statusCode || 0;
             const response = {
               statusCode,
@@ -1574,7 +1448,7 @@ var require_lib = __commonJS({
 var require_auth = __commonJS({
   "node_modules/@actions/http-client/lib/auth.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -1614,11 +1488,12 @@ var require_auth = __commonJS({
         }
         options.headers["Authorization"] = `Basic ${Buffer.from(`${this.username}:${this.password}`).toString("base64")}`;
       }
+      // This handler cannot handle 401
       canHandleAuthentication() {
         return false;
       }
       handleAuthentication() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           throw new Error("not implemented");
         });
       }
@@ -1628,17 +1503,20 @@ var require_auth = __commonJS({
       constructor(token) {
         this.token = token;
       }
+      // currently implements pre-authorization
+      // TODO: support preAuth = false where it hooks on 401
       prepareRequest(options) {
         if (!options.headers) {
           throw Error("The request has no headers");
         }
         options.headers["Authorization"] = `Bearer ${this.token}`;
       }
+      // This handler cannot handle 401
       canHandleAuthentication() {
         return false;
       }
       handleAuthentication() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           throw new Error("not implemented");
         });
       }
@@ -1648,17 +1526,20 @@ var require_auth = __commonJS({
       constructor(token) {
         this.token = token;
       }
+      // currently implements pre-authorization
+      // TODO: support preAuth = false where it hooks on 401
       prepareRequest(options) {
         if (!options.headers) {
           throw Error("The request has no headers");
         }
         options.headers["Authorization"] = `Basic ${Buffer.from(`PAT:${this.token}`).toString("base64")}`;
       }
+      // This handler cannot handle 401
       canHandleAuthentication() {
         return false;
       }
       handleAuthentication() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           throw new Error("not implemented");
         });
       }
@@ -1671,7 +1552,7 @@ var require_auth = __commonJS({
 var require_oidc_utils = __commonJS({
   "node_modules/@actions/core/lib/oidc-utils.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -1727,7 +1608,7 @@ var require_oidc_utils = __commonJS({
       }
       static getCall(id_token_url) {
         var _a;
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const httpclient = OidcClient.createHttpClient();
           const res = yield httpclient.getJson(id_token_url).catch((error) => {
             throw new Error(`Failed to get ID Token. 
@@ -1744,7 +1625,7 @@ var require_oidc_utils = __commonJS({
         });
       }
       static getIDToken(audience) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           try {
             let id_token_url = OidcClient.getIDTokenUrl();
             if (audience) {
@@ -1769,7 +1650,7 @@ var require_oidc_utils = __commonJS({
 var require_summary = __commonJS({
   "node_modules/@actions/core/lib/summary.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -1807,8 +1688,14 @@ var require_summary = __commonJS({
       constructor() {
         this._buffer = "";
       }
+      /**
+       * Finds the summary file path from the environment, rejects if env var is not found or file does not exist
+       * Also checks r/w permissions.
+       *
+       * @returns step summary file path
+       */
       filePath() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           if (this._filePath) {
             return this._filePath;
           }
@@ -1825,6 +1712,15 @@ var require_summary = __commonJS({
           return this._filePath;
         });
       }
+      /**
+       * Wraps content in an HTML tag, adding any HTML attributes
+       *
+       * @param {string} tag HTML tag to wrap
+       * @param {string | null} content content within the tag
+       * @param {[attribute: string]: string} attrs key-value list of HTML attributes to add
+       *
+       * @returns {string} content wrapped in HTML element
+       */
       wrap(tag, content, attrs = {}) {
         const htmlAttrs = Object.entries(attrs).map(([key, value]) => ` ${key}="${value}"`).join("");
         if (!content) {
@@ -1832,8 +1728,15 @@ var require_summary = __commonJS({
         }
         return `<${tag}${htmlAttrs}>${content}</${tag}>`;
       }
+      /**
+       * Writes text in the buffer to the summary buffer file and empties buffer. Will append by default.
+       *
+       * @param {SummaryWriteOptions} [options] (optional) options for write operation
+       *
+       * @returns {Promise<Summary>} summary instance
+       */
       write(options) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const overwrite = !!(options === null || options === void 0 ? void 0 : options.overwrite);
           const filePath = yield this.filePath();
           const writeFunc = overwrite ? writeFile : appendFile;
@@ -1841,39 +1744,95 @@ var require_summary = __commonJS({
           return this.emptyBuffer();
         });
       }
+      /**
+       * Clears the summary buffer and wipes the summary file
+       *
+       * @returns {Summary} summary instance
+       */
       clear() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           return this.emptyBuffer().write({ overwrite: true });
         });
       }
+      /**
+       * Returns the current summary buffer as a string
+       *
+       * @returns {string} string of summary buffer
+       */
       stringify() {
         return this._buffer;
       }
+      /**
+       * If the summary buffer is empty
+       *
+       * @returns {boolen} true if the buffer is empty
+       */
       isEmptyBuffer() {
         return this._buffer.length === 0;
       }
+      /**
+       * Resets the summary buffer without writing to summary file
+       *
+       * @returns {Summary} summary instance
+       */
       emptyBuffer() {
         this._buffer = "";
         return this;
       }
+      /**
+       * Adds raw text to the summary buffer
+       *
+       * @param {string} text content to add
+       * @param {boolean} [addEOL=false] (optional) append an EOL to the raw text (default: false)
+       *
+       * @returns {Summary} summary instance
+       */
       addRaw(text, addEOL = false) {
         this._buffer += text;
         return addEOL ? this.addEOL() : this;
       }
+      /**
+       * Adds the operating system-specific end-of-line marker to the buffer
+       *
+       * @returns {Summary} summary instance
+       */
       addEOL() {
         return this.addRaw(os_1.EOL);
       }
+      /**
+       * Adds an HTML codeblock to the summary buffer
+       *
+       * @param {string} code content to render within fenced code block
+       * @param {string} lang (optional) language to syntax highlight code
+       *
+       * @returns {Summary} summary instance
+       */
       addCodeBlock(code, lang) {
         const attrs = Object.assign({}, lang && { lang });
         const element = this.wrap("pre", this.wrap("code", code), attrs);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML list to the summary buffer
+       *
+       * @param {string[]} items list of items to render
+       * @param {boolean} [ordered=false] (optional) if the rendered list should be ordered or not (default: false)
+       *
+       * @returns {Summary} summary instance
+       */
       addList(items, ordered = false) {
         const tag = ordered ? "ol" : "ul";
         const listItems = items.map((item) => this.wrap("li", item)).join("");
         const element = this.wrap(tag, listItems);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML table to the summary buffer
+       *
+       * @param {SummaryTableCell[]} rows table rows
+       *
+       * @returns {Summary} summary instance
+       */
       addTable(rows) {
         const tableBody = rows.map((row) => {
           const cells = row.map((cell) => {
@@ -1890,35 +1849,86 @@ var require_summary = __commonJS({
         const element = this.wrap("table", tableBody);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds a collapsable HTML details element to the summary buffer
+       *
+       * @param {string} label text for the closed state
+       * @param {string} content collapsable content
+       *
+       * @returns {Summary} summary instance
+       */
       addDetails(label, content) {
         const element = this.wrap("details", this.wrap("summary", label) + content);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML image tag to the summary buffer
+       *
+       * @param {string} src path to the image you to embed
+       * @param {string} alt text description of the image
+       * @param {SummaryImageOptions} options (optional) addition image attributes
+       *
+       * @returns {Summary} summary instance
+       */
       addImage(src, alt, options) {
         const { width, height } = options || {};
         const attrs = Object.assign(Object.assign({}, width && { width }), height && { height });
         const element = this.wrap("img", null, Object.assign({ src, alt }, attrs));
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML section heading element
+       *
+       * @param {string} text heading text
+       * @param {number | string} [level=1] (optional) the heading level, default: 1
+       *
+       * @returns {Summary} summary instance
+       */
       addHeading(text, level) {
         const tag = `h${level}`;
         const allowedTag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(tag) ? tag : "h1";
         const element = this.wrap(allowedTag, text);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML thematic break (<hr>) to the summary buffer
+       *
+       * @returns {Summary} summary instance
+       */
       addSeparator() {
         const element = this.wrap("hr", null);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML line break (<br>) to the summary buffer
+       *
+       * @returns {Summary} summary instance
+       */
       addBreak() {
         const element = this.wrap("br", null);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML blockquote to the summary buffer
+       *
+       * @param {string} text quote text
+       * @param {string} cite (optional) citation url
+       *
+       * @returns {Summary} summary instance
+       */
       addQuote(text, cite) {
         const attrs = Object.assign({}, cite && { cite });
         const element = this.wrap("blockquote", text, attrs);
         return this.addRaw(element).addEOL();
       }
+      /**
+       * Adds an HTML anchor tag to the summary buffer
+       *
+       * @param {string} text link text/content
+       * @param {string} href hyperlink
+       *
+       * @returns {Summary} summary instance
+       */
       addLink(text, href) {
         const element = this.wrap("a", text, { href });
         return this.addRaw(element).addEOL();
@@ -1934,7 +1944,7 @@ var require_summary = __commonJS({
 var require_path_utils = __commonJS({
   "node_modules/@actions/core/lib/path-utils.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -1945,26 +1955,26 @@ var require_path_utils = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = void 0;
-    var path = __importStar(require("path"));
+    var path = __importStar2(require("path"));
     function toPosixPath(pth) {
       return pth.replace(/[\\]/g, "/");
     }
@@ -1984,7 +1994,7 @@ var require_path_utils = __commonJS({
 var require_core = __commonJS({
   "node_modules/@actions/core/lib/core.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -1995,24 +2005,24 @@ var require_core = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -2044,8 +2054,8 @@ var require_core = __commonJS({
     var command_1 = require_command();
     var file_command_1 = require_file_command();
     var utils_1 = require_utils();
-    var os = __importStar(require("os"));
-    var path = __importStar(require("path"));
+    var os = __importStar2(require("os"));
+    var path = __importStar2(require("path"));
     var oidc_utils_1 = require_oidc_utils();
     var ExitCode;
     (function(ExitCode2) {
@@ -2158,7 +2168,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
     exports.endGroup = endGroup;
     function group(name, fn) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         startGroup(name);
         let result;
         try {
@@ -2183,7 +2193,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
     exports.getState = getState3;
     function getIDToken(aud) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return yield oidc_utils_1.OidcClient.getIDToken(aud);
       });
     }
@@ -2213,7 +2223,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 var require_io_util = __commonJS({
   "node_modules/@actions/io/lib/io-util.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -2224,24 +2234,24 @@ var require_io_util = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -2271,12 +2281,12 @@ var require_io_util = __commonJS({
     var _a;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCmdPath = exports.tryGetExecutablePath = exports.isRooted = exports.isDirectory = exports.exists = exports.IS_WINDOWS = exports.unlink = exports.symlink = exports.stat = exports.rmdir = exports.rename = exports.readlink = exports.readdir = exports.mkdir = exports.lstat = exports.copyFile = exports.chmod = void 0;
-    var fs2 = __importStar(require("fs"));
-    var path = __importStar(require("path"));
+    var fs2 = __importStar2(require("fs"));
+    var path = __importStar2(require("path"));
     _a = fs2.promises, exports.chmod = _a.chmod, exports.copyFile = _a.copyFile, exports.lstat = _a.lstat, exports.mkdir = _a.mkdir, exports.readdir = _a.readdir, exports.readlink = _a.readlink, exports.rename = _a.rename, exports.rmdir = _a.rmdir, exports.stat = _a.stat, exports.symlink = _a.symlink, exports.unlink = _a.unlink;
     exports.IS_WINDOWS = process.platform === "win32";
     function exists(fsPath) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         try {
           yield exports.stat(fsPath);
         } catch (err) {
@@ -2290,7 +2300,7 @@ var require_io_util = __commonJS({
     }
     exports.exists = exists;
     function isDirectory(fsPath, useStat = false) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const stats = useStat ? yield exports.stat(fsPath) : yield exports.lstat(fsPath);
         return stats.isDirectory();
       });
@@ -2308,7 +2318,7 @@ var require_io_util = __commonJS({
     }
     exports.isRooted = isRooted;
     function tryGetExecutablePath(filePath, extensions) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         let stats = void 0;
         try {
           stats = yield exports.stat(filePath);
@@ -2389,7 +2399,7 @@ var require_io_util = __commonJS({
 var require_io = __commonJS({
   "node_modules/@actions/io/lib/io.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -2400,24 +2410,24 @@ var require_io = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -2447,14 +2457,14 @@ var require_io = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.findInPath = exports.which = exports.mkdirP = exports.rmRF = exports.mv = exports.cp = void 0;
     var assert_1 = require("assert");
-    var childProcess = __importStar(require("child_process"));
-    var path = __importStar(require("path"));
+    var childProcess = __importStar2(require("child_process"));
+    var path = __importStar2(require("path"));
     var util_1 = require("util");
-    var ioUtil = __importStar(require_io_util());
+    var ioUtil = __importStar2(require_io_util());
     var exec = util_1.promisify(childProcess.exec);
     var execFile = util_1.promisify(childProcess.execFile);
     function cp(source, dest, options = {}) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const { force, recursive, copySourceDirectory } = readCopyOptions(options);
         const destStat = (yield ioUtil.exists(dest)) ? yield ioUtil.stat(dest) : null;
         if (destStat && destStat.isFile() && !force) {
@@ -2481,7 +2491,7 @@ var require_io = __commonJS({
     }
     exports.cp = cp;
     function mv(source, dest, options = {}) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (yield ioUtil.exists(dest)) {
           let destExists = true;
           if (yield ioUtil.isDirectory(dest)) {
@@ -2502,7 +2512,7 @@ var require_io = __commonJS({
     }
     exports.mv = mv;
     function rmRF(inputPath) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (ioUtil.IS_WINDOWS) {
           if (/[*"<>|]/.test(inputPath)) {
             throw new Error('File path must not contain `*`, `"`, `<`, `>` or `|` on Windows');
@@ -2547,14 +2557,14 @@ var require_io = __commonJS({
     }
     exports.rmRF = rmRF;
     function mkdirP(fsPath) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         assert_1.ok(fsPath, "a path argument must be provided");
         yield ioUtil.mkdir(fsPath, { recursive: true });
       });
     }
     exports.mkdirP = mkdirP;
     function which(tool, check) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (!tool) {
           throw new Error("parameter 'tool' is required");
         }
@@ -2578,7 +2588,7 @@ var require_io = __commonJS({
     }
     exports.which = which;
     function findInPath(tool) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (!tool) {
           throw new Error("parameter 'tool' is required");
         }
@@ -2626,7 +2636,7 @@ var require_io = __commonJS({
       return { force, recursive, copySourceDirectory };
     }
     function cpDirRecursive(sourceDir, destDir, currentDepth, force) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (currentDepth >= 255)
           return;
         currentDepth++;
@@ -2646,7 +2656,7 @@ var require_io = __commonJS({
       });
     }
     function copyFile(srcFile, destFile, force) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if ((yield ioUtil.lstat(srcFile)).isSymbolicLink()) {
           try {
             yield ioUtil.lstat(destFile);
@@ -2671,7 +2681,7 @@ var require_io = __commonJS({
 var require_toolrunner = __commonJS({
   "node_modules/@actions/exec/lib/toolrunner.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -2682,24 +2692,24 @@ var require_toolrunner = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -2728,12 +2738,12 @@ var require_toolrunner = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.argStringToArray = exports.ToolRunner = void 0;
-    var os = __importStar(require("os"));
-    var events = __importStar(require("events"));
-    var child = __importStar(require("child_process"));
-    var path = __importStar(require("path"));
-    var io = __importStar(require_io());
-    var ioUtil = __importStar(require_io_util());
+    var os = __importStar2(require("os"));
+    var events = __importStar2(require("events"));
+    var child = __importStar2(require("child_process"));
+    var path = __importStar2(require("path"));
+    var io = __importStar2(require_io());
+    var ioUtil = __importStar2(require_io_util());
     var timers_1 = require("timers");
     var IS_WINDOWS2 = process.platform === "win32";
     var ToolRunner = class extends events.EventEmitter {
@@ -2934,13 +2944,22 @@ var require_toolrunner = __commonJS({
         }
         return result;
       }
+      /**
+       * Exec a tool.
+       * Output will be streamed to the live console.
+       * Returns promise with return code
+       *
+       * @param     tool     path to tool to exec
+       * @param     options  optional exec options.  See ExecOptions
+       * @returns   number
+       */
       exec() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           if (!ioUtil.isRooted(this.toolPath) && (this.toolPath.includes("/") || IS_WINDOWS2 && this.toolPath.includes("\\"))) {
             this.toolPath = path.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
           }
           this.toolPath = yield io.which(this.toolPath, true);
-          return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+          return new Promise((resolve, reject) => __awaiter2(this, void 0, void 0, function* () {
             this._debug(`exec tool: ${this.toolPath}`);
             this._debug("arguments:");
             for (const arg of this.args) {
@@ -3151,7 +3170,7 @@ var require_toolrunner = __commonJS({
 var require_exec = __commonJS({
   "node_modules/@actions/exec/lib/exec.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -3162,24 +3181,24 @@ var require_exec = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -3209,9 +3228,9 @@ var require_exec = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getExecOutput = exports.exec = void 0;
     var string_decoder_1 = require("string_decoder");
-    var tr = __importStar(require_toolrunner());
+    var tr = __importStar2(require_toolrunner());
     function exec(commandLine, args, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const commandArgs = tr.argStringToArray(commandLine);
         if (commandArgs.length === 0) {
           throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
@@ -3225,7 +3244,7 @@ var require_exec = __commonJS({
     exports.exec = exec;
     function getExecOutput(commandLine, args, options) {
       var _a, _b;
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         let stdout = "";
         let stderr = "";
         const stdoutDecoder = new string_decoder_1.StringDecoder("utf8");
@@ -3263,7 +3282,7 @@ var require_exec = __commonJS({
 var require_internal_glob_options_helper = __commonJS({
   "node_modules/@actions/glob/lib/internal-glob-options-helper.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -3274,26 +3293,26 @@ var require_internal_glob_options_helper = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getOptions = void 0;
-    var core4 = __importStar(require_core());
+    var core4 = __importStar2(require_core());
     function getOptions(copy) {
       const result = {
         followSymbolicLinks: true,
@@ -3324,7 +3343,7 @@ var require_internal_glob_options_helper = __commonJS({
 var require_internal_path_helper = __commonJS({
   "node_modules/@actions/glob/lib/internal-path-helper.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -3335,30 +3354,30 @@ var require_internal_path_helper = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault2 = exports && exports.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.safeTrimTrailingSeparator = exports.normalizeSeparators = exports.hasRoot = exports.hasAbsoluteRoot = exports.ensureAbsoluteRoot = exports.dirname = void 0;
-    var path = __importStar(require("path"));
-    var assert_1 = __importDefault(require("assert"));
+    var path = __importStar2(require("path"));
+    var assert_1 = __importDefault2(require("assert"));
     var IS_WINDOWS2 = process.platform === "win32";
     function dirname(p) {
       p = safeTrimTrailingSeparator(p);
@@ -3476,7 +3495,7 @@ var require_internal_match_kind = __commonJS({
 var require_internal_pattern_helper = __commonJS({
   "node_modules/@actions/glob/lib/internal-pattern-helper.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -3487,26 +3506,26 @@ var require_internal_pattern_helper = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.partialMatch = exports.match = exports.getSearchPaths = void 0;
-    var pathHelper = __importStar(require_internal_path_helper());
+    var pathHelper = __importStar2(require_internal_path_helper());
     var internal_match_kind_1 = require_internal_match_kind();
     var IS_WINDOWS2 = process.platform === "win32";
     function getSearchPaths(patterns) {
@@ -3981,9 +4000,9 @@ var require_minimatch = __commonJS({
         throw new TypeError("pattern is too long");
       }
     };
-    Minimatch.prototype.parse = parse;
+    Minimatch.prototype.parse = parse3;
     var SUBPARSE = {};
-    function parse(pattern, isSub) {
+    function parse3(pattern, isSub) {
       assertValidPattern(pattern);
       var options = this.options;
       if (pattern === "**") {
@@ -4379,7 +4398,7 @@ var require_minimatch = __commonJS({
 var require_internal_path = __commonJS({
   "node_modules/@actions/glob/lib/internal-path.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -4390,33 +4409,37 @@ var require_internal_path = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault2 = exports && exports.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Path = void 0;
-    var path = __importStar(require("path"));
-    var pathHelper = __importStar(require_internal_path_helper());
-    var assert_1 = __importDefault(require("assert"));
+    var path = __importStar2(require("path"));
+    var pathHelper = __importStar2(require_internal_path_helper());
+    var assert_1 = __importDefault2(require("assert"));
     var IS_WINDOWS2 = process.platform === "win32";
     var Path = class {
+      /**
+       * Constructs a Path
+       * @param itemPath Path or array of segments
+       */
       constructor(itemPath) {
         this.segments = [];
         if (typeof itemPath === "string") {
@@ -4452,6 +4475,9 @@ var require_internal_path = __commonJS({
           }
         }
       }
+      /**
+       * Converts the path to it's string representation
+       */
       toString() {
         let result = this.segments[0];
         let skipSlash = result.endsWith(path.sep) || IS_WINDOWS2 && /^[A-Z]:$/i.test(result);
@@ -4474,7 +4500,7 @@ var require_internal_path = __commonJS({
 var require_internal_pattern = __commonJS({
   "node_modules/@actions/glob/lib/internal-pattern.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -4485,32 +4511,32 @@ var require_internal_pattern = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault2 = exports && exports.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os = __importStar(require("os"));
-    var path = __importStar(require("path"));
-    var pathHelper = __importStar(require_internal_path_helper());
-    var assert_1 = __importDefault(require("assert"));
+    var os = __importStar2(require("os"));
+    var path = __importStar2(require("path"));
+    var pathHelper = __importStar2(require_internal_path_helper());
+    var assert_1 = __importDefault2(require("assert"));
     var minimatch_1 = require_minimatch();
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_path_1 = require_internal_path();
@@ -4555,6 +4581,9 @@ var require_internal_pattern = __commonJS({
         pattern = IS_WINDOWS2 ? pattern.replace(/\\/g, "/") : pattern;
         this.minimatch = new minimatch_1.Minimatch(pattern, minimatchOptions);
       }
+      /**
+       * Matches the pattern against the specified path
+       */
       match(itemPath) {
         if (this.segments[this.segments.length - 1] === "**") {
           itemPath = pathHelper.normalizeSeparators(itemPath);
@@ -4569,6 +4598,9 @@ var require_internal_pattern = __commonJS({
         }
         return internal_match_kind_1.MatchKind.None;
       }
+      /**
+       * Indicates whether the pattern may match descendants of the specified path
+       */
       partialMatch(itemPath) {
         itemPath = pathHelper.safeTrimTrailingSeparator(itemPath);
         if (pathHelper.dirname(itemPath) === itemPath) {
@@ -4576,9 +4608,15 @@ var require_internal_pattern = __commonJS({
         }
         return this.minimatch.matchOne(itemPath.split(IS_WINDOWS2 ? /\\+/ : /\/+/), this.minimatch.set[0], true);
       }
+      /**
+       * Escapes glob patterns within a path
+       */
       static globEscape(s) {
         return (IS_WINDOWS2 ? s : s.replace(/\\/g, "\\\\")).replace(/(\[)(?=[^/]+\])/g, "[[]").replace(/\?/g, "[?]").replace(/\*/g, "[*]");
       }
+      /**
+       * Normalizes slashes and ensures absolute root
+       */
       static fixupPattern(pattern, homedir) {
         assert_1.default(pattern, "pattern cannot be empty");
         const literalSegments = new internal_path_1.Path(pattern).segments.map((x) => Pattern.getLiteral(x));
@@ -4609,6 +4647,10 @@ var require_internal_pattern = __commonJS({
         }
         return pathHelper.normalizeSeparators(pattern);
       }
+      /**
+       * Attempts to unescape a pattern segment to create a literal path segment.
+       * Otherwise returns empty string.
+       */
       static getLiteral(segment) {
         let literal = "";
         for (let i = 0; i < segment.length; i++) {
@@ -4648,6 +4690,10 @@ var require_internal_pattern = __commonJS({
         }
         return literal;
       }
+      /**
+       * Escapes regexp special characters
+       * https://javascript.info/regexp-escaping
+       */
       static regExpEscape(s) {
         return s.replace(/[[\\^$.|?*+()]/g, "\\$&");
       }
@@ -4676,7 +4722,7 @@ var require_internal_search_state = __commonJS({
 var require_internal_globber = __commonJS({
   "node_modules/@actions/glob/lib/internal-globber.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -4687,24 +4733,24 @@ var require_internal_globber = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+    var __setModuleDefault2 = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
       if (mod != null) {
         for (var k in mod)
           if (k !== "default" && Object.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+            __createBinding2(result, mod, k);
       }
-      __setModuleDefault(result, mod);
+      __setModuleDefault2(result, mod);
       return result;
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -4731,7 +4777,7 @@ var require_internal_globber = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __asyncValues = exports && exports.__asyncValues || function(o) {
+    var __asyncValues2 = exports && exports.__asyncValues || function(o) {
       if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
       var m = o[Symbol.asyncIterator], i;
@@ -4751,10 +4797,10 @@ var require_internal_globber = __commonJS({
         }, reject);
       }
     };
-    var __await = exports && exports.__await || function(v) {
-      return this instanceof __await ? (this.v = v, this) : new __await(v);
+    var __await2 = exports && exports.__await || function(v) {
+      return this instanceof __await2 ? (this.v = v, this) : new __await2(v);
     };
-    var __asyncGenerator = exports && exports.__asyncGenerator || function(thisArg, _arguments, generator) {
+    var __asyncGenerator2 = exports && exports.__asyncGenerator || function(thisArg, _arguments, generator) {
       if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
       var g = generator.apply(thisArg, _arguments || []), i, q = [];
@@ -4777,7 +4823,7 @@ var require_internal_globber = __commonJS({
         }
       }
       function step(r) {
-        r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+        r.value instanceof __await2 ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
       }
       function fulfill(value) {
         resume("next", value);
@@ -4792,11 +4838,11 @@ var require_internal_globber = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
-    var core4 = __importStar(require_core());
-    var fs2 = __importStar(require("fs"));
-    var globOptionsHelper = __importStar(require_internal_glob_options_helper());
-    var path = __importStar(require("path"));
-    var patternHelper = __importStar(require_internal_pattern_helper());
+    var core4 = __importStar2(require_core());
+    var fs2 = __importStar2(require("fs"));
+    var globOptionsHelper = __importStar2(require_internal_glob_options_helper());
+    var path = __importStar2(require("path"));
+    var patternHelper = __importStar2(require_internal_pattern_helper());
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_pattern_1 = require_internal_pattern();
     var internal_search_state_1 = require_internal_search_state();
@@ -4812,10 +4858,10 @@ var require_internal_globber = __commonJS({
       }
       glob() {
         var e_1, _a;
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const result = [];
           try {
-            for (var _b = __asyncValues(this.globGenerator()), _c; _c = yield _b.next(), !_c.done; ) {
+            for (var _b = __asyncValues2(this.globGenerator()), _c; _c = yield _b.next(), !_c.done; ) {
               const itemPath = _c.value;
               result.push(itemPath);
             }
@@ -4834,7 +4880,7 @@ var require_internal_globber = __commonJS({
         });
       }
       globGenerator() {
-        return __asyncGenerator(this, arguments, function* globGenerator_1() {
+        return __asyncGenerator2(this, arguments, function* globGenerator_1() {
           const options = globOptionsHelper.getOptions(this.options);
           const patterns = [];
           for (const pattern of this.patterns) {
@@ -4847,7 +4893,7 @@ var require_internal_globber = __commonJS({
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
             core4.debug(`Search path '${searchPath}'`);
             try {
-              yield __await(fs2.promises.lstat(searchPath));
+              yield __await2(fs2.promises.lstat(searchPath));
             } catch (err) {
               if (err.code === "ENOENT") {
                 continue;
@@ -4864,29 +4910,33 @@ var require_internal_globber = __commonJS({
             if (!match && !partialMatch) {
               continue;
             }
-            const stats = yield __await(
+            const stats = yield __await2(
               DefaultGlobber.stat(item, options, traversalChain)
+              // Broken symlink, or symlink cycle detected, or no longer exists
             );
             if (!stats) {
               continue;
             }
             if (stats.isDirectory()) {
               if (match & internal_match_kind_1.MatchKind.Directory) {
-                yield yield __await(item.path);
+                yield yield __await2(item.path);
               } else if (!partialMatch) {
                 continue;
               }
               const childLevel = item.level + 1;
-              const childItems = (yield __await(fs2.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path.join(item.path, x), childLevel));
+              const childItems = (yield __await2(fs2.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path.join(item.path, x), childLevel));
               stack.push(...childItems.reverse());
             } else if (match & internal_match_kind_1.MatchKind.File) {
-              yield yield __await(item.path);
+              yield yield __await2(item.path);
             }
           }
         });
       }
+      /**
+       * Constructs a DefaultGlobber
+       */
       static create(patterns, options) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           const result = new DefaultGlobber(options);
           if (IS_WINDOWS2) {
             patterns = patterns.replace(/\r\n/g, "\n");
@@ -4905,7 +4955,7 @@ var require_internal_globber = __commonJS({
         });
       }
       static stat(item, options, traversalChain) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return __awaiter2(this, void 0, void 0, function* () {
           let stats;
           if (options.followSymbolicLinks) {
             try {
@@ -4946,7 +4996,7 @@ var require_internal_globber = __commonJS({
 var require_glob = __commonJS({
   "node_modules/@actions/glob/lib/glob.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -4977,7 +5027,7 @@ var require_glob = __commonJS({
     exports.create = void 0;
     var internal_globber_1 = require_internal_globber();
     function create(patterns, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return yield internal_globber_1.DefaultGlobber.create(patterns, options);
       });
     }
@@ -5002,7 +5052,8 @@ var require_semver = __commonJS({
     }
     exports.SEMVER_SPEC_VERSION = "2.0.0";
     var MAX_LENGTH = 256;
-    var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
+    var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || /* istanbul ignore next */
+    9007199254740991;
     var MAX_SAFE_COMPONENT_LENGTH = 16;
     var re = exports.re = [];
     var src = exports.src = [];
@@ -5100,74 +5151,74 @@ var require_semver = __commonJS({
       }
     }
     var i;
-    exports.parse = parse;
-    function parse(version, options) {
+    exports.parse = parse3;
+    function parse3(version3, options) {
       if (!options || typeof options !== "object") {
         options = {
           loose: !!options,
           includePrerelease: false
         };
       }
-      if (version instanceof SemVer) {
-        return version;
+      if (version3 instanceof SemVer) {
+        return version3;
       }
-      if (typeof version !== "string") {
+      if (typeof version3 !== "string") {
         return null;
       }
-      if (version.length > MAX_LENGTH) {
+      if (version3.length > MAX_LENGTH) {
         return null;
       }
       var r = options.loose ? re[t.LOOSE] : re[t.FULL];
-      if (!r.test(version)) {
+      if (!r.test(version3)) {
         return null;
       }
       try {
-        return new SemVer(version, options);
+        return new SemVer(version3, options);
       } catch (er) {
         return null;
       }
     }
     exports.valid = valid;
-    function valid(version, options) {
-      var v = parse(version, options);
+    function valid(version3, options) {
+      var v = parse3(version3, options);
       return v ? v.version : null;
     }
     exports.clean = clean;
-    function clean(version, options) {
-      var s = parse(version.trim().replace(/^[=v]+/, ""), options);
+    function clean(version3, options) {
+      var s = parse3(version3.trim().replace(/^[=v]+/, ""), options);
       return s ? s.version : null;
     }
     exports.SemVer = SemVer;
-    function SemVer(version, options) {
+    function SemVer(version3, options) {
       if (!options || typeof options !== "object") {
         options = {
           loose: !!options,
           includePrerelease: false
         };
       }
-      if (version instanceof SemVer) {
-        if (version.loose === options.loose) {
-          return version;
+      if (version3 instanceof SemVer) {
+        if (version3.loose === options.loose) {
+          return version3;
         } else {
-          version = version.version;
+          version3 = version3.version;
         }
-      } else if (typeof version !== "string") {
-        throw new TypeError("Invalid Version: " + version);
+      } else if (typeof version3 !== "string") {
+        throw new TypeError("Invalid Version: " + version3);
       }
-      if (version.length > MAX_LENGTH) {
+      if (version3.length > MAX_LENGTH) {
         throw new TypeError("version is longer than " + MAX_LENGTH + " characters");
       }
       if (!(this instanceof SemVer)) {
-        return new SemVer(version, options);
+        return new SemVer(version3, options);
       }
-      debug2("SemVer", version, options);
+      debug2("SemVer", version3, options);
       this.options = options;
       this.loose = !!options.loose;
-      var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+      var m = version3.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
       if (!m) {
-        throw new TypeError("Invalid Version: " + version);
+        throw new TypeError("Invalid Version: " + version3);
       }
-      this.raw = version;
+      this.raw = version3;
       this.major = +m[1];
       this.minor = +m[2];
       this.patch = +m[3];
@@ -5350,32 +5401,32 @@ var require_semver = __commonJS({
       return this;
     };
     exports.inc = inc;
-    function inc(version, release, loose, identifier) {
+    function inc(version3, release, loose, identifier) {
       if (typeof loose === "string") {
         identifier = loose;
         loose = void 0;
       }
       try {
-        return new SemVer(version, loose).inc(release, identifier).version;
+        return new SemVer(version3, loose).inc(release, identifier).version;
       } catch (er) {
         return null;
       }
     }
     exports.diff = diff;
-    function diff(version1, version2) {
-      if (eq(version1, version2)) {
+    function diff(version1, version22) {
+      if (eq(version1, version22)) {
         return null;
       } else {
-        var v1 = parse(version1);
-        var v2 = parse(version2);
+        var v13 = parse3(version1);
+        var v2 = parse3(version22);
         var prefix = "";
-        if (v1.prerelease.length || v2.prerelease.length) {
+        if (v13.prerelease.length || v2.prerelease.length) {
           prefix = "pre";
           var defaultResult = "prerelease";
         }
-        for (var key in v1) {
+        for (var key in v13) {
           if (key === "major" || key === "minor" || key === "patch") {
-            if (v1[key] !== v2[key]) {
+            if (v13[key] !== v2[key]) {
               return prefix + key;
             }
           }
@@ -5546,19 +5597,19 @@ var require_semver = __commonJS({
     Comparator.prototype.toString = function() {
       return this.value;
     };
-    Comparator.prototype.test = function(version) {
-      debug2("Comparator.test", version, this.options.loose);
-      if (this.semver === ANY || version === ANY) {
+    Comparator.prototype.test = function(version3) {
+      debug2("Comparator.test", version3, this.options.loose);
+      if (this.semver === ANY || version3 === ANY) {
         return true;
       }
-      if (typeof version === "string") {
+      if (typeof version3 === "string") {
         try {
-          version = new SemVer(version, this.options);
+          version3 = new SemVer(version3, this.options);
         } catch (er) {
           return false;
         }
       }
-      return cmp(version, this.operator, this.semver, this.options);
+      return cmp(version3, this.operator, this.semver, this.options);
     };
     Comparator.prototype.intersects = function(comp, options) {
       if (!(comp instanceof Comparator)) {
@@ -5869,31 +5920,31 @@ var require_semver = __commonJS({
       }
       return (from + " " + to).trim();
     }
-    Range.prototype.test = function(version) {
-      if (!version) {
+    Range.prototype.test = function(version3) {
+      if (!version3) {
         return false;
       }
-      if (typeof version === "string") {
+      if (typeof version3 === "string") {
         try {
-          version = new SemVer(version, this.options);
+          version3 = new SemVer(version3, this.options);
         } catch (er) {
           return false;
         }
       }
       for (var i2 = 0; i2 < this.set.length; i2++) {
-        if (testSet(this.set[i2], version, this.options)) {
+        if (testSet(this.set[i2], version3, this.options)) {
           return true;
         }
       }
       return false;
     };
-    function testSet(set, version, options) {
+    function testSet(set, version3, options) {
       for (var i2 = 0; i2 < set.length; i2++) {
-        if (!set[i2].test(version)) {
+        if (!set[i2].test(version3)) {
           return false;
         }
       }
-      if (version.prerelease.length && !options.includePrerelease) {
+      if (version3.prerelease.length && !options.includePrerelease) {
         for (i2 = 0; i2 < set.length; i2++) {
           debug2(set[i2].semver);
           if (set[i2].semver === ANY) {
@@ -5901,7 +5952,7 @@ var require_semver = __commonJS({
           }
           if (set[i2].semver.prerelease.length > 0) {
             var allowed = set[i2].semver;
-            if (allowed.major === version.major && allowed.minor === version.minor && allowed.patch === version.patch) {
+            if (allowed.major === version3.major && allowed.minor === version3.minor && allowed.patch === version3.patch) {
               return true;
             }
           }
@@ -5911,13 +5962,13 @@ var require_semver = __commonJS({
       return true;
     }
     exports.satisfies = satisfies;
-    function satisfies(version, range, options) {
+    function satisfies(version3, range, options) {
       try {
         range = new Range(range, options);
       } catch (er) {
         return false;
       }
-      return range.test(version);
+      return range.test(version3);
     }
     exports.maxSatisfying = maxSatisfying;
     function maxSatisfying(versions, range, options) {
@@ -6009,16 +6060,16 @@ var require_semver = __commonJS({
       }
     }
     exports.ltr = ltr;
-    function ltr(version, range, options) {
-      return outside(version, range, "<", options);
+    function ltr(version3, range, options) {
+      return outside(version3, range, "<", options);
     }
     exports.gtr = gtr;
-    function gtr(version, range, options) {
-      return outside(version, range, ">", options);
+    function gtr(version3, range, options) {
+      return outside(version3, range, ">", options);
     }
     exports.outside = outside;
-    function outside(version, range, hilo, options) {
-      version = new SemVer(version, options);
+    function outside(version3, range, hilo, options) {
+      version3 = new SemVer(version3, options);
       range = new Range(range, options);
       var gtfn, ltefn, ltfn, comp, ecomp;
       switch (hilo) {
@@ -6039,7 +6090,7 @@ var require_semver = __commonJS({
         default:
           throw new TypeError('Must provide a hilo val of "<" or ">"');
       }
-      if (satisfies(version, range, options)) {
+      if (satisfies(version3, range, options)) {
         return false;
       }
       for (var i2 = 0; i2 < range.set.length; ++i2) {
@@ -6061,17 +6112,17 @@ var require_semver = __commonJS({
         if (high.operator === comp || high.operator === ecomp) {
           return false;
         }
-        if ((!low.operator || low.operator === comp) && ltefn(version, low.semver)) {
+        if ((!low.operator || low.operator === comp) && ltefn(version3, low.semver)) {
           return false;
-        } else if (low.operator === ecomp && ltfn(version, low.semver)) {
+        } else if (low.operator === ecomp && ltfn(version3, low.semver)) {
           return false;
         }
       }
       return true;
     }
     exports.prerelease = prerelease;
-    function prerelease(version, options) {
-      var parsed = parse(version, options);
+    function prerelease(version3, options) {
+      var parsed = parse3(version3, options);
       return parsed && parsed.prerelease.length ? parsed.prerelease : null;
     }
     exports.intersects = intersects;
@@ -6081,23 +6132,23 @@ var require_semver = __commonJS({
       return r1.intersects(r2);
     }
     exports.coerce = coerce;
-    function coerce(version, options) {
-      if (version instanceof SemVer) {
-        return version;
+    function coerce(version3, options) {
+      if (version3 instanceof SemVer) {
+        return version3;
       }
-      if (typeof version === "number") {
-        version = String(version);
+      if (typeof version3 === "number") {
+        version3 = String(version3);
       }
-      if (typeof version !== "string") {
+      if (typeof version3 !== "string") {
         return null;
       }
       options = options || {};
       var match = null;
       if (!options.rtl) {
-        match = version.match(re[t.COERCE]);
+        match = version3.match(re[t.COERCE]);
       } else {
         var next;
-        while ((next = re[t.COERCERTL].exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+        while ((next = re[t.COERCERTL].exec(version3)) && (!match || match.index + match[0].length !== version3.length)) {
           if (!match || next.index + next[0].length !== match.index + match[0].length) {
             match = next;
           }
@@ -6108,17 +6159,17 @@ var require_semver = __commonJS({
       if (match === null) {
         return null;
       }
-      return parse(match[2] + "." + (match[3] || "0") + "." + (match[4] || "0"), options);
+      return parse3(match[2] + "." + (match[3] || "0") + "." + (match[4] || "0"), options);
     }
   }
 });
 
 // node_modules/uuid/lib/rng.js
-var require_rng2 = __commonJS({
+var require_rng = __commonJS({
   "node_modules/uuid/lib/rng.js"(exports, module2) {
-    var crypto = require("crypto");
+    var crypto7 = require("crypto");
     module2.exports = function nodeRNG() {
-      return crypto.randomBytes(16);
+      return crypto7.randomBytes(16);
     };
   }
 });
@@ -6126,14 +6177,14 @@ var require_rng2 = __commonJS({
 // node_modules/uuid/lib/bytesToUuid.js
 var require_bytesToUuid = __commonJS({
   "node_modules/uuid/lib/bytesToUuid.js"(exports, module2) {
-    var byteToHex = [];
+    var byteToHex3 = [];
     for (i = 0; i < 256; ++i) {
-      byteToHex[i] = (i + 256).toString(16).substr(1);
+      byteToHex3[i] = (i + 256).toString(16).substr(1);
     }
     var i;
     function bytesToUuid(buf, offset) {
       var i2 = offset || 0;
-      var bth = byteToHex;
+      var bth = byteToHex3;
       return [
         bth[buf[i2++]],
         bth[buf[i2++]],
@@ -6162,24 +6213,24 @@ var require_bytesToUuid = __commonJS({
 });
 
 // node_modules/uuid/v1.js
-var require_v12 = __commonJS({
+var require_v1 = __commonJS({
   "node_modules/uuid/v1.js"(exports, module2) {
-    var rng = require_rng2();
+    var rng3 = require_rng();
     var bytesToUuid = require_bytesToUuid();
-    var _nodeId;
-    var _clockseq;
-    var _lastMSecs = 0;
-    var _lastNSecs = 0;
-    function v1(options, buf, offset) {
+    var _nodeId3;
+    var _clockseq3;
+    var _lastMSecs3 = 0;
+    var _lastNSecs3 = 0;
+    function v13(options, buf, offset) {
       var i = buf && offset || 0;
       var b = buf || [];
       options = options || {};
-      var node = options.node || _nodeId;
-      var clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
+      var node = options.node || _nodeId3;
+      var clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq3;
       if (node == null || clockseq == null) {
-        var seedBytes = rng();
+        var seedBytes = rng3();
         if (node == null) {
-          node = _nodeId = [
+          node = _nodeId3 = [
             seedBytes[0] | 1,
             seedBytes[1],
             seedBytes[2],
@@ -6189,24 +6240,24 @@ var require_v12 = __commonJS({
           ];
         }
         if (clockseq == null) {
-          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+          clockseq = _clockseq3 = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
         }
       }
-      var msecs = options.msecs !== void 0 ? options.msecs : new Date().getTime();
-      var nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
-      var dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+      var msecs = options.msecs !== void 0 ? options.msecs : (/* @__PURE__ */ new Date()).getTime();
+      var nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs3 + 1;
+      var dt = msecs - _lastMSecs3 + (nsecs - _lastNSecs3) / 1e4;
       if (dt < 0 && options.clockseq === void 0) {
         clockseq = clockseq + 1 & 16383;
       }
-      if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
+      if ((dt < 0 || msecs > _lastMSecs3) && options.nsecs === void 0) {
         nsecs = 0;
       }
       if (nsecs >= 1e4) {
         throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
       }
-      _lastMSecs = msecs;
-      _lastNSecs = nsecs;
-      _clockseq = clockseq;
+      _lastMSecs3 = msecs;
+      _lastNSecs3 = nsecs;
+      _clockseq3 = clockseq;
       msecs += 122192928e5;
       var tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
       b[i++] = tl >>> 24 & 255;
@@ -6225,23 +6276,23 @@ var require_v12 = __commonJS({
       }
       return buf ? buf : bytesToUuid(b);
     }
-    module2.exports = v1;
+    module2.exports = v13;
   }
 });
 
 // node_modules/uuid/v4.js
-var require_v42 = __commonJS({
+var require_v4 = __commonJS({
   "node_modules/uuid/v4.js"(exports, module2) {
-    var rng = require_rng2();
+    var rng3 = require_rng();
     var bytesToUuid = require_bytesToUuid();
-    function v4(options, buf, offset) {
+    function v43(options, buf, offset) {
       var i = buf && offset || 0;
       if (typeof options == "string") {
         buf = options === "binary" ? new Array(16) : null;
         options = null;
       }
       options = options || {};
-      var rnds = options.random || (options.rng || rng)();
+      var rnds = options.random || (options.rng || rng3)();
       rnds[6] = rnds[6] & 15 | 64;
       rnds[8] = rnds[8] & 63 | 128;
       if (buf) {
@@ -6251,18 +6302,18 @@ var require_v42 = __commonJS({
       }
       return buf || bytesToUuid(rnds);
     }
-    module2.exports = v4;
+    module2.exports = v43;
   }
 });
 
 // node_modules/uuid/index.js
 var require_uuid = __commonJS({
   "node_modules/uuid/index.js"(exports, module2) {
-    var v1 = require_v12();
-    var v4 = require_v42();
-    var uuid = v4;
-    uuid.v1 = v1;
-    uuid.v4 = v4;
+    var v13 = require_v1();
+    var v43 = require_v4();
+    var uuid = v43;
+    uuid.v1 = v13;
+    uuid.v4 = v43;
     module2.exports = uuid;
   }
 });
@@ -6293,7 +6344,7 @@ var require_constants = __commonJS({
 var require_cacheUtils = __commonJS({
   "node_modules/@actions/cache/lib/internal/cacheUtils.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -6320,7 +6371,7 @@ var require_cacheUtils = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __asyncValues = exports && exports.__asyncValues || function(o) {
+    var __asyncValues2 = exports && exports.__asyncValues || function(o) {
       if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
       var m = o[Symbol.asyncIterator], i;
@@ -6340,7 +6391,7 @@ var require_cacheUtils = __commonJS({
         }, reject);
       }
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -6353,18 +6404,18 @@ var require_cacheUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
-    var exec = __importStar(require_exec());
-    var glob = __importStar(require_glob());
-    var io = __importStar(require_io());
-    var fs2 = __importStar(require("fs"));
-    var path = __importStar(require("path"));
-    var semver = __importStar(require_semver());
-    var util = __importStar(require("util"));
+    var core4 = __importStar2(require_core());
+    var exec = __importStar2(require_exec());
+    var glob = __importStar2(require_glob());
+    var io = __importStar2(require_io());
+    var fs2 = __importStar2(require("fs"));
+    var path = __importStar2(require("path"));
+    var semver = __importStar2(require_semver());
+    var util = __importStar2(require("util"));
     var uuid_1 = require_uuid();
     var constants_1 = require_constants();
     function createTempDirectory() {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const IS_WINDOWS2 = process.platform === "win32";
         let tempDirectory = process.env["RUNNER_TEMP"] || "";
         if (!tempDirectory) {
@@ -6393,14 +6444,14 @@ var require_cacheUtils = __commonJS({
     function resolvePaths(patterns) {
       var e_1, _a;
       var _b;
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const paths = [];
         const workspace = (_b = process.env["GITHUB_WORKSPACE"]) !== null && _b !== void 0 ? _b : process.cwd();
         const globber = yield glob.create(patterns.join("\n"), {
           implicitDescendants: false
         });
         try {
-          for (var _c = __asyncValues(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
+          for (var _c = __asyncValues2(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
             const file = _d.value;
             const relativeFile = path.relative(workspace, file).replace(new RegExp(`\\${path.sep}`, "g"), "/");
             core4.debug(`Matched: ${relativeFile}`);
@@ -6426,13 +6477,13 @@ var require_cacheUtils = __commonJS({
     }
     exports.resolvePaths = resolvePaths;
     function unlinkFile(filePath) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return util.promisify(fs2.unlink)(filePath);
       });
     }
     exports.unlinkFile = unlinkFile;
     function getVersion(app) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         core4.debug(`Checking ${app} --version`);
         let versionOutput = "";
         try {
@@ -6453,15 +6504,15 @@ var require_cacheUtils = __commonJS({
       });
     }
     function getCompressionMethod() {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         if (process.platform === "win32" && !(yield isGnuTarInstalled())) {
           return constants_1.CompressionMethod.Gzip;
         }
         const versionOutput = yield getVersion("zstd");
-        const version = semver.clean(versionOutput);
+        const version3 = semver.clean(versionOutput);
         if (!versionOutput.toLowerCase().includes("zstd command line interface")) {
           return constants_1.CompressionMethod.Gzip;
-        } else if (!version || semver.lt(version, "v1.3.2")) {
+        } else if (!version3 || semver.lt(version3, "v1.3.2")) {
           return constants_1.CompressionMethod.ZstdWithoutLong;
         } else {
           return constants_1.CompressionMethod.Zstd;
@@ -6474,7 +6525,7 @@ var require_cacheUtils = __commonJS({
     }
     exports.getCacheFileName = getCacheFileName;
     function isGnuTarInstalled() {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const versionOutput = yield getVersion("tar");
         return versionOutput.toLowerCase().includes("gnu tar");
       });
@@ -6495,566 +6546,706 @@ var require_cacheUtils = __commonJS({
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/rng.js
-var require_rng3 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/rng.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = rng;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var rnds8Pool = new Uint8Array(256);
-    var poolPtr = rnds8Pool.length;
-    function rng() {
-      if (poolPtr > rnds8Pool.length - 16) {
-        _crypto.default.randomFillSync(rnds8Pool);
-        poolPtr = 0;
-      }
-      return rnds8Pool.slice(poolPtr, poolPtr += 16);
-    }
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/rng.js
+function rng2() {
+  if (poolPtr2 > rnds8Pool2.length - 16) {
+    import_crypto4.default.randomFillSync(rnds8Pool2);
+    poolPtr2 = 0;
+  }
+  return rnds8Pool2.slice(poolPtr2, poolPtr2 += 16);
+}
+var import_crypto4, rnds8Pool2, poolPtr2;
+var init_rng2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/rng.js"() {
+    import_crypto4 = __toESM(require("crypto"));
+    rnds8Pool2 = new Uint8Array(256);
+    poolPtr2 = rnds8Pool2.length;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/regex.js
-var require_regex2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/regex.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
-    exports.default = _default;
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/regex.js
+var regex_default2;
+var init_regex2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/regex.js"() {
+    regex_default2 = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/validate.js
-var require_validate2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/validate.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _regex = _interopRequireDefault(require_regex2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function validate(uuid) {
-      return typeof uuid === "string" && _regex.default.test(uuid);
-    }
-    var _default = validate;
-    exports.default = _default;
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/validate.js
+function validate2(uuid) {
+  return typeof uuid === "string" && regex_default2.test(uuid);
+}
+var validate_default2;
+var init_validate2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/validate.js"() {
+    init_regex2();
+    validate_default2 = validate2;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/stringify.js
-var require_stringify2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/stringify.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var byteToHex = [];
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/stringify.js
+function stringify2(arr, offset = 0) {
+  const uuid = (byteToHex2[arr[offset + 0]] + byteToHex2[arr[offset + 1]] + byteToHex2[arr[offset + 2]] + byteToHex2[arr[offset + 3]] + "-" + byteToHex2[arr[offset + 4]] + byteToHex2[arr[offset + 5]] + "-" + byteToHex2[arr[offset + 6]] + byteToHex2[arr[offset + 7]] + "-" + byteToHex2[arr[offset + 8]] + byteToHex2[arr[offset + 9]] + "-" + byteToHex2[arr[offset + 10]] + byteToHex2[arr[offset + 11]] + byteToHex2[arr[offset + 12]] + byteToHex2[arr[offset + 13]] + byteToHex2[arr[offset + 14]] + byteToHex2[arr[offset + 15]]).toLowerCase();
+  if (!validate_default2(uuid)) {
+    throw TypeError("Stringified UUID is invalid");
+  }
+  return uuid;
+}
+var byteToHex2, stringify_default2;
+var init_stringify2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/stringify.js"() {
+    init_validate2();
+    byteToHex2 = [];
     for (let i = 0; i < 256; ++i) {
-      byteToHex.push((i + 256).toString(16).substr(1));
+      byteToHex2.push((i + 256).toString(16).substr(1));
     }
-    function stringify(arr, offset = 0) {
-      const uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Stringified UUID is invalid");
-      }
-      return uuid;
-    }
-    var _default = stringify;
-    exports.default = _default;
+    stringify_default2 = stringify2;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/v1.js
-var require_v13 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/v1.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _rng = _interopRequireDefault(require_rng3());
-    var _stringify = _interopRequireDefault(require_stringify2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v1.js
+function v12(options, buf, offset) {
+  let i = buf && offset || 0;
+  const b = buf || new Array(16);
+  options = options || {};
+  let node = options.node || _nodeId2;
+  let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq2;
+  if (node == null || clockseq == null) {
+    const seedBytes = options.random || (options.rng || rng2)();
+    if (node == null) {
+      node = _nodeId2 = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
     }
-    var _nodeId;
-    var _clockseq;
-    var _lastMSecs = 0;
-    var _lastNSecs = 0;
-    function v1(options, buf, offset) {
-      let i = buf && offset || 0;
-      const b = buf || new Array(16);
-      options = options || {};
-      let node = options.node || _nodeId;
-      let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
-      if (node == null || clockseq == null) {
-        const seedBytes = options.random || (options.rng || _rng.default)();
-        if (node == null) {
-          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
-        }
-        if (clockseq == null) {
-          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
-        }
-      }
-      let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
-      let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
-      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-      if (dt < 0 && options.clockseq === void 0) {
-        clockseq = clockseq + 1 & 16383;
-      }
-      if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
-        nsecs = 0;
-      }
-      if (nsecs >= 1e4) {
-        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
-      }
-      _lastMSecs = msecs;
-      _lastNSecs = nsecs;
-      _clockseq = clockseq;
-      msecs += 122192928e5;
-      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
-      b[i++] = tl >>> 24 & 255;
-      b[i++] = tl >>> 16 & 255;
-      b[i++] = tl >>> 8 & 255;
-      b[i++] = tl & 255;
-      const tmh = msecs / 4294967296 * 1e4 & 268435455;
-      b[i++] = tmh >>> 8 & 255;
-      b[i++] = tmh & 255;
-      b[i++] = tmh >>> 24 & 15 | 16;
-      b[i++] = tmh >>> 16 & 255;
-      b[i++] = clockseq >>> 8 | 128;
-      b[i++] = clockseq & 255;
-      for (let n = 0; n < 6; ++n) {
-        b[i + n] = node[n];
-      }
-      return buf || (0, _stringify.default)(b);
+    if (clockseq == null) {
+      clockseq = _clockseq2 = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
     }
-    var _default = v1;
-    exports.default = _default;
+  }
+  let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
+  let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs2 + 1;
+  const dt = msecs - _lastMSecs2 + (nsecs - _lastNSecs2) / 1e4;
+  if (dt < 0 && options.clockseq === void 0) {
+    clockseq = clockseq + 1 & 16383;
+  }
+  if ((dt < 0 || msecs > _lastMSecs2) && options.nsecs === void 0) {
+    nsecs = 0;
+  }
+  if (nsecs >= 1e4) {
+    throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+  }
+  _lastMSecs2 = msecs;
+  _lastNSecs2 = nsecs;
+  _clockseq2 = clockseq;
+  msecs += 122192928e5;
+  const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+  b[i++] = tl >>> 24 & 255;
+  b[i++] = tl >>> 16 & 255;
+  b[i++] = tl >>> 8 & 255;
+  b[i++] = tl & 255;
+  const tmh = msecs / 4294967296 * 1e4 & 268435455;
+  b[i++] = tmh >>> 8 & 255;
+  b[i++] = tmh & 255;
+  b[i++] = tmh >>> 24 & 15 | 16;
+  b[i++] = tmh >>> 16 & 255;
+  b[i++] = clockseq >>> 8 | 128;
+  b[i++] = clockseq & 255;
+  for (let n = 0; n < 6; ++n) {
+    b[i + n] = node[n];
+  }
+  return buf || stringify_default2(b);
+}
+var _nodeId2, _clockseq2, _lastMSecs2, _lastNSecs2, v1_default2;
+var init_v12 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v1.js"() {
+    init_rng2();
+    init_stringify2();
+    _lastMSecs2 = 0;
+    _lastNSecs2 = 0;
+    v1_default2 = v12;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/parse.js
-var require_parse2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/parse.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function parse(uuid) {
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Invalid UUID");
-      }
-      let v;
-      const arr = new Uint8Array(16);
-      arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
-      arr[1] = v >>> 16 & 255;
-      arr[2] = v >>> 8 & 255;
-      arr[3] = v & 255;
-      arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
-      arr[5] = v & 255;
-      arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
-      arr[7] = v & 255;
-      arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
-      arr[9] = v & 255;
-      arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
-      arr[11] = v / 4294967296 & 255;
-      arr[12] = v >>> 24 & 255;
-      arr[13] = v >>> 16 & 255;
-      arr[14] = v >>> 8 & 255;
-      arr[15] = v & 255;
-      return arr;
-    }
-    var _default = parse;
-    exports.default = _default;
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/parse.js
+function parse2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  let v;
+  const arr = new Uint8Array(16);
+  arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v >>> 16 & 255;
+  arr[2] = v >>> 8 & 255;
+  arr[3] = v & 255;
+  arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v & 255;
+  arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v & 255;
+  arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v & 255;
+  arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
+  arr[11] = v / 4294967296 & 255;
+  arr[12] = v >>> 24 & 255;
+  arr[13] = v >>> 16 & 255;
+  arr[14] = v >>> 8 & 255;
+  arr[15] = v & 255;
+  return arr;
+}
+var parse_default2;
+var init_parse2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/parse.js"() {
+    init_validate2();
+    parse_default2 = parse2;
   }
 });
 
-// node_modules/@azure/core-http/node_modules/uuid/dist/v35.js
-var require_v352 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/v35.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v35.js
+function stringToBytes2(str) {
+  str = unescape(encodeURIComponent(str));
+  const bytes = [];
+  for (let i = 0; i < str.length; ++i) {
+    bytes.push(str.charCodeAt(i));
+  }
+  return bytes;
+}
+function v35_default2(name, version3, hashfunc) {
+  function generateUUID(value, namespace, buf, offset) {
+    if (typeof value === "string") {
+      value = stringToBytes2(value);
+    }
+    if (typeof namespace === "string") {
+      namespace = parse_default2(namespace);
+    }
+    if (namespace.length !== 16) {
+      throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+    }
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
+    bytes[6] = bytes[6] & 15 | version3;
+    bytes[8] = bytes[8] & 63 | 128;
+    if (buf) {
+      offset = offset || 0;
+      for (let i = 0; i < 16; ++i) {
+        buf[offset + i] = bytes[i];
+      }
+      return buf;
+    }
+    return stringify_default2(bytes);
+  }
+  try {
+    generateUUID.name = name;
+  } catch (err) {
+  }
+  generateUUID.DNS = DNS2;
+  generateUUID.URL = URL3;
+  return generateUUID;
+}
+var DNS2, URL3;
+var init_v352 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v35.js"() {
+    init_stringify2();
+    init_parse2();
+    DNS2 = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    URL3 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/md5.js
+function md52(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto5.default.createHash("md5").update(bytes).digest();
+}
+var import_crypto5, md5_default2;
+var init_md52 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/md5.js"() {
+    import_crypto5 = __toESM(require("crypto"));
+    md5_default2 = md52;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v3.js
+var v32, v3_default2;
+var init_v32 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v3.js"() {
+    init_v352();
+    init_md52();
+    v32 = v35_default2("v3", 48, md5_default2);
+    v3_default2 = v32;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v4.js
+function v42(options, buf, offset) {
+  options = options || {};
+  const rnds = options.random || (options.rng || rng2)();
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset = offset || 0;
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+    return buf;
+  }
+  return stringify_default2(rnds);
+}
+var v4_default2;
+var init_v42 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v4.js"() {
+    init_rng2();
+    init_stringify2();
+    v4_default2 = v42;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/sha1.js
+function sha12(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto6.default.createHash("sha1").update(bytes).digest();
+}
+var import_crypto6, sha1_default2;
+var init_sha12 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/sha1.js"() {
+    import_crypto6 = __toESM(require("crypto"));
+    sha1_default2 = sha12;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v5.js
+var v52, v5_default2;
+var init_v52 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/v5.js"() {
+    init_v352();
+    init_sha12();
+    v52 = v35_default2("v5", 80, sha1_default2);
+    v5_default2 = v52;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/nil.js
+var nil_default2;
+var init_nil2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/nil.js"() {
+    nil_default2 = "00000000-0000-0000-0000-000000000000";
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/version.js
+function version2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  return parseInt(uuid.substr(14, 1), 16);
+}
+var version_default2;
+var init_version2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/version.js"() {
+    init_validate2();
+    version_default2 = version2;
+  }
+});
+
+// node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/index.js
+var esm_node_exports2 = {};
+__export(esm_node_exports2, {
+  NIL: () => nil_default2,
+  parse: () => parse_default2,
+  stringify: () => stringify_default2,
+  v1: () => v1_default2,
+  v3: () => v3_default2,
+  v4: () => v4_default2,
+  v5: () => v5_default2,
+  validate: () => validate_default2,
+  version: () => version_default2
+});
+var init_esm_node2 = __esm({
+  "node_modules/@azure/core-http/node_modules/uuid/dist/esm-node/index.js"() {
+    init_v12();
+    init_v32();
+    init_v42();
+    init_v52();
+    init_nil2();
+    init_version2();
+    init_validate2();
+    init_stringify2();
+    init_parse2();
+  }
+});
+
+// node_modules/tslib/tslib.es6.js
+var tslib_es6_exports = {};
+__export(tslib_es6_exports, {
+  __assign: () => __assign,
+  __asyncDelegator: () => __asyncDelegator,
+  __asyncGenerator: () => __asyncGenerator,
+  __asyncValues: () => __asyncValues,
+  __await: () => __await,
+  __awaiter: () => __awaiter,
+  __classPrivateFieldGet: () => __classPrivateFieldGet,
+  __classPrivateFieldIn: () => __classPrivateFieldIn,
+  __classPrivateFieldSet: () => __classPrivateFieldSet,
+  __createBinding: () => __createBinding,
+  __decorate: () => __decorate,
+  __exportStar: () => __exportStar,
+  __extends: () => __extends,
+  __generator: () => __generator,
+  __importDefault: () => __importDefault,
+  __importStar: () => __importStar,
+  __makeTemplateObject: () => __makeTemplateObject,
+  __metadata: () => __metadata,
+  __param: () => __param,
+  __read: () => __read,
+  __rest: () => __rest,
+  __spread: () => __spread,
+  __spreadArray: () => __spreadArray,
+  __spreadArrays: () => __spreadArrays,
+  __values: () => __values2
+});
+function __extends(d, b) {
+  if (typeof b !== "function" && b !== null)
+    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d, b);
+  function __() {
+    this.constructor = d;
+  }
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+function __rest(s, e) {
+  var t = {};
+  for (var p in s)
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+      t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+        t[p[i]] = s[p[i]];
+    }
+  return t;
+}
+function __decorate(decorators, target, key, desc) {
+  var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    r = Reflect.decorate(decorators, target, key, desc);
+  else
+    for (var i = decorators.length - 1; i >= 0; i--)
+      if (d = decorators[i])
+        r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+function __param(paramIndex, decorator) {
+  return function(target, key) {
+    decorator(target, key, paramIndex);
+  };
+}
+function __metadata(metadataKey, metadataValue) {
+  if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+    return Reflect.metadata(metadataKey, metadataValue);
+}
+function __awaiter(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve) {
+      resolve(value);
     });
-    exports.default = _default;
-    exports.URL = exports.DNS = void 0;
-    var _stringify = _interopRequireDefault(require_stringify2());
-    var _parse = _interopRequireDefault(require_parse2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function stringToBytes(str) {
-      str = unescape(encodeURIComponent(str));
-      const bytes = [];
-      for (let i = 0; i < str.length; ++i) {
-        bytes.push(str.charCodeAt(i));
-      }
-      return bytes;
-    }
-    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-    exports.DNS = DNS;
-    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-    exports.URL = URL2;
-    function _default(name, version, hashfunc) {
-      function generateUUID(value, namespace, buf, offset) {
-        if (typeof value === "string") {
-          value = stringToBytes(value);
-        }
-        if (typeof namespace === "string") {
-          namespace = (0, _parse.default)(namespace);
-        }
-        if (namespace.length !== 16) {
-          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
-        }
-        let bytes = new Uint8Array(16 + value.length);
-        bytes.set(namespace);
-        bytes.set(value, namespace.length);
-        bytes = hashfunc(bytes);
-        bytes[6] = bytes[6] & 15 | version;
-        bytes[8] = bytes[8] & 63 | 128;
-        if (buf) {
-          offset = offset || 0;
-          for (let i = 0; i < 16; ++i) {
-            buf[offset + i] = bytes[i];
-          }
-          return buf;
-        }
-        return (0, _stringify.default)(bytes);
-      }
+  }
+  return new (P || (P = Promise))(function(resolve, reject) {
+    function fulfilled(value) {
       try {
-        generateUUID.name = name;
-      } catch (err) {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
       }
-      generateUUID.DNS = DNS;
-      generateUUID.URL = URL2;
-      return generateUUID;
     }
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/md5.js
-var require_md52 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/md5.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function md5(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
       }
-      return _crypto.default.createHash("md5").update(bytes).digest();
     }
-    var _default = md5;
-    exports.default = _default;
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+}
+function __generator(thisArg, body) {
+  var _ = { label: 0, sent: function() {
+    if (t[0] & 1)
+      throw t[1];
+    return t[1];
+  }, trys: [], ops: [] }, f, y, t, g;
+  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+    return this;
+  }), g;
+  function verb(n) {
+    return function(v) {
+      return step([n, v]);
+    };
   }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/v3.js
-var require_v32 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/v3.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _v = _interopRequireDefault(require_v352());
-    var _md = _interopRequireDefault(require_md52());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var v3 = (0, _v.default)("v3", 48, _md.default);
-    var _default = v3;
-    exports.default = _default;
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/v4.js
-var require_v43 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/v4.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _rng = _interopRequireDefault(require_rng3());
-    var _stringify = _interopRequireDefault(require_stringify2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function v4(options, buf, offset) {
-      options = options || {};
-      const rnds = options.random || (options.rng || _rng.default)();
-      rnds[6] = rnds[6] & 15 | 64;
-      rnds[8] = rnds[8] & 63 | 128;
-      if (buf) {
-        offset = offset || 0;
-        for (let i = 0; i < 16; ++i) {
-          buf[offset + i] = rnds[i];
+  function step(op) {
+    if (f)
+      throw new TypeError("Generator is already executing.");
+    while (g && (g = 0, op[0] && (_ = 0)), _)
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+          return t;
+        if (y = 0, t)
+          op = [op[0] & 2, t.value];
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+          case 4:
+            _.label++;
+            return { value: op[1], done: false };
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+          case 7:
+            op = _.ops.pop();
+            _.trys.pop();
+            continue;
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+              _.ops.push(op);
+              break;
+            }
+            if (t[2])
+              _.ops.pop();
+            _.trys.pop();
+            continue;
         }
-        return buf;
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
       }
-      return (0, _stringify.default)(rnds);
-    }
-    var _default = v4;
-    exports.default = _default;
+    if (op[0] & 5)
+      throw op[1];
+    return { value: op[0] ? op[1] : void 0, done: true };
   }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/sha1.js
-var require_sha12 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/sha1.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function sha1(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
+}
+function __exportStar(m, o) {
+  for (var p in m)
+    if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
+      __createBinding(o, m, p);
+}
+function __values2(o) {
+  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+  if (m)
+    return m.call(o);
+  if (o && typeof o.length === "number")
+    return {
+      next: function() {
+        if (o && i >= o.length)
+          o = void 0;
+        return { value: o && o[i++], done: !o };
       }
-      return _crypto.default.createHash("sha1").update(bytes).digest();
-    }
-    var _default = sha1;
-    exports.default = _default;
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/v5.js
-var require_v52 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/v5.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _v = _interopRequireDefault(require_v352());
-    var _sha = _interopRequireDefault(require_sha12());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    var v5 = (0, _v.default)("v5", 80, _sha.default);
-    var _default = v5;
-    exports.default = _default;
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/nil.js
-var require_nil2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/nil.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _default = "00000000-0000-0000-0000-000000000000";
-    exports.default = _default;
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/version.js
-var require_version2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/version.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _validate = _interopRequireDefault(require_validate2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function version(uuid) {
-      if (!(0, _validate.default)(uuid)) {
-        throw TypeError("Invalid UUID");
-      }
-      return parseInt(uuid.substr(14, 1), 16);
-    }
-    var _default = version;
-    exports.default = _default;
-  }
-});
-
-// node_modules/@azure/core-http/node_modules/uuid/dist/index.js
-var require_dist2 = __commonJS({
-  "node_modules/@azure/core-http/node_modules/uuid/dist/index.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    Object.defineProperty(exports, "v1", {
-      enumerable: true,
-      get: function() {
-        return _v.default;
-      }
-    });
-    Object.defineProperty(exports, "v3", {
-      enumerable: true,
-      get: function() {
-        return _v2.default;
-      }
-    });
-    Object.defineProperty(exports, "v4", {
-      enumerable: true,
-      get: function() {
-        return _v3.default;
-      }
-    });
-    Object.defineProperty(exports, "v5", {
-      enumerable: true,
-      get: function() {
-        return _v4.default;
-      }
-    });
-    Object.defineProperty(exports, "NIL", {
-      enumerable: true,
-      get: function() {
-        return _nil.default;
-      }
-    });
-    Object.defineProperty(exports, "version", {
-      enumerable: true,
-      get: function() {
-        return _version.default;
-      }
-    });
-    Object.defineProperty(exports, "validate", {
-      enumerable: true,
-      get: function() {
-        return _validate.default;
-      }
-    });
-    Object.defineProperty(exports, "stringify", {
-      enumerable: true,
-      get: function() {
-        return _stringify.default;
-      }
-    });
-    Object.defineProperty(exports, "parse", {
-      enumerable: true,
-      get: function() {
-        return _parse.default;
-      }
-    });
-    var _v = _interopRequireDefault(require_v13());
-    var _v2 = _interopRequireDefault(require_v32());
-    var _v3 = _interopRequireDefault(require_v43());
-    var _v4 = _interopRequireDefault(require_v52());
-    var _nil = _interopRequireDefault(require_nil2());
-    var _version = _interopRequireDefault(require_version2());
-    var _validate = _interopRequireDefault(require_validate2());
-    var _stringify = _interopRequireDefault(require_stringify2());
-    var _parse = _interopRequireDefault(require_parse2());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
+    };
+  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function __read(o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m)
+    return o;
+  var i = m.call(o), r, ar = [], e;
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+      ar.push(r.value);
+  } catch (error) {
+    e = { error };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"]))
+        m.call(i);
+    } finally {
+      if (e)
+        throw e.error;
     }
   }
-});
-
-// node_modules/tslib/tslib.js
-var require_tslib = __commonJS({
-  "node_modules/tslib/tslib.js"(exports, module2) {
-    var __extends;
-    var __assign;
-    var __rest;
-    var __decorate;
-    var __param;
-    var __metadata;
-    var __awaiter;
-    var __generator;
-    var __exportStar;
-    var __values2;
-    var __read;
-    var __spread;
-    var __spreadArrays;
-    var __spreadArray;
-    var __await;
-    var __asyncGenerator;
-    var __asyncDelegator;
-    var __asyncValues;
-    var __makeTemplateObject;
-    var __importStar;
-    var __importDefault;
-    var __classPrivateFieldGet;
-    var __classPrivateFieldSet;
-    var __classPrivateFieldIn;
-    var __createBinding;
-    (function(factory) {
-      var root = typeof global === "object" ? global : typeof self === "object" ? self : typeof this === "object" ? this : {};
-      if (typeof define === "function" && define.amd) {
-        define("tslib", ["exports"], function(exports2) {
-          factory(createExporter(root, createExporter(exports2)));
+  return ar;
+}
+function __spread() {
+  for (var ar = [], i = 0; i < arguments.length; i++)
+    ar = ar.concat(__read(arguments[i]));
+  return ar;
+}
+function __spreadArrays() {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+    s += arguments[i].length;
+  for (var r = Array(s), k = 0, i = 0; i < il; i++)
+    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+      r[k] = a[j];
+  return r;
+}
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+function __await(v) {
+  return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+function __asyncGenerator(thisArg, _arguments, generator) {
+  if (!Symbol.asyncIterator)
+    throw new TypeError("Symbol.asyncIterator is not defined.");
+  var g = generator.apply(thisArg, _arguments || []), i, q = [];
+  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+    return this;
+  }, i;
+  function verb(n) {
+    if (g[n])
+      i[n] = function(v) {
+        return new Promise(function(a, b) {
+          q.push([n, v, a, b]) > 1 || resume(n, v);
         });
-      } else if (typeof module2 === "object" && typeof module2.exports === "object") {
-        factory(createExporter(root, createExporter(module2.exports)));
-      } else {
-        factory(createExporter(root));
-      }
-      function createExporter(exports2, previous) {
-        if (exports2 !== root) {
-          if (typeof Object.create === "function") {
-            Object.defineProperty(exports2, "__esModule", { value: true });
-          } else {
-            exports2.__esModule = true;
-          }
-        }
-        return function(id, v) {
-          return exports2[id] = previous ? previous(id, v) : v;
-        };
-      }
-    })(function(exporter) {
-      var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d, b) {
-        d.__proto__ = b;
-      } || function(d, b) {
-        for (var p in b)
-          if (Object.prototype.hasOwnProperty.call(b, p))
-            d[p] = b[p];
       };
-      __extends = function(d, b) {
-        if (typeof b !== "function" && b !== null)
-          throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() {
-          this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  }
+  function resume(n, v) {
+    try {
+      step(g[n](v));
+    } catch (e) {
+      settle(q[0][3], e);
+    }
+  }
+  function step(r) {
+    r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+  }
+  function fulfill(value) {
+    resume("next", value);
+  }
+  function reject(value) {
+    resume("throw", value);
+  }
+  function settle(f, v) {
+    if (f(v), q.shift(), q.length)
+      resume(q[0][0], q[0][1]);
+  }
+}
+function __asyncDelegator(o) {
+  var i, p;
+  return i = {}, verb("next"), verb("throw", function(e) {
+    throw e;
+  }), verb("return"), i[Symbol.iterator] = function() {
+    return this;
+  }, i;
+  function verb(n, f) {
+    i[n] = o[n] ? function(v) {
+      return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v;
+    } : f;
+  }
+}
+function __asyncValues(o) {
+  if (!Symbol.asyncIterator)
+    throw new TypeError("Symbol.asyncIterator is not defined.");
+  var m = o[Symbol.asyncIterator], i;
+  return m ? m.call(o) : (o = typeof __values2 === "function" ? __values2(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+    return this;
+  }, i);
+  function verb(n) {
+    i[n] = o[n] && function(v) {
+      return new Promise(function(resolve, reject) {
+        v = o[n](v), settle(resolve, reject, v.done, v.value);
+      });
+    };
+  }
+  function settle(resolve, reject, d, v) {
+    Promise.resolve(v).then(function(v2) {
+      resolve({ value: v2, done: d });
+    }, reject);
+  }
+}
+function __makeTemplateObject(cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", { value: raw });
+  } else {
+    cooked.raw = raw;
+  }
+  return cooked;
+}
+function __importStar(mod) {
+  if (mod && mod.__esModule)
+    return mod;
+  var result = {};
+  if (mod != null) {
+    for (var k in mod)
+      if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+        __createBinding(result, mod, k);
+  }
+  __setModuleDefault(result, mod);
+  return result;
+}
+function __importDefault(mod) {
+  return mod && mod.__esModule ? mod : { default: mod };
+}
+function __classPrivateFieldGet(receiver, state, kind, f) {
+  if (kind === "a" && !f)
+    throw new TypeError("Private accessor was defined without a getter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+    throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+  if (kind === "m")
+    throw new TypeError("Private method is not writable");
+  if (kind === "a" && !f)
+    throw new TypeError("Private accessor was defined without a setter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+    throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+function __classPrivateFieldIn(state, receiver) {
+  if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function")
+    throw new TypeError("Cannot use 'in' operator on non-object");
+  return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+var extendStatics, __assign, __createBinding, __setModuleDefault;
+var init_tslib_es6 = __esm({
+  "node_modules/tslib/tslib.es6.js"() {
+    extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2)
+          if (Object.prototype.hasOwnProperty.call(b2, p))
+            d2[p] = b2[p];
       };
-      __assign = Object.assign || function(t) {
+      return extendStatics(d, b);
+    };
+    __assign = function() {
+      __assign = Object.assign || function __assign2(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
           s = arguments[i];
           for (var p in s)
@@ -7063,366 +7254,28 @@ var require_tslib = __commonJS({
         }
         return t;
       };
-      __rest = function(s, e) {
-        var t = {};
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-            t[p] = s[p];
-        if (s != null && typeof Object.getOwnPropertySymbols === "function")
-          for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-              t[p[i]] = s[p[i]];
-          }
-        return t;
-      };
-      __decorate = function(decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-          r = Reflect.decorate(decorators, target, key, desc);
-        else
-          for (var i = decorators.length - 1; i >= 0; i--)
-            if (d = decorators[i])
-              r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-      };
-      __param = function(paramIndex, decorator) {
-        return function(target, key) {
-          decorator(target, key, paramIndex);
-        };
-      };
-      __metadata = function(metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-          return Reflect.metadata(metadataKey, metadataValue);
-      };
-      __awaiter = function(thisArg, _arguments, P, generator) {
-        function adopt(value) {
-          return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-          });
-        }
-        return new (P || (P = Promise))(function(resolve, reject) {
-          function fulfilled(value) {
-            try {
-              step(generator.next(value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-          function rejected(value) {
-            try {
-              step(generator["throw"](value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-          function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-          }
-          step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-      };
-      __generator = function(thisArg, body) {
-        var _ = { label: 0, sent: function() {
-          if (t[0] & 1)
-            throw t[1];
-          return t[1];
-        }, trys: [], ops: [] }, f, y, t, g;
-        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-          return this;
-        }), g;
-        function verb(n) {
-          return function(v) {
-            return step([n, v]);
-          };
-        }
-        function step(op) {
-          if (f)
-            throw new TypeError("Generator is already executing.");
-          while (g && (g = 0, op[0] && (_ = 0)), _)
-            try {
-              if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-                return t;
-              if (y = 0, t)
-                op = [op[0] & 2, t.value];
-              switch (op[0]) {
-                case 0:
-                case 1:
-                  t = op;
-                  break;
-                case 4:
-                  _.label++;
-                  return { value: op[1], done: false };
-                case 5:
-                  _.label++;
-                  y = op[1];
-                  op = [0];
-                  continue;
-                case 7:
-                  op = _.ops.pop();
-                  _.trys.pop();
-                  continue;
-                default:
-                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                    _ = 0;
-                    continue;
-                  }
-                  if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                    _.label = op[1];
-                    break;
-                  }
-                  if (op[0] === 6 && _.label < t[1]) {
-                    _.label = t[1];
-                    t = op;
-                    break;
-                  }
-                  if (t && _.label < t[2]) {
-                    _.label = t[2];
-                    _.ops.push(op);
-                    break;
-                  }
-                  if (t[2])
-                    _.ops.pop();
-                  _.trys.pop();
-                  continue;
-              }
-              op = body.call(thisArg, _);
-            } catch (e) {
-              op = [6, e];
-              y = 0;
-            } finally {
-              f = t = 0;
-            }
-          if (op[0] & 5)
-            throw op[1];
-          return { value: op[0] ? op[1] : void 0, done: true };
-        }
-      };
-      __exportStar = function(m, o) {
-        for (var p in m)
-          if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            __createBinding(o, m, p);
-      };
-      __createBinding = Object.create ? function(o, m, k, k2) {
-        if (k2 === void 0)
-          k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-          desc = { enumerable: true, get: function() {
-            return m[k];
-          } };
-        }
-        Object.defineProperty(o, k2, desc);
-      } : function(o, m, k, k2) {
-        if (k2 === void 0)
-          k2 = k;
-        o[k2] = m[k];
-      };
-      __values2 = function(o) {
-        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-        if (m)
-          return m.call(o);
-        if (o && typeof o.length === "number")
-          return {
-            next: function() {
-              if (o && i >= o.length)
-                o = void 0;
-              return { value: o && o[i++], done: !o };
-            }
-          };
-        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-      };
-      __read = function(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-          return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-          while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-            ar.push(r.value);
-        } catch (error) {
-          e = { error };
-        } finally {
-          try {
-            if (r && !r.done && (m = i["return"]))
-              m.call(i);
-          } finally {
-            if (e)
-              throw e.error;
-          }
-        }
-        return ar;
-      };
-      __spread = function() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-          ar = ar.concat(__read(arguments[i]));
-        return ar;
-      };
-      __spreadArrays = function() {
-        for (var s = 0, i = 0, il = arguments.length; i < il; i++)
-          s += arguments[i].length;
-        for (var r = Array(s), k = 0, i = 0; i < il; i++)
-          for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-        return r;
-      };
-      __spreadArray = function(to, from, pack) {
-        if (pack || arguments.length === 2)
-          for (var i = 0, l = from.length, ar; i < l; i++) {
-            if (ar || !(i in from)) {
-              if (!ar)
-                ar = Array.prototype.slice.call(from, 0, i);
-              ar[i] = from[i];
-            }
-          }
-        return to.concat(ar || Array.prototype.slice.call(from));
-      };
-      __await = function(v) {
-        return this instanceof __await ? (this.v = v, this) : new __await(v);
-      };
-      __asyncGenerator = function(thisArg, _arguments, generator) {
-        if (!Symbol.asyncIterator)
-          throw new TypeError("Symbol.asyncIterator is not defined.");
-        var g = generator.apply(thisArg, _arguments || []), i, q = [];
-        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
-          return this;
-        }, i;
-        function verb(n) {
-          if (g[n])
-            i[n] = function(v) {
-              return new Promise(function(a, b) {
-                q.push([n, v, a, b]) > 1 || resume(n, v);
-              });
-            };
-        }
-        function resume(n, v) {
-          try {
-            step(g[n](v));
-          } catch (e) {
-            settle(q[0][3], e);
-          }
-        }
-        function step(r) {
-          r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
-        }
-        function fulfill(value) {
-          resume("next", value);
-        }
-        function reject(value) {
-          resume("throw", value);
-        }
-        function settle(f, v) {
-          if (f(v), q.shift(), q.length)
-            resume(q[0][0], q[0][1]);
-        }
-      };
-      __asyncDelegator = function(o) {
-        var i, p;
-        return i = {}, verb("next"), verb("throw", function(e) {
-          throw e;
-        }), verb("return"), i[Symbol.iterator] = function() {
-          return this;
-        }, i;
-        function verb(n, f) {
-          i[n] = o[n] ? function(v) {
-            return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v;
-          } : f;
-        }
-      };
-      __asyncValues = function(o) {
-        if (!Symbol.asyncIterator)
-          throw new TypeError("Symbol.asyncIterator is not defined.");
-        var m = o[Symbol.asyncIterator], i;
-        return m ? m.call(o) : (o = typeof __values2 === "function" ? __values2(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
-          return this;
-        }, i);
-        function verb(n) {
-          i[n] = o[n] && function(v) {
-            return new Promise(function(resolve, reject) {
-              v = o[n](v), settle(resolve, reject, v.done, v.value);
-            });
-          };
-        }
-        function settle(resolve, reject, d, v) {
-          Promise.resolve(v).then(function(v2) {
-            resolve({ value: v2, done: d });
-          }, reject);
-        }
-      };
-      __makeTemplateObject = function(cooked, raw) {
-        if (Object.defineProperty) {
-          Object.defineProperty(cooked, "raw", { value: raw });
-        } else {
-          cooked.raw = raw;
-        }
-        return cooked;
-      };
-      var __setModuleDefault = Object.create ? function(o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      } : function(o, v) {
-        o["default"] = v;
-      };
-      __importStar = function(mod) {
-        if (mod && mod.__esModule)
-          return mod;
-        var result = {};
-        if (mod != null) {
-          for (var k in mod)
-            if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-              __createBinding(result, mod, k);
-        }
-        __setModuleDefault(result, mod);
-        return result;
-      };
-      __importDefault = function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      __classPrivateFieldGet = function(receiver, state, kind, f) {
-        if (kind === "a" && !f)
-          throw new TypeError("Private accessor was defined without a getter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-          throw new TypeError("Cannot read private member from an object whose class did not declare it");
-        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-      };
-      __classPrivateFieldSet = function(receiver, state, value, kind, f) {
-        if (kind === "m")
-          throw new TypeError("Private method is not writable");
-        if (kind === "a" && !f)
-          throw new TypeError("Private accessor was defined without a setter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-          throw new TypeError("Cannot write private member to an object whose class did not declare it");
-        return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
-      };
-      __classPrivateFieldIn = function(state, receiver) {
-        if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function")
-          throw new TypeError("Cannot use 'in' operator on non-object");
-        return typeof state === "function" ? receiver === state : state.has(receiver);
-      };
-      exporter("__extends", __extends);
-      exporter("__assign", __assign);
-      exporter("__rest", __rest);
-      exporter("__decorate", __decorate);
-      exporter("__param", __param);
-      exporter("__metadata", __metadata);
-      exporter("__awaiter", __awaiter);
-      exporter("__generator", __generator);
-      exporter("__exportStar", __exportStar);
-      exporter("__createBinding", __createBinding);
-      exporter("__values", __values2);
-      exporter("__read", __read);
-      exporter("__spread", __spread);
-      exporter("__spreadArrays", __spreadArrays);
-      exporter("__spreadArray", __spreadArray);
-      exporter("__await", __await);
-      exporter("__asyncGenerator", __asyncGenerator);
-      exporter("__asyncDelegator", __asyncDelegator);
-      exporter("__asyncValues", __asyncValues);
-      exporter("__makeTemplateObject", __makeTemplateObject);
-      exporter("__importStar", __importStar);
-      exporter("__importDefault", __importDefault);
-      exporter("__classPrivateFieldGet", __classPrivateFieldGet);
-      exporter("__classPrivateFieldSet", __classPrivateFieldSet);
-      exporter("__classPrivateFieldIn", __classPrivateFieldIn);
-    });
+      return __assign.apply(this, arguments);
+    };
+    __createBinding = Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() {
+          return m[k];
+        } };
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    };
+    __setModuleDefault = Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    };
   }
 });
 
@@ -7583,7 +7436,7 @@ var require_XMLDOMImplementation = __commonJS({
       module2.exports = XMLDOMImplementation = function() {
         function XMLDOMImplementation2() {
         }
-        XMLDOMImplementation2.prototype.hasFeature = function(feature, version) {
+        XMLDOMImplementation2.prototype.hasFeature = function(feature, version3) {
           return true;
         };
         XMLDOMImplementation2.prototype.createDocumentType = function(qualifiedName, publicId, systemId) {
@@ -7595,7 +7448,7 @@ var require_XMLDOMImplementation = __commonJS({
         XMLDOMImplementation2.prototype.createHTMLDocument = function(title) {
           throw new Error("This DOM method is not implemented.");
         };
-        XMLDOMImplementation2.prototype.getFeature = function(feature, version) {
+        XMLDOMImplementation2.prototype.getFeature = function(feature, version3) {
           throw new Error("This DOM method is not implemented.");
         };
         return XMLDOMImplementation2;
@@ -8333,17 +8186,17 @@ var require_XMLDeclaration = __commonJS({
       NodeType = require_NodeType();
       module2.exports = XMLDeclaration = function(superClass) {
         extend(XMLDeclaration2, superClass);
-        function XMLDeclaration2(parent, version, encoding, standalone) {
+        function XMLDeclaration2(parent, version3, encoding, standalone) {
           var ref;
           XMLDeclaration2.__super__.constructor.call(this, parent);
-          if (isObject(version)) {
-            ref = version, version = ref.version, encoding = ref.encoding, standalone = ref.standalone;
+          if (isObject(version3)) {
+            ref = version3, version3 = ref.version, encoding = ref.encoding, standalone = ref.standalone;
           }
-          if (!version) {
-            version = "1.0";
+          if (!version3) {
+            version3 = "1.0";
           }
           this.type = NodeType.Declaration;
-          this.version = this.stringify.xmlVersion(version);
+          this.version = this.stringify.xmlVersion(version3);
           if (encoding != null) {
             this.encoding = this.stringify.xmlEncoding(encoding);
           }
@@ -9409,10 +9262,10 @@ var require_XMLNode = __commonJS({
           Array.prototype.push.apply(this.parent.children, removed);
           return this;
         };
-        XMLNode2.prototype.declaration = function(version, encoding, standalone) {
+        XMLNode2.prototype.declaration = function(version3, encoding, standalone) {
           var doc, xmldec;
           doc = this.document();
-          xmldec = new XMLDeclaration(doc, version, encoding, standalone);
+          xmldec = new XMLDeclaration(doc, version3, encoding, standalone);
           if (doc.children.length === 0) {
             doc.children.unshift(xmldec);
           } else if (doc.children[0].type === NodeType.Declaration) {
@@ -9536,8 +9389,8 @@ var require_XMLNode = __commonJS({
         XMLNode2.prototype.doc = function() {
           return this.document();
         };
-        XMLNode2.prototype.dec = function(version, encoding, standalone) {
-          return this.declaration(version, encoding, standalone);
+        XMLNode2.prototype.dec = function(version3, encoding, standalone) {
+          return this.declaration(version3, encoding, standalone);
         };
         XMLNode2.prototype.e = function(name, attributes, text) {
           return this.element(name, attributes, text);
@@ -9584,7 +9437,7 @@ var require_XMLNode = __commonJS({
         XMLNode2.prototype.normalize = function() {
           throw new Error("This DOM method is not implemented." + this.debugInfo());
         };
-        XMLNode2.prototype.isSupported = function(feature, version) {
+        XMLNode2.prototype.isSupported = function(feature, version3) {
           return true;
         };
         XMLNode2.prototype.hasAttributes = function() {
@@ -9640,7 +9493,7 @@ var require_XMLNode = __commonJS({
           }
           return true;
         };
-        XMLNode2.prototype.getFeature = function(feature, version) {
+        XMLNode2.prototype.getFeature = function(feature, version3) {
           throw new Error("This DOM method is not implemented." + this.debugInfo());
         };
         XMLNode2.prototype.setUserData = function(key, data, handler) {
@@ -10845,13 +10698,13 @@ var require_XMLDocumentCB = __commonJS({
           }
           return this;
         };
-        XMLDocumentCB2.prototype.declaration = function(version, encoding, standalone) {
+        XMLDocumentCB2.prototype.declaration = function(version3, encoding, standalone) {
           var node;
           this.openCurrent();
           if (this.documentStarted) {
             throw new Error("declaration() must be the first node.");
           }
-          node = new XMLDeclaration(this, version, encoding, standalone);
+          node = new XMLDeclaration(this, version3, encoding, standalone);
           this.onData(this.writer.declaration(node, this.writerOptions, this.currentLevel + 1), this.currentLevel + 1);
           return this;
         };
@@ -11023,8 +10876,8 @@ var require_XMLDocumentCB = __commonJS({
         XMLDocumentCB2.prototype.ins = function(target, value) {
           return this.instruction(target, value);
         };
-        XMLDocumentCB2.prototype.dec = function(version, encoding, standalone) {
-          return this.declaration(version, encoding, standalone);
+        XMLDocumentCB2.prototype.dec = function(version3, encoding, standalone) {
+          return this.declaration(version3, encoding, standalone);
         };
         XMLDocumentCB2.prototype.dtd = function(root, pubID, sysID) {
           return this.doctype(root, pubID, sysID);
@@ -11689,41 +11542,77 @@ var require_sax = __commonJS({
       var S = 0;
       sax.STATE = {
         BEGIN: S++,
+        // leading byte order mark or whitespace
         BEGIN_WHITESPACE: S++,
+        // leading whitespace
         TEXT: S++,
+        // general stuff
         TEXT_ENTITY: S++,
+        // &amp and such.
         OPEN_WAKA: S++,
+        // <
         SGML_DECL: S++,
+        // <!BLARG
         SGML_DECL_QUOTED: S++,
+        // <!BLARG foo "bar
         DOCTYPE: S++,
+        // <!DOCTYPE
         DOCTYPE_QUOTED: S++,
+        // <!DOCTYPE "//blah
         DOCTYPE_DTD: S++,
+        // <!DOCTYPE "//blah" [ ...
         DOCTYPE_DTD_QUOTED: S++,
+        // <!DOCTYPE "//blah" [ "foo
         COMMENT_STARTING: S++,
+        // <!-
         COMMENT: S++,
+        // <!--
         COMMENT_ENDING: S++,
+        // <!-- blah -
         COMMENT_ENDED: S++,
+        // <!-- blah --
         CDATA: S++,
+        // <![CDATA[ something
         CDATA_ENDING: S++,
+        // ]
         CDATA_ENDING_2: S++,
+        // ]]
         PROC_INST: S++,
+        // <?hi
         PROC_INST_BODY: S++,
+        // <?hi there
         PROC_INST_ENDING: S++,
+        // <?hi "there" ?
         OPEN_TAG: S++,
+        // <strong
         OPEN_TAG_SLASH: S++,
+        // <strong /
         ATTRIB: S++,
+        // <a
         ATTRIB_NAME: S++,
+        // <a foo
         ATTRIB_NAME_SAW_WHITE: S++,
+        // <a foo _
         ATTRIB_VALUE: S++,
+        // <a foo=
         ATTRIB_VALUE_QUOTED: S++,
+        // <a foo="bar
         ATTRIB_VALUE_CLOSED: S++,
+        // <a foo="bar"
         ATTRIB_VALUE_UNQUOTED: S++,
+        // <a foo=bar
         ATTRIB_VALUE_ENTITY_Q: S++,
+        // <foo bar="&quot;"
         ATTRIB_VALUE_ENTITY_U: S++,
+        // <foo bar=&quot
         CLOSE_TAG: S++,
+        // </a
         CLOSE_TAG_SAW_WHITE: S++,
+        // </a   >
         SCRIPT: S++,
+        // <script> ...
         SCRIPT_ENDING: S++
+        // <script> ... <
       };
       sax.XML_ENTITIES = {
         "amp": "&",
@@ -12797,7 +12686,10 @@ var require_sax = __commonJS({
             var result = "";
             while (++index < length) {
               var codePoint = Number(arguments[index]);
-              if (!isFinite(codePoint) || codePoint < 0 || codePoint > 1114111 || floor(codePoint) !== codePoint) {
+              if (!isFinite(codePoint) || // `NaN`, `+Infinity`, or `-Infinity`
+              codePoint < 0 || // not a valid Unicode code point
+              codePoint > 1114111 || // not a valid Unicode code point
+              floor(codePoint) !== codePoint) {
                 throw RangeError("Invalid code point: " + codePoint);
               }
               if (codePoint <= 65535) {
@@ -13301,7 +13193,7 @@ var require_xml2js = __commonJS({
 });
 
 // node_modules/@azure/abort-controller/dist/index.js
-var require_dist3 = __commonJS({
+var require_dist = __commonJS({
   "node_modules/@azure/abort-controller/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -13313,15 +13205,31 @@ var require_dist3 = __commonJS({
         listenersMap.set(this, []);
         abortedMap.set(this, false);
       }
+      /**
+       * Status of whether aborted or not.
+       *
+       * @readonly
+       */
       get aborted() {
         if (!abortedMap.has(this)) {
           throw new TypeError("Expected `this` to be an instance of AbortSignal.");
         }
         return abortedMap.get(this);
       }
+      /**
+       * Creates a new AbortSignal instance that will never be aborted.
+       *
+       * @readonly
+       */
       static get none() {
         return new AbortSignal();
       }
+      /**
+       * Added new "abort" event listener, only support "abort" event.
+       *
+       * @param _type - Only support "abort" event
+       * @param listener - The listener to be added
+       */
       addEventListener(_type, listener) {
         if (!listenersMap.has(this)) {
           throw new TypeError("Expected `this` to be an instance of AbortSignal.");
@@ -13329,6 +13237,12 @@ var require_dist3 = __commonJS({
         const listeners = listenersMap.get(this);
         listeners.push(listener);
       }
+      /**
+       * Remove "abort" event listener, only support "abort" event.
+       *
+       * @param _type - Only support "abort" event
+       * @param listener - The listener to be removed
+       */
       removeEventListener(_type, listener) {
         if (!listenersMap.has(this)) {
           throw new TypeError("Expected `this` to be an instance of AbortSignal.");
@@ -13339,6 +13253,9 @@ var require_dist3 = __commonJS({
           listeners.splice(index, 1);
         }
       }
+      /**
+       * Dispatches a synthetic event to the AbortSignal.
+       */
       dispatchEvent(_event) {
         throw new Error("This is a stub dispatchEvent implementation that should not be used.  It only exists for type-checking purposes.");
       }
@@ -13365,6 +13282,7 @@ var require_dist3 = __commonJS({
       }
     };
     var AbortController = class {
+      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       constructor(parentSignals) {
         this._signal = new AbortSignal();
         if (!parentSignals) {
@@ -13383,12 +13301,26 @@ var require_dist3 = __commonJS({
           }
         }
       }
+      /**
+       * The AbortSignal associated with this controller that will signal aborted
+       * when the abort method is called on this controller.
+       *
+       * @readonly
+       */
       get signal() {
         return this._signal;
       }
+      /**
+       * Signal that any operations passed this controller's associated abort signal
+       * to cancel any remaining work and throw an `AbortError`.
+       */
       abort() {
         abortSignal(this._signal);
       }
+      /**
+       * Creates a new AbortSignal instance that will abort after the provided ms.
+       * @param ms - Elapsed time in milliseconds to trigger an abort.
+       */
       static timeout(ms) {
         const signal = new AbortSignal();
         const timer = setTimeout(abortSignal, ms, signal);
@@ -13405,12 +13337,12 @@ var require_dist3 = __commonJS({
 });
 
 // node_modules/@azure/core-util/dist/index.js
-var require_dist4 = __commonJS({
+var require_dist2 = __commonJS({
   "node_modules/@azure/core-util/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var abortController = require_dist3();
-    var crypto = require("crypto");
+    var abortController = require_dist();
+    var crypto7 = require("crypto");
     var _a;
     var isNode = typeof process !== "undefined" && Boolean(process.version) && Boolean((_a = process.versions) === null || _a === void 0 ? void 0 : _a.node);
     function isDefined(thing) {
@@ -13499,10 +13431,10 @@ var require_dist4 = __commonJS({
     }
     async function computeSha256Hmac(key, stringToSign, encoding) {
       const decodedKey = Buffer.from(key, "base64");
-      return crypto.createHmac("sha256", decodedKey).update(stringToSign).digest(encoding);
+      return crypto7.createHmac("sha256", decodedKey).update(stringToSign).digest(encoding);
     }
     async function computeSha256Hash(content, encoding) {
-      return crypto.createHash("sha256").update(content).digest(encoding);
+      return crypto7.createHash("sha256").update(content).digest(encoding);
     }
     exports.computeSha256Hash = computeSha256Hash;
     exports.computeSha256Hmac = computeSha256Hmac;
@@ -13519,7 +13451,7 @@ var require_dist4 = __commonJS({
 });
 
 // node_modules/@azure/logger/dist/index.js
-var require_dist5 = __commonJS({
+var require_dist3 = __commonJS({
   "node_modules/@azure/logger/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -13700,20 +13632,37 @@ var require_dist5 = __commonJS({
 });
 
 // node_modules/@azure/core-auth/dist/index.js
-var require_dist6 = __commonJS({
+var require_dist4 = __commonJS({
   "node_modules/@azure/core-auth/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AzureKeyCredential = class {
+      /**
+       * Create an instance of an AzureKeyCredential for use
+       * with a service client.
+       *
+       * @param key - The initial value of the key to use in authentication
+       */
       constructor(key) {
         if (!key) {
           throw new Error("key must be a non-empty string");
         }
         this._key = key;
       }
+      /**
+       * The value of the key to be used in authentication
+       */
       get key() {
         return this._key;
       }
+      /**
+       * Change the value of the key.
+       *
+       * Updates will take effect upon the next request after
+       * updating the key value.
+       *
+       * @param newKey - The new key value to be used
+       */
       update(newKey) {
         this._key = newKey;
       }
@@ -13736,6 +13685,13 @@ var require_dist6 = __commonJS({
       return typeof thing === "object" && property in thing;
     }
     var AzureNamedKeyCredential = class {
+      /**
+       * Create an instance of an AzureNamedKeyCredential for use
+       * with a service client.
+       *
+       * @param name - The initial value of the name to use in authentication.
+       * @param key - The initial value of the key to use in authentication.
+       */
       constructor(name, key) {
         if (!name || !key) {
           throw new TypeError("name and key must be non-empty strings");
@@ -13743,12 +13699,27 @@ var require_dist6 = __commonJS({
         this._name = name;
         this._key = key;
       }
+      /**
+       * The value of the key to be used in authentication.
+       */
       get key() {
         return this._key;
       }
+      /**
+       * The value of the name to be used in authentication.
+       */
       get name() {
         return this._name;
       }
+      /**
+       * Change the value of the key.
+       *
+       * Updates will take effect upon the next request after
+       * updating the key value.
+       *
+       * @param newName - The new name value to be used.
+       * @param newKey - The new key value to be used.
+       */
       update(newName, newKey) {
         if (!newName || !newKey) {
           throw new TypeError("newName and newKey must be non-empty strings");
@@ -13761,15 +13732,32 @@ var require_dist6 = __commonJS({
       return isObjectWithProperties(credential, ["name", "key"]) && typeof credential.key === "string" && typeof credential.name === "string";
     }
     var AzureSASCredential = class {
+      /**
+       * Create an instance of an AzureSASCredential for use
+       * with a service client.
+       *
+       * @param signature - The initial value of the shared access signature to use in authentication
+       */
       constructor(signature) {
         if (!signature) {
           throw new Error("shared access signature must be a non-empty string");
         }
         this._signature = signature;
       }
+      /**
+       * The value of the shared access signature to be used in authentication
+       */
       get signature() {
         return this._signature;
       }
+      /**
+       * Change the value of the signature.
+       *
+       * Updates will take effect upon the next request after
+       * updating the signature value.
+       *
+       * @param newSignature - The new shared access signature value to be used
+       */
       update(newSignature) {
         if (!newSignature) {
           throw new Error("shared access signature must be a non-empty string");
@@ -14003,7 +13991,19 @@ var require_punycode = __commonJS({
       });
     };
     var punycode = {
+      /**
+       * A string representing the current Punycode.js version number.
+       * @memberOf punycode
+       * @type String
+       */
       "version": "2.1.0",
+      /**
+       * An object of methods to convert from JavaScript's internal character
+       * representation (UCS-2) to Unicode code points, and back.
+       * @see <https://mathiasbynens.be/notes/javascript-encoding>
+       * @memberOf punycode
+       * @type Object
+       */
       "ucs2": {
         "decode": ucs2decode,
         "encode": ucs2encode
@@ -14117,15 +14117,22 @@ var require_url_parse = __commonJS({
     }
     var rules = [
       ["#", "hash"],
+      // Extract from the back.
       ["?", "query"],
+      // Extract from the back.
       function sanitize(address, url) {
         return isSpecial(url.protocol) ? address.replace(/\\/g, "/") : address;
       },
       ["/", "pathname"],
+      // Extract from the back.
       ["@", "auth", 1],
+      // Extract from the front.
       [NaN, "host", void 0, 1, 1],
+      // Set left over value.
       [/:(\d*)$/, "port", void 0, 1],
+      // RegExp the back.
       [NaN, "hostname", void 0, 1, 1]
+      // Set left over.
     ];
     var ignore = { hash: 1, query: 1 };
     function lolcation(loc) {
@@ -14237,7 +14244,7 @@ var require_url_parse = __commonJS({
       if (!(this instanceof Url)) {
         return new Url(address, location, parser);
       }
-      var relative, extracted, parse, instruction, index, key, instructions = rules.slice(), type = typeof location, url = this, i = 0;
+      var relative, extracted, parse3, instruction, index, key, instructions = rules.slice(), type = typeof location, url = this, i = 0;
       if ("object" !== type && "string" !== type) {
         parser = location;
         location = null;
@@ -14259,12 +14266,12 @@ var require_url_parse = __commonJS({
           address = instruction(address, url);
           continue;
         }
-        parse = instruction[0];
+        parse3 = instruction[0];
         key = instruction[1];
-        if (parse !== parse) {
+        if (parse3 !== parse3) {
           url[key] = address;
-        } else if ("string" === typeof parse) {
-          index = parse === "@" ? address.lastIndexOf(parse) : address.indexOf(parse);
+        } else if ("string" === typeof parse3) {
+          index = parse3 === "@" ? address.lastIndexOf(parse3) : address.indexOf(parse3);
           if (~index) {
             if ("number" === typeof instruction[2]) {
               url[key] = address.slice(0, index);
@@ -14274,7 +14281,7 @@ var require_url_parse = __commonJS({
               address = address.slice(0, index);
             }
           }
-        } else if (index = parse.exec(address)) {
+        } else if (index = parse3.exec(address)) {
           url[key] = index[1];
           address = address.slice(0, index.index);
         }
@@ -14383,9 +14390,9 @@ var require_url_parse = __commonJS({
       url.href = url.toString();
       return url;
     }
-    function toString2(stringify) {
-      if (!stringify || "function" !== typeof stringify)
-        stringify = qs.stringify;
+    function toString2(stringify3) {
+      if (!stringify3 || "function" !== typeof stringify3)
+        stringify3 = qs.stringify;
       var query, url = this, host = url.host, protocol = url.protocol;
       if (protocol && protocol.charAt(protocol.length - 1) !== ":")
         protocol += ":";
@@ -14405,7 +14412,7 @@ var require_url_parse = __commonJS({
         host += ":";
       }
       result += host + url.pathname;
-      query = "object" === typeof url.query ? stringify(url.query) : url.query;
+      query = "object" === typeof url.query ? stringify3(url.query) : url.query;
       if (query)
         result += "?" !== query.charAt(0) ? "?" + query : query;
       if (url.hash)
@@ -24386,7 +24393,7 @@ var require_validators = __commonJS({
     function isInteger(data) {
       return typeof data === "number" && data % 1 === 0;
     }
-    function validate(bool, cb, options) {
+    function validate3(bool, cb, options) {
       if (!isFunction(cb)) {
         options = cb;
         cb = null;
@@ -24413,12 +24420,12 @@ var require_validators = __commonJS({
     exports.isEmptyString = isEmptyString;
     exports.isString = isString;
     exports.isObject = isObject;
-    exports.validate = validate;
+    exports.validate = validate3;
   }
 });
 
 // node_modules/@azure/core-http/node_modules/tough-cookie/lib/version.js
-var require_version3 = __commonJS({
+var require_version = __commonJS({
   "node_modules/@azure/core-http/node_modules/tough-cookie/lib/version.js"(exports, module2) {
     module2.exports = "4.1.2";
   }
@@ -24435,7 +24442,7 @@ var require_cookie = __commonJS({
     var MemoryCookieStore = require_memstore().MemoryCookieStore;
     var pathMatch = require_pathMatch().pathMatch;
     var validators = require_validators();
-    var VERSION = require_version3();
+    var VERSION = require_version();
     var { fromCallback } = require_universalify();
     var { getCustomInspectSymbol } = require_utilHelper();
     var COOKIE_OCTETS = /^[\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]+$/;
@@ -24683,7 +24690,7 @@ var require_cookie = __commonJS({
       c.value = cookieValue;
       return c;
     }
-    function parse(str, options) {
+    function parse3(str, options) {
       if (!options || typeof options !== "object") {
         options = {};
       }
@@ -24877,6 +24884,7 @@ var require_cookie = __commonJS({
       return urlParse(url);
     }
     var cookieDefaults = {
+      // the order in which the RFC has them:
       key: "",
       value: "",
       expires: "Infinity",
@@ -24886,6 +24894,7 @@ var require_cookie = __commonJS({
       secure: false,
       httpOnly: false,
       extensions: null,
+      // set by the CookieJar:
       hostOnly: null,
       pathIsDefault: null,
       creation: null,
@@ -24899,10 +24908,11 @@ var require_cookie = __commonJS({
           this[customInspectSymbol] = this.inspect;
         }
         Object.assign(this, cookieDefaults, options);
-        this.creation = this.creation || new Date();
+        this.creation = this.creation || /* @__PURE__ */ new Date();
         Object.defineProperty(this, "creationIndex", {
           configurable: false,
           enumerable: false,
+          // important for assert.deepEqual checks
           writable: true,
           value: ++Cookie.cookiesCreated
         });
@@ -24990,6 +25000,7 @@ var require_cookie = __commonJS({
         }
         return `${this.key}=${val}`;
       }
+      // gives Set-Cookie header format
       toString() {
         let str = this.cookieString();
         if (this.expires != Infinity) {
@@ -25025,6 +25036,10 @@ var require_cookie = __commonJS({
         }
         return str;
       }
+      // TTL() partially replaces the "expiry-time" parts of S5.3 step 3 (setCookie()
+      // elsewhere)
+      // S5.3 says to give the "latest representable date" for which we use Infinity
+      // For "expired" we use 0
       TTL(now) {
         if (this.maxAge != null) {
           return this.maxAge <= 0 ? 0 : this.maxAge * 1e3;
@@ -25041,9 +25056,11 @@ var require_cookie = __commonJS({
         }
         return Infinity;
       }
+      // expiryTime() replaces the "expiry-time" parts of S5.3 step 3 (setCookie()
+      // elsewhere)
       expiryTime(now) {
         if (this.maxAge != null) {
-          const relativeTo = now || this.creation || new Date();
+          const relativeTo = now || this.creation || /* @__PURE__ */ new Date();
           const age = this.maxAge <= 0 ? -Infinity : this.maxAge * 1e3;
           return relativeTo.getTime() + age;
         }
@@ -25052,6 +25069,8 @@ var require_cookie = __commonJS({
         }
         return this.expires.getTime();
       }
+      // expiryDate() replaces the "expiry-time" parts of S5.3 step 3 (setCookie()
+      // elsewhere), except it returns a Date
       expiryDate(now) {
         const millisec = this.expiryTime(now);
         if (millisec == Infinity) {
@@ -25062,9 +25081,11 @@ var require_cookie = __commonJS({
           return new Date(millisec);
         }
       }
+      // This replaces the "persistent-flag" parts of S5.3 step 3
       isPersistent() {
         return this.maxAge != null || this.expires != Infinity;
       }
+      // Mostly S5.1.2 and S5.2.3:
       canonicalizedDomain() {
         if (this.domain == null) {
           return null;
@@ -25076,7 +25097,7 @@ var require_cookie = __commonJS({
       }
     };
     Cookie.cookiesCreated = 0;
-    Cookie.parse = parse;
+    Cookie.parse = parse3;
     Cookie.fromJSON = fromJSON;
     Cookie.serializableProperties = Object.keys(cookieDefaults);
     Cookie.sameSiteLevel = {
@@ -25157,7 +25178,7 @@ var require_cookie = __commonJS({
           );
           return cb(options.ignoreError ? null : err);
         }
-        const now = options.now || new Date();
+        const now = options.now || /* @__PURE__ */ new Date();
         if (this.rejectPublicSuffixes && cookie.domain) {
           const suffix = pubsuffix.getPublicSuffix(cookie.cdomain(), {
             allowSpecialUseDomain: this.allowSpecialUseDomain,
@@ -25249,6 +25270,7 @@ var require_cookie = __commonJS({
         }
         store.findCookie(cookie.domain, cookie.path, cookie.key, withCookie);
       }
+      // RFC6365 S5.4
       getCookies(url, options, cb) {
         validators.validate(validators.isNonEmptyString(url), cb, url);
         const context = getCookieContext(url);
@@ -25324,7 +25346,7 @@ var require_cookie = __commonJS({
             if (options.sort !== false) {
               cookies = cookies.sort(cookieCompare);
             }
-            const now2 = new Date();
+            const now2 = /* @__PURE__ */ new Date();
             for (const cookie of cookies) {
               cookie.lastAccessed = now2;
             }
@@ -25373,12 +25395,18 @@ var require_cookie = __commonJS({
           type = null;
         }
         const serialized = {
+          // The version of tough-cookie that serialized this jar. Generally a good
+          // practice since future versions can make data import decisions based on
+          // known past behavior. When/if this matters, use `semver`.
           version: `tough-cookie@${VERSION}`,
+          // add the store type, to make humans happy:
           storeType: type,
+          // CookieJar configuration:
           rejectPublicSuffixes: !!this.rejectPublicSuffixes,
           enableLooseMode: !!this.enableLooseMode,
           allowSpecialUseDomain: !!this.allowSpecialUseDomain,
           prefixSecurity: getNormalizedPrefixSecurity(this.prefixSecurity),
+          // this gets filled from getAllCookies:
           cookies: []
         };
         if (!(this.store.getAllCookies && typeof this.store.getAllCookies === "function")) {
@@ -25403,6 +25431,7 @@ var require_cookie = __commonJS({
       toJSON() {
         return this.serializeSync();
       }
+      // use the class method CookieJar.deserialize instead of calling this directly
       _importCookies(serialized, cb) {
         let cookies = serialized.cookies;
         if (!cookies || !Array.isArray(cookies)) {
@@ -25568,7 +25597,7 @@ var require_cookie = __commonJS({
     exports.MemoryCookieStore = MemoryCookieStore;
     exports.parseDate = parseDate;
     exports.formatDate = formatDate;
-    exports.parse = parse;
+    exports.parse = parse3;
     exports.fromJSON = fromJSON;
     exports.domainMatch = domainMatch;
     exports.defaultPath = defaultPath;
@@ -34793,7 +34822,9 @@ var require_form_data = __commonJS({
       var contentType = this._getContentType(value, options);
       var contents = "";
       var headers = {
+        // add custom disposition as third element or keep it two elements if not
         "Content-Disposition": ["form-data", 'name="' + field + '"'].concat(contentDisposition || []),
+        // if no content type. allow it to be empty array
         "Content-Type": [].concat(contentType || [])
       };
       if (typeof options.header == "object") {
@@ -36121,7 +36152,9 @@ var require_url_state_machine = __commonJS({
           this.url.fragment = "";
           this.state = "fragment";
         } else {
-          if (this.input.length - this.pointer - 1 === 0 || !isWindowsDriveLetterCodePoints(c, this.input[this.pointer + 1]) || this.input.length - this.pointer - 1 >= 2 && !fileOtherwiseCodePoints.has(this.input[this.pointer + 2])) {
+          if (this.input.length - this.pointer - 1 === 0 || // remaining consists of 0 code points
+          !isWindowsDriveLetterCodePoints(c, this.input[this.pointer + 1]) || this.input.length - this.pointer - 1 >= 2 && // remaining has at least 2 code points
+          !fileOtherwiseCodePoints.has(this.input[this.pointer + 2])) {
             this.url.host = this.base.host;
             this.url.path = this.base.path.slice();
             shortenPath(this.url);
@@ -36584,8 +36617,8 @@ var require_URL = __commonJS({
     var utils = require_utils2();
     var Impl = require_URL_impl();
     var impl = utils.implSymbol;
-    function URL2(url) {
-      if (!this || this[impl] || !(this instanceof URL2)) {
+    function URL4(url) {
+      if (!this || this[impl] || !(this instanceof URL4)) {
         throw new TypeError("Failed to construct 'URL': Please use the 'new' operator, this DOM object constructor cannot be called as a function.");
       }
       if (arguments.length < 1) {
@@ -36601,7 +36634,7 @@ var require_URL = __commonJS({
       }
       module2.exports.setup(this, args);
     }
-    URL2.prototype.toJSON = function toJSON() {
+    URL4.prototype.toJSON = function toJSON() {
       if (!this || !module2.exports.is(this)) {
         throw new TypeError("Illegal invocation");
       }
@@ -36611,7 +36644,7 @@ var require_URL = __commonJS({
       }
       return this[impl].toJSON.apply(this[impl], args);
     };
-    Object.defineProperty(URL2.prototype, "href", {
+    Object.defineProperty(URL4.prototype, "href", {
       get() {
         return this[impl].href;
       },
@@ -36622,20 +36655,20 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    URL2.prototype.toString = function() {
+    URL4.prototype.toString = function() {
       if (!this || !module2.exports.is(this)) {
         throw new TypeError("Illegal invocation");
       }
       return this.href;
     };
-    Object.defineProperty(URL2.prototype, "origin", {
+    Object.defineProperty(URL4.prototype, "origin", {
       get() {
         return this[impl].origin;
       },
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "protocol", {
+    Object.defineProperty(URL4.prototype, "protocol", {
       get() {
         return this[impl].protocol;
       },
@@ -36646,7 +36679,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "username", {
+    Object.defineProperty(URL4.prototype, "username", {
       get() {
         return this[impl].username;
       },
@@ -36657,7 +36690,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "password", {
+    Object.defineProperty(URL4.prototype, "password", {
       get() {
         return this[impl].password;
       },
@@ -36668,7 +36701,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "host", {
+    Object.defineProperty(URL4.prototype, "host", {
       get() {
         return this[impl].host;
       },
@@ -36679,7 +36712,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "hostname", {
+    Object.defineProperty(URL4.prototype, "hostname", {
       get() {
         return this[impl].hostname;
       },
@@ -36690,7 +36723,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "port", {
+    Object.defineProperty(URL4.prototype, "port", {
       get() {
         return this[impl].port;
       },
@@ -36701,7 +36734,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "pathname", {
+    Object.defineProperty(URL4.prototype, "pathname", {
       get() {
         return this[impl].pathname;
       },
@@ -36712,7 +36745,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "search", {
+    Object.defineProperty(URL4.prototype, "search", {
       get() {
         return this[impl].search;
       },
@@ -36723,7 +36756,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL2.prototype, "hash", {
+    Object.defineProperty(URL4.prototype, "hash", {
       get() {
         return this[impl].hash;
       },
@@ -36739,7 +36772,7 @@ var require_URL = __commonJS({
         return !!obj && obj[impl] instanceof Impl.implementation;
       },
       create(constructorArgs, privateData) {
-        let obj = Object.create(URL2.prototype);
+        let obj = Object.create(URL4.prototype);
         this.setup(obj, constructorArgs, privateData);
         return obj;
       },
@@ -36750,10 +36783,10 @@ var require_URL = __commonJS({
         obj[impl] = new Impl.implementation(constructorArgs, privateData);
         obj[impl][utils.wrapperSymbol] = obj;
       },
-      interface: URL2,
+      interface: URL4,
       expose: {
-        Window: { URL: URL2 },
-        Worker: { URL: URL2 }
+        Window: { URL: URL4 },
+        Worker: { URL: URL4 }
       }
     };
   }
@@ -36952,15 +36985,26 @@ var require_lib4 = __commonJS({
       get bodyUsed() {
         return this[INTERNALS].disturbed;
       },
+      /**
+       * Decode response as ArrayBuffer
+       *
+       * @return  Promise
+       */
       arrayBuffer() {
         return consumeBody.call(this).then(function(buf) {
           return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
         });
       },
+      /**
+       * Return raw response as Blob
+       *
+       * @return Promise
+       */
       blob() {
         let ct = this.headers && this.headers.get("content-type") || "";
         return consumeBody.call(this).then(function(buf) {
           return Object.assign(
+            // Prevent copying
             new Blob2([], {
               type: ct.toLowerCase()
             }),
@@ -36970,6 +37014,11 @@ var require_lib4 = __commonJS({
           );
         });
       },
+      /**
+       * Decode response as json
+       *
+       * @return  Promise
+       */
       json() {
         var _this2 = this;
         return consumeBody.call(this).then(function(buffer) {
@@ -36980,14 +37029,30 @@ var require_lib4 = __commonJS({
           }
         });
       },
+      /**
+       * Decode response as text
+       *
+       * @return  Promise
+       */
       text() {
         return consumeBody.call(this).then(function(buffer) {
           return buffer.toString();
         });
       },
+      /**
+       * Decode response as buffer (non-spec api)
+       *
+       * @return  Promise
+       */
       buffer() {
         return consumeBody.call(this);
       },
+      /**
+       * Decode response as text, while automatically detecting the encoding and
+       * trying to decode to UTF-8 (non-spec api)
+       *
+       * @return  Promise
+       */
       textConverted() {
         var _this3 = this;
         return consumeBody.call(this).then(function(buffer) {
@@ -37171,7 +37236,8 @@ var require_lib4 = __commonJS({
       } else if (Buffer.isBuffer(body)) {
         return body.length;
       } else if (body && typeof body.getLengthSync === "function") {
-        if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
+        if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || // 1.x
+        body.hasKnownLength && body.hasKnownLength()) {
           return body.getLengthSync();
         }
         return null;
@@ -37218,6 +37284,12 @@ var require_lib4 = __commonJS({
     }
     var MAP = Symbol("map");
     var Headers = class {
+      /**
+       * Headers class
+       *
+       * @param   Object  headers  Response headers
+       * @return  Void
+       */
       constructor() {
         let init = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
         this[MAP] = /* @__PURE__ */ Object.create(null);
@@ -37262,6 +37334,12 @@ var require_lib4 = __commonJS({
           throw new TypeError("Provided initializer must be an object");
         }
       }
+      /**
+       * Return combined header value given name
+       *
+       * @param   String  name  Header name
+       * @return  Mixed
+       */
       get(name) {
         name = `${name}`;
         validateName(name);
@@ -37271,6 +37349,13 @@ var require_lib4 = __commonJS({
         }
         return this[MAP][key].join(", ");
       }
+      /**
+       * Iterate over all headers
+       *
+       * @param   Function  callback  Executed for each item with parameters (value, name, thisArg)
+       * @param   Boolean   thisArg   `this` context for callback function
+       * @return  Void
+       */
       forEach(callback) {
         let thisArg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
         let pairs = getHeaders(this);
@@ -37283,6 +37368,13 @@ var require_lib4 = __commonJS({
           i++;
         }
       }
+      /**
+       * Overwrite header values given name
+       *
+       * @param   String  name   Header name
+       * @param   String  value  Header value
+       * @return  Void
+       */
       set(name, value) {
         name = `${name}`;
         value = `${value}`;
@@ -37291,6 +37383,13 @@ var require_lib4 = __commonJS({
         const key = find(this[MAP], name);
         this[MAP][key !== void 0 ? key : name] = [value];
       }
+      /**
+       * Append a value onto existing header
+       *
+       * @param   String  name   Header name
+       * @param   String  value  Header value
+       * @return  Void
+       */
       append(name, value) {
         name = `${name}`;
         value = `${value}`;
@@ -37303,11 +37402,23 @@ var require_lib4 = __commonJS({
           this[MAP][name] = [value];
         }
       }
+      /**
+       * Check for header name existence
+       *
+       * @param   String   name  Header name
+       * @return  Boolean
+       */
       has(name) {
         name = `${name}`;
         validateName(name);
         return find(this[MAP], name) !== void 0;
       }
+      /**
+       * Delete all header values given name
+       *
+       * @param   String  name  Header name
+       * @return  Void
+       */
       delete(name) {
         name = `${name}`;
         validateName(name);
@@ -37316,15 +37427,37 @@ var require_lib4 = __commonJS({
           delete this[MAP][key];
         }
       }
+      /**
+       * Return raw headers (non-spec api)
+       *
+       * @return  Object
+       */
       raw() {
         return this[MAP];
       }
+      /**
+       * Get an iterator on keys.
+       *
+       * @return  Iterator
+       */
       keys() {
         return createHeadersIterator(this, "key");
       }
+      /**
+       * Get an iterator on values.
+       *
+       * @return  Iterator
+       */
       values() {
         return createHeadersIterator(this, "value");
       }
+      /**
+       * Get an iterator on entries.
+       *
+       * This is the default iterator of the Headers object.
+       *
+       * @return  Iterator
+       */
       [Symbol.iterator]() {
         return createHeadersIterator(this, "key+value");
       }
@@ -37456,6 +37589,9 @@ var require_lib4 = __commonJS({
       get status() {
         return this[INTERNALS$1].status;
       }
+      /**
+       * Convenience property representing if the request ended normally
+       */
       get ok() {
         return this[INTERNALS$1].status >= 200 && this[INTERNALS$1].status < 300;
       }
@@ -37468,6 +37604,11 @@ var require_lib4 = __commonJS({
       get headers() {
         return this[INTERNALS$1].headers;
       }
+      /**
+       * Clone this response
+       *
+       * @return  Response
+       */
       clone() {
         return new Response(clone(this), {
           url: this.url,
@@ -37496,12 +37637,12 @@ var require_lib4 = __commonJS({
       configurable: true
     });
     var INTERNALS$2 = Symbol("Request internals");
-    var URL2 = Url.URL || whatwgUrl.URL;
+    var URL4 = Url.URL || whatwgUrl.URL;
     var parse_url = Url.parse;
     var format_url = Url.format;
     function parseURL(urlStr) {
       if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
-        urlStr = new URL2(urlStr).toString();
+        urlStr = new URL4(urlStr).toString();
       }
       return parse_url(urlStr);
     }
@@ -37577,6 +37718,11 @@ var require_lib4 = __commonJS({
       get signal() {
         return this[INTERNALS$2].signal;
       }
+      /**
+       * Clone this request
+       *
+       * @return  Request
+       */
       clone() {
         return new Request(this);
       }
@@ -37864,7 +38010,7 @@ var require_globalThis = __commonJS({
 var require_node = __commonJS({
   "node_modules/@opentelemetry/api/build/src/platform/node/index.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -37875,13 +38021,13 @@ var require_node = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+    var __exportStar2 = exports && exports.__exportStar || function(m, exports2) {
       for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p))
-          __createBinding(exports2, m, p);
+          __createBinding2(exports2, m, p);
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    __exportStar(require_globalThis(), exports);
+    __exportStar2(require_globalThis(), exports);
   }
 });
 
@@ -37889,7 +38035,7 @@ var require_node = __commonJS({
 var require_platform = __commonJS({
   "node_modules/@opentelemetry/api/build/src/platform/index.js"(exports) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding2 = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
@@ -37900,18 +38046,18 @@ var require_platform = __commonJS({
         k2 = k;
       o[k2] = m[k];
     });
-    var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+    var __exportStar2 = exports && exports.__exportStar || function(m, exports2) {
       for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p))
-          __createBinding(exports2, m, p);
+          __createBinding2(exports2, m, p);
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    __exportStar(require_node(), exports);
+    __exportStar2(require_node(), exports);
   }
 });
 
 // node_modules/@opentelemetry/api/build/src/version.js
-var require_version4 = __commonJS({
+var require_version2 = __commonJS({
   "node_modules/@opentelemetry/api/build/src/version.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -37926,7 +38072,7 @@ var require_semver2 = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.isCompatible = exports._makeCompatibilityCheck = void 0;
-    var version_1 = require_version4();
+    var version_1 = require_version2();
     var re = /^(\d+)\.(\d+)\.(\d+)(-(.+))?$/;
     function _makeCompatibilityCheck(ownVersion) {
       const acceptedVersions = /* @__PURE__ */ new Set([ownVersion]);
@@ -38001,7 +38147,7 @@ var require_global_utils = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unregisterGlobal = exports.getGlobal = exports.registerGlobal = void 0;
     var platform_1 = require_platform();
-    var version_1 = require_version4();
+    var version_1 = require_version2();
     var semver_1 = require_semver2();
     var major = version_1.VERSION.split(".")[0];
     var GLOBAL_OPENTELEMETRY_API_KEY = Symbol.for(`opentelemetry.js.api.${major}`);
@@ -38150,6 +38296,10 @@ var require_diag = __commonJS({
     var global_utils_1 = require_global_utils();
     var API_NAME = "diag";
     var DiagAPI = class {
+      /**
+       * Private internal constructor
+       * @private
+       */
       constructor() {
         function _logProxy(funcName) {
           return function(...args) {
@@ -38194,6 +38344,7 @@ var require_diag = __commonJS({
         self2.warn = _logProxy("warn");
         self2.error = _logProxy("error");
       }
+      /** Get the singleton instance of the DiagAPI API */
       static instance() {
         if (!this._instance) {
           this._instance = new DiagAPI();
@@ -38301,6 +38452,11 @@ var require_context = __commonJS({
     }
     exports.createContextKey = createContextKey;
     var BaseContext = class {
+      /**
+       * Construct a new context which inherits values from an optional parent context.
+       *
+       * @param parentContext a context from which to inherit values
+       */
       constructor(parentContext) {
         const self2 = this;
         self2._currentContext = parentContext ? new Map(parentContext) : /* @__PURE__ */ new Map();
@@ -38367,26 +38523,50 @@ var require_NoopMeter = __commonJS({
     var NoopMeter = class {
       constructor() {
       }
+      /**
+       * @see {@link Meter.createHistogram}
+       */
       createHistogram(_name, _options) {
         return exports.NOOP_HISTOGRAM_METRIC;
       }
+      /**
+       * @see {@link Meter.createCounter}
+       */
       createCounter(_name, _options) {
         return exports.NOOP_COUNTER_METRIC;
       }
+      /**
+       * @see {@link Meter.createUpDownCounter}
+       */
       createUpDownCounter(_name, _options) {
         return exports.NOOP_UP_DOWN_COUNTER_METRIC;
       }
+      /**
+       * @see {@link Meter.createObservableGauge}
+       */
       createObservableGauge(_name, _options) {
         return exports.NOOP_OBSERVABLE_GAUGE_METRIC;
       }
+      /**
+       * @see {@link Meter.createObservableCounter}
+       */
       createObservableCounter(_name, _options) {
         return exports.NOOP_OBSERVABLE_COUNTER_METRIC;
       }
+      /**
+       * @see {@link Meter.createObservableUpDownCounter}
+       */
       createObservableUpDownCounter(_name, _options) {
         return exports.NOOP_OBSERVABLE_UP_DOWN_COUNTER_METRIC;
       }
+      /**
+       * @see {@link Meter.addBatchObservableCallback}
+       */
       addBatchObservableCallback(_callback, _observables) {
       }
+      /**
+       * @see {@link Meter.removeBatchObservableCallback}
+       */
       removeBatchObservableCallback(_callback) {
       }
     };
@@ -38524,29 +38704,54 @@ var require_context2 = __commonJS({
     var API_NAME = "context";
     var NOOP_CONTEXT_MANAGER = new NoopContextManager_1.NoopContextManager();
     var ContextAPI = class {
+      /** Empty private constructor prevents end users from constructing a new instance of the API */
       constructor() {
       }
+      /** Get the singleton instance of the Context API */
       static getInstance() {
         if (!this._instance) {
           this._instance = new ContextAPI();
         }
         return this._instance;
       }
+      /**
+       * Set the current context manager.
+       *
+       * @returns true if the context manager was successfully registered, else false
+       */
       setGlobalContextManager(contextManager) {
         return (0, global_utils_1.registerGlobal)(API_NAME, contextManager, diag_1.DiagAPI.instance());
       }
+      /**
+       * Get the currently active context
+       */
       active() {
         return this._getContextManager().active();
       }
+      /**
+       * Execute a function with an active context
+       *
+       * @param context context to be active during function execution
+       * @param fn function to execute in a context
+       * @param thisArg optional receiver to be used for calling fn
+       * @param args optional arguments forwarded to fn
+       */
       with(context, fn, thisArg, ...args) {
         return this._getContextManager().with(context, fn, thisArg, ...args);
       }
+      /**
+       * Bind a context to a target function or event emitter
+       *
+       * @param context context to bind to the event emitter or function. Defaults to the currently active context
+       * @param target function or event emitter to bind
+       */
       bind(context, target) {
         return this._getContextManager().bind(context, target);
       }
       _getContextManager() {
         return (0, global_utils_1.getGlobal)(API_NAME) || NOOP_CONTEXT_MANAGER;
       }
+      /** Disable and remove the global context manager */
       disable() {
         this._getContextManager().disable();
         (0, global_utils_1.unregisterGlobal)(API_NAME, diag_1.DiagAPI.instance());
@@ -38598,29 +38803,38 @@ var require_NonRecordingSpan = __commonJS({
       constructor(_spanContext = invalid_span_constants_1.INVALID_SPAN_CONTEXT) {
         this._spanContext = _spanContext;
       }
+      // Returns a SpanContext.
       spanContext() {
         return this._spanContext;
       }
+      // By default does nothing
       setAttribute(_key, _value) {
         return this;
       }
+      // By default does nothing
       setAttributes(_attributes) {
         return this;
       }
+      // By default does nothing
       addEvent(_name, _attributes) {
         return this;
       }
+      // By default does nothing
       setStatus(_status) {
         return this;
       }
+      // By default does nothing
       updateName(_name) {
         return this;
       }
+      // By default does nothing
       end(_endTime) {
       }
+      // isRecording always returns false for NonRecordingSpan.
       isRecording() {
         return false;
       }
+      // By default does nothing
       recordException(_exception, _time) {
       }
     };
@@ -38707,6 +38921,7 @@ var require_NoopTracer = __commonJS({
     var spancontext_utils_1 = require_spancontext_utils();
     var contextApi = context_1.ContextAPI.getInstance();
     var NoopTracer = class {
+      // startSpan starts a noop span.
       startSpan(name, options, context) {
         const root = Boolean(options === null || options === void 0 ? void 0 : options.root);
         if (root) {
@@ -38757,10 +38972,10 @@ var require_ProxyTracer = __commonJS({
     var NoopTracer_1 = require_NoopTracer();
     var NOOP_TRACER = new NoopTracer_1.NoopTracer();
     var ProxyTracer = class {
-      constructor(_provider, name, version, options) {
+      constructor(_provider, name, version3, options) {
         this._provider = _provider;
         this.name = name;
-        this.version = version;
+        this.version = version3;
         this.options = options;
       }
       startSpan(name, options, context) {
@@ -38770,6 +38985,10 @@ var require_ProxyTracer = __commonJS({
         const tracer = this._getTracer();
         return Reflect.apply(tracer.startActiveSpan, tracer, arguments);
       }
+      /**
+       * Try to get a tracer from the proxy tracer provider.
+       * If the proxy tracer provider has no delegate, return a noop tracer.
+       */
       _getTracer() {
         if (this._delegate) {
           return this._delegate;
@@ -38812,20 +39031,26 @@ var require_ProxyTracerProvider = __commonJS({
     var NoopTracerProvider_1 = require_NoopTracerProvider();
     var NOOP_TRACER_PROVIDER = new NoopTracerProvider_1.NoopTracerProvider();
     var ProxyTracerProvider = class {
-      getTracer(name, version, options) {
+      /**
+       * Get a {@link ProxyTracer}
+       */
+      getTracer(name, version3, options) {
         var _a;
-        return (_a = this.getDelegateTracer(name, version, options)) !== null && _a !== void 0 ? _a : new ProxyTracer_1.ProxyTracer(this, name, version, options);
+        return (_a = this.getDelegateTracer(name, version3, options)) !== null && _a !== void 0 ? _a : new ProxyTracer_1.ProxyTracer(this, name, version3, options);
       }
       getDelegate() {
         var _a;
         return (_a = this._delegate) !== null && _a !== void 0 ? _a : NOOP_TRACER_PROVIDER;
       }
+      /**
+       * Set the delegate tracer provider
+       */
       setDelegate(delegate) {
         this._delegate = delegate;
       }
-      getDelegateTracer(name, version, options) {
+      getDelegateTracer(name, version3, options) {
         var _a;
-        return (_a = this._delegate) === null || _a === void 0 ? void 0 : _a.getTracer(name, version, options);
+        return (_a = this._delegate) === null || _a === void 0 ? void 0 : _a.getTracer(name, version3, options);
       }
     };
     exports.ProxyTracerProvider = ProxyTracerProvider;
@@ -39038,23 +39263,36 @@ var require_metrics = __commonJS({
     var diag_1 = require_diag();
     var API_NAME = "metrics";
     var MetricsAPI = class {
+      /** Empty private constructor prevents end users from constructing a new instance of the API */
       constructor() {
       }
+      /** Get the singleton instance of the Metrics API */
       static getInstance() {
         if (!this._instance) {
           this._instance = new MetricsAPI();
         }
         return this._instance;
       }
+      /**
+       * Set the current global meter provider.
+       * Returns true if the meter provider was successfully registered, else false.
+       */
       setGlobalMeterProvider(provider) {
         return (0, global_utils_1.registerGlobal)(API_NAME, provider, diag_1.DiagAPI.instance());
       }
+      /**
+       * Returns the global meter provider.
+       */
       getMeterProvider() {
         return (0, global_utils_1.getGlobal)(API_NAME) || NoopMeterProvider_1.NOOP_METER_PROVIDER;
       }
-      getMeter(name, version, options) {
-        return this.getMeterProvider().getMeter(name, version, options);
+      /**
+       * Returns a meter from the global meter provider.
+       */
+      getMeter(name, version3, options) {
+        return this.getMeterProvider().getMeter(name, version3, options);
       }
+      /** Remove the global meter provider */
       disable() {
         (0, global_utils_1.unregisterGlobal)(API_NAME, diag_1.DiagAPI.instance());
       }
@@ -39081,8 +39319,10 @@ var require_NoopTextMapPropagator = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.NoopTextMapPropagator = void 0;
     var NoopTextMapPropagator = class {
+      /** Noop inject function does nothing */
       inject(_context, _carrier) {
       }
+      /** Noop extract function does nothing and returns the input context */
       extract(context, _carrier) {
         return context;
       }
@@ -39132,30 +39372,55 @@ var require_propagation = __commonJS({
     var API_NAME = "propagation";
     var NOOP_TEXT_MAP_PROPAGATOR = new NoopTextMapPropagator_1.NoopTextMapPropagator();
     var PropagationAPI = class {
+      /** Empty private constructor prevents end users from constructing a new instance of the API */
       constructor() {
         this.createBaggage = utils_1.createBaggage;
         this.getBaggage = context_helpers_1.getBaggage;
         this.setBaggage = context_helpers_1.setBaggage;
         this.deleteBaggage = context_helpers_1.deleteBaggage;
       }
+      /** Get the singleton instance of the Propagator API */
       static getInstance() {
         if (!this._instance) {
           this._instance = new PropagationAPI();
         }
         return this._instance;
       }
+      /**
+       * Set the current propagator.
+       *
+       * @returns true if the propagator was successfully registered, else false
+       */
       setGlobalPropagator(propagator) {
         return (0, global_utils_1.registerGlobal)(API_NAME, propagator, diag_1.DiagAPI.instance());
       }
+      /**
+       * Inject context into a carrier to be propagated inter-process
+       *
+       * @param context Context carrying tracing data to inject
+       * @param carrier carrier to inject context into
+       * @param setter Function used to set values on the carrier
+       */
       inject(context, carrier, setter = TextMapPropagator_1.defaultTextMapSetter) {
         return this._getGlobalPropagator().inject(context, carrier, setter);
       }
+      /**
+       * Extract context from a carrier
+       *
+       * @param context Context which the newly created context will inherit from
+       * @param carrier Carrier to extract context from
+       * @param getter Function used to extract keys from a carrier
+       */
       extract(context, carrier, getter = TextMapPropagator_1.defaultTextMapGetter) {
         return this._getGlobalPropagator().extract(context, carrier, getter);
       }
+      /**
+       * Return a list of all fields which may be used by the propagator.
+       */
       fields() {
         return this._getGlobalPropagator().fields();
       }
+      /** Remove the global propagator */
       disable() {
         (0, global_utils_1.unregisterGlobal)(API_NAME, diag_1.DiagAPI.instance());
       }
@@ -39191,6 +39456,7 @@ var require_trace = __commonJS({
     var diag_1 = require_diag();
     var API_NAME = "trace";
     var TraceAPI = class {
+      /** Empty private constructor prevents end users from constructing a new instance of the API */
       constructor() {
         this._proxyTracerProvider = new ProxyTracerProvider_1.ProxyTracerProvider();
         this.wrapSpanContext = spancontext_utils_1.wrapSpanContext;
@@ -39202,12 +39468,18 @@ var require_trace = __commonJS({
         this.setSpan = context_utils_1.setSpan;
         this.setSpanContext = context_utils_1.setSpanContext;
       }
+      /** Get the singleton instance of the Trace API */
       static getInstance() {
         if (!this._instance) {
           this._instance = new TraceAPI();
         }
         return this._instance;
       }
+      /**
+       * Set the current global tracer.
+       *
+       * @returns true if the tracer provider was successfully registered, else false
+       */
       setGlobalTracerProvider(provider) {
         const success = (0, global_utils_1.registerGlobal)(API_NAME, this._proxyTracerProvider, diag_1.DiagAPI.instance());
         if (success) {
@@ -39215,12 +39487,19 @@ var require_trace = __commonJS({
         }
         return success;
       }
+      /**
+       * Returns the global tracer provider.
+       */
       getTracerProvider() {
         return (0, global_utils_1.getGlobal)(API_NAME) || this._proxyTracerProvider;
       }
-      getTracer(name, version) {
-        return this.getTracerProvider().getTracer(name, version);
+      /**
+       * Returns a tracer from the global tracer provider.
+       */
+      getTracer(name, version3) {
+        return this.getTracerProvider().getTracer(name, version3);
       }
+      /** Remove the global tracer provider */
       disable() {
         (0, global_utils_1.unregisterGlobal)(API_NAME, diag_1.DiagAPI.instance());
         this._proxyTracerProvider = new ProxyTracerProvider_1.ProxyTracerProvider();
@@ -39360,7 +39639,7 @@ var require_src = __commonJS({
 });
 
 // node_modules/@azure/core-tracing/dist/index.js
-var require_dist7 = __commonJS({
+var require_dist5 = __commonJS({
   "node_modules/@azure/core-tracing/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -39387,8 +39666,8 @@ var require_dist7 = __commonJS({
     function isSpanContextValid(context2) {
       return api.trace.isSpanContextValid(context2);
     }
-    function getTracer(name, version) {
-      return api.trace.getTracer(name || "azure/core-tracing", version);
+    function getTracer(name, version3) {
+      return api.trace.getTracer(name || "azure/core-tracing", version3);
     }
     var context = api.context;
     (function(SpanStatusCode) {
@@ -39440,8 +39719,8 @@ var require_dist7 = __commonJS({
       if (parts.length !== 4) {
         return;
       }
-      const [version, traceId, spanId, traceOptions] = parts;
-      if (version !== VERSION) {
+      const [version3, traceId, spanId, traceOptions] = parts;
+      if (version3 !== VERSION) {
         return;
       }
       const traceFlags = parseInt(traceOptions, 16);
@@ -39482,27 +39761,27 @@ var require_dist7 = __commonJS({
 });
 
 // node_modules/@azure/core-http/dist/index.js
-var require_dist8 = __commonJS({
+var require_dist6 = __commonJS({
   "node_modules/@azure/core-http/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var uuid = require_dist2();
+    var uuid = (init_esm_node2(), __toCommonJS(esm_node_exports2));
     var util = require("util");
-    var tslib = require_tslib();
+    var tslib = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var xml2js = require_xml2js();
-    var coreUtil = require_dist4();
-    var logger$1 = require_dist5();
-    var coreAuth = require_dist6();
+    var coreUtil = require_dist2();
+    var logger$1 = require_dist3();
+    var coreAuth = require_dist4();
     var os = require("os");
     var http = require("http");
     var https = require("https");
     var tough = require_cookie();
-    var abortController = require_dist3();
+    var abortController = require_dist();
     var tunnel = require_tunnel2();
     var stream = require("stream");
     var FormData = require_form_data();
     var node_fetch = require_lib4();
-    var coreTracing = require_dist7();
+    var coreTracing = require_dist5();
     function _interopDefaultLegacy(e) {
       return e && typeof e === "object" && "default" in e ? e : { "default": e };
     }
@@ -39555,27 +39834,52 @@ var require_dist8 = __commonJS({
           }
         }
       }
+      /**
+       * Set a header in this collection with the provided name and value. The name is
+       * case-insensitive.
+       * @param headerName - The name of the header to set. This value is case-insensitive.
+       * @param headerValue - The value of the header to set.
+       */
       set(headerName, headerValue) {
         this._headersMap[getHeaderKey(headerName)] = {
           name: headerName,
           value: headerValue.toString()
         };
       }
+      /**
+       * Get the header value for the provided header name, or undefined if no header exists in this
+       * collection with the provided name.
+       * @param headerName - The name of the header.
+       */
       get(headerName) {
         const header = this._headersMap[getHeaderKey(headerName)];
         return !header ? void 0 : header.value;
       }
+      /**
+       * Get whether or not this header collection contains a header entry for the provided header name.
+       */
       contains(headerName) {
         return !!this._headersMap[getHeaderKey(headerName)];
       }
+      /**
+       * Remove the header with the provided headerName. Return whether or not the header existed and
+       * was removed.
+       * @param headerName - The name of the header to remove.
+       */
       remove(headerName) {
         const result = this.contains(headerName);
         delete this._headersMap[getHeaderKey(headerName)];
         return result;
       }
+      /**
+       * Get the headers that are contained this collection as an object.
+       */
       rawHeaders() {
         return this.toJson({ preserveCase: true });
       }
+      /**
+       * Get the headers that are contained in this collection as an array.
+       */
       headersArray() {
         const headers = [];
         for (const headerKey in this._headersMap) {
@@ -39583,6 +39887,9 @@ var require_dist8 = __commonJS({
         }
         return headers;
       }
+      /**
+       * Get the header names that are contained in this collection.
+       */
       headerNames() {
         const headerNames = [];
         const headers = this.headersArray();
@@ -39591,6 +39898,9 @@ var require_dist8 = __commonJS({
         }
         return headerNames;
       }
+      /**
+       * Get the header values that are contained in this collection.
+       */
       headerValues() {
         const headerValues = [];
         const headers = this.headersArray();
@@ -39599,6 +39909,9 @@ var require_dist8 = __commonJS({
         }
         return headerValues;
       }
+      /**
+       * Get the JSON object representation of this HTTP header collection.
+       */
       toJson(options = {}) {
         const result = {};
         if (options.preserveCase) {
@@ -39614,9 +39927,15 @@ var require_dist8 = __commonJS({
         }
         return result;
       }
+      /**
+       * Get the string representation of this HTTP header collection.
+       */
       toString() {
         return JSON.stringify(this.toJson({ preserveCase: true }));
       }
+      /**
+       * Create a deep clone/copy of this HttpHeaders collection.
+       */
       clone() {
         const resultPreservingCasing = {};
         for (const headerKey in this._headersMap) {
@@ -39637,14 +39956,38 @@ var require_dist8 = __commonJS({
       return Buffer.from(value, "base64");
     }
     var Constants = {
+      /**
+       * The core-http version
+       */
       coreHttpVersion: "2.3.1",
+      /**
+       * Specifies HTTP.
+       */
       HTTP: "http:",
+      /**
+       * Specifies HTTPS.
+       */
       HTTPS: "https:",
+      /**
+       * Specifies HTTP Proxy.
+       */
       HTTP_PROXY: "HTTP_PROXY",
+      /**
+       * Specifies HTTPS Proxy.
+       */
       HTTPS_PROXY: "HTTPS_PROXY",
+      /**
+       * Specifies NO Proxy.
+       */
       NO_PROXY: "NO_PROXY",
+      /**
+       * Specifies ALL Proxy.
+       */
       ALL_PROXY: "ALL_PROXY",
       HttpConstants: {
+        /**
+         * Http Verbs
+         */
         HttpVerbs: {
           PUT: "PUT",
           GET: "GET",
@@ -39659,10 +40002,24 @@ var require_dist8 = __commonJS({
           ServiceUnavailable: 503
         }
       },
+      /**
+       * Defines constants for use with HTTP headers.
+       */
       HeaderConstants: {
+        /**
+         * The Authorization header.
+         */
         AUTHORIZATION: "authorization",
         AUTHORIZATION_SCHEME: "Bearer",
+        /**
+         * The Retry-After response-header field can be used with a 503 (Service
+         * Unavailable) or 349 (Too Many Requests) responses to indicate how long
+         * the service is expected to be unavailable to the requesting client.
+         */
         RETRY_AFTER: "Retry-After",
+        /**
+         * The UserAgent header.
+         */
         USER_AGENT: "User-Agent"
       }
     };
@@ -39769,6 +40126,13 @@ var require_dist8 = __commonJS({
         this.modelMappers = modelMappers;
         this.isXML = isXML;
       }
+      /**
+       * Validates constraints, if any. This function will throw if the provided value does not respect those constraints.
+       * @param mapper - The definition of data models.
+       * @param value - The value.
+       * @param objectName - Name of the object. Used in the error messages.
+       * @deprecated Removing the constraints validation on client side.
+       */
       validateConstraints(mapper, value, objectName) {
         const failValidation = (constraintName, constraintValue) => {
           throw new Error(`"${objectName}" with value "${value}" should satisfy the constraint "${constraintName}": ${constraintValue}.`);
@@ -39815,6 +40179,15 @@ var require_dist8 = __commonJS({
           }
         }
       }
+      /**
+       * Serialize the given object based on its metadata defined in the mapper.
+       *
+       * @param mapper - The mapper which defines the metadata of the serializable object.
+       * @param object - A valid Javascript object to be serialized.
+       * @param objectName - Name of the serialized object.
+       * @param options - additional options to deserialization.
+       * @returns A valid serialized Javascript object.
+       */
       serialize(mapper, object, objectName, options = {}) {
         var _a, _b, _c;
         const updatedOptions = {
@@ -39869,6 +40242,15 @@ var require_dist8 = __commonJS({
         }
         return payload;
       }
+      /**
+       * Deserialize the given object based on its metadata defined in the mapper.
+       *
+       * @param mapper - The mapper which defines the metadata of the serializable object.
+       * @param responseBody - A valid Javascript entity to be deserialized.
+       * @param objectName - Name of the deserialized object.
+       * @param options - Controls behavior of XML parser and builder.
+       * @returns A valid deserialized Javascript object.
+       */
       deserialize(mapper, responseBody, objectName, options = {}) {
         var _a, _b, _c;
         const updatedOptions = {
@@ -40491,6 +40873,11 @@ var require_dist8 = __commonJS({
         this.decompressResponse = decompressResponse;
         this.requestId = this.headers.get("x-ms-client-request-id") || generateUuid();
       }
+      /**
+       * Validates that the required properties such as method, url, headers["Content-Type"],
+       * headers["accept-language"] are defined. It will throw an error if one of the above
+       * mentioned properties are not defined.
+       */
       validateRequestProperties() {
         if (!this.method) {
           throw new Error("WebResource.method is required.");
@@ -40499,6 +40886,11 @@ var require_dist8 = __commonJS({
           throw new Error("WebResource.url is required.");
         }
       }
+      /**
+       * Prepares the request.
+       * @param options - Options to provide for preparing the request.
+       * @returns Returns the prepared WebResource (HTTP Request) object that needs to be given to the request pipeline.
+       */
       prepare(options) {
         if (!options) {
           throw new Error("options object is required");
@@ -40640,6 +41032,10 @@ var require_dist8 = __commonJS({
         this.onUploadProgress = options.onUploadProgress;
         return this;
       }
+      /**
+       * Clone this WebResource HTTP request object.
+       * @returns The clone of this WebResource HTTP request object.
+       */
       clone() {
         const result = new WebResource(this.url, this.method, this.body, this.query, this.headers && this.headers.clone(), this.streamResponseBody, this.withCredentials, this.abortSignal, this.timeout, this.onUploadProgress, this.onDownloadProgress, this.proxySettings, this.keepAlive, this.decompressResponse, this.streamResponseStatusCodes);
         if (this.formData) {
@@ -40661,12 +41057,23 @@ var require_dist8 = __commonJS({
       constructor() {
         this._rawQuery = {};
       }
+      /**
+       * Get whether or not there any query parameters in this URLQuery.
+       */
       any() {
         return Object.keys(this._rawQuery).length > 0;
       }
+      /**
+       * Get the keys of the query string.
+       */
       keys() {
         return Object.keys(this._rawQuery);
       }
+      /**
+       * Set a query parameter with the provided name and value. If the parameterValue is undefined or
+       * empty, then this will attempt to remove an existing query parameter with the provided
+       * parameterName.
+       */
       set(parameterName, parameterValue) {
         const caseParameterValue = parameterValue;
         if (parameterName) {
@@ -40678,9 +41085,16 @@ var require_dist8 = __commonJS({
           }
         }
       }
+      /**
+       * Get the value of the query parameter with the provided name. If no parameter exists with the
+       * provided parameter name, then undefined will be returned.
+       */
       get(parameterName) {
         return parameterName ? this._rawQuery[parameterName] : void 0;
       }
+      /**
+       * Get the string representation of this query. The return value will not start with a "?".
+       */
       toString() {
         let result = "";
         for (const parameterName in this._rawQuery) {
@@ -40700,6 +41114,9 @@ var require_dist8 = __commonJS({
         }
         return result;
       }
+      /**
+       * Parse a URLQuery from the provided text.
+       */
       static parse(text) {
         const result = new URLQuery();
         if (text) {
@@ -40751,6 +41168,10 @@ var require_dist8 = __commonJS({
       }
     };
     var URLBuilder = class {
+      /**
+       * Set the scheme/protocol for this URL. If the provided scheme contains other parts of a URL
+       * (such as a host, port, path, or query), those parts will be added to this URL as well.
+       */
       setScheme(scheme) {
         if (!scheme) {
           this._scheme = void 0;
@@ -40758,9 +41179,16 @@ var require_dist8 = __commonJS({
           this.set(scheme, "SCHEME");
         }
       }
+      /**
+       * Get the scheme that has been set in this URL.
+       */
       getScheme() {
         return this._scheme;
       }
+      /**
+       * Set the host for this URL. If the provided host contains other parts of a URL (such as a
+       * port, path, or query), those parts will be added to this URL as well.
+       */
       setHost(host) {
         if (!host) {
           this._host = void 0;
@@ -40768,9 +41196,16 @@ var require_dist8 = __commonJS({
           this.set(host, "SCHEME_OR_HOST");
         }
       }
+      /**
+       * Get the host that has been set in this URL.
+       */
       getHost() {
         return this._host;
       }
+      /**
+       * Set the port for this URL. If the provided port contains other parts of a URL (such as a
+       * path or query), those parts will be added to this URL as well.
+       */
       setPort(port) {
         if (port === void 0 || port === null || port === "") {
           this._port = void 0;
@@ -40778,9 +41213,16 @@ var require_dist8 = __commonJS({
           this.set(port.toString(), "PORT");
         }
       }
+      /**
+       * Get the port that has been set in this URL.
+       */
       getPort() {
         return this._port;
       }
+      /**
+       * Set the path for this URL. If the provided path contains a query, then it will be added to
+       * this URL as well.
+       */
       setPath(path) {
         if (!path) {
           this._path = void 0;
@@ -40794,6 +41236,10 @@ var require_dist8 = __commonJS({
           }
         }
       }
+      /**
+       * Append the provided path to this URL's existing path. If the provided path contains a query,
+       * then it will be added to this URL as well.
+       */
       appendPath(path) {
         if (path) {
           let currentPath = this.getPath();
@@ -40809,9 +41255,15 @@ var require_dist8 = __commonJS({
           this.set(path, "PATH");
         }
       }
+      /**
+       * Get the path that has been set in this URL.
+       */
       getPath() {
         return this._path;
       }
+      /**
+       * Set the query in this URL.
+       */
       setQuery(query) {
         if (!query) {
           this._query = void 0;
@@ -40819,6 +41271,11 @@ var require_dist8 = __commonJS({
           this._query = URLQuery.parse(query);
         }
       }
+      /**
+       * Set a query parameter with the provided name and value in this URL's query. If the provided
+       * query parameter value is undefined or empty, then the query parameter will be removed if it
+       * existed.
+       */
       setQueryParameter(queryParameterName, queryParameterValue) {
         if (queryParameterName) {
           if (!this._query) {
@@ -40827,12 +41284,22 @@ var require_dist8 = __commonJS({
           this._query.set(queryParameterName, queryParameterValue);
         }
       }
+      /**
+       * Get the value of the query parameter with the provided query parameter name. If no query
+       * parameter exists with the provided name, then undefined will be returned.
+       */
       getQueryParameterValue(queryParameterName) {
         return this._query ? this._query.get(queryParameterName) : void 0;
       }
+      /**
+       * Get the query in this URL.
+       */
       getQuery() {
         return this._query ? this._query.toString() : void 0;
       }
+      /**
+       * Set the parts of this URL by parsing the provided text using the provided startState.
+       */
       set(text, startState) {
         const tokenizer = new URLTokenizer(text, startState);
         while (tokenizer.next()) {
@@ -40864,6 +41331,10 @@ var require_dist8 = __commonJS({
           }
         }
       }
+      /**
+       * Serializes the URL as a string.
+       * @returns the URL as a string.
+       */
       toString() {
         let result = "";
         if (this._scheme) {
@@ -40886,6 +41357,10 @@ var require_dist8 = __commonJS({
         }
         return result;
       }
+      /**
+       * If the provided searchValue is found in this URLBuilder, then replace it with the provided
+       * replaceValue.
+       */
       replaceAll(searchValue, replaceValue) {
         if (searchValue) {
           this.setScheme(replaceAll(this.getScheme(), searchValue, replaceValue));
@@ -40895,6 +41370,9 @@ var require_dist8 = __commonJS({
           this.setQuery(replaceAll(this.getQuery(), searchValue, replaceValue));
         }
       }
+      /**
+       * Parses a given string URL into a new {@link URLBuilder}.
+       */
       static parse(text) {
         const result = new URLBuilder();
         result.set(text, "SCHEME_OR_HOST");
@@ -40933,9 +41411,16 @@ var require_dist8 = __commonJS({
         this._currentState = state !== void 0 && state !== null ? state : "SCHEME_OR_HOST";
         this._currentIndex = 0;
       }
+      /**
+       * Get the current URLToken this URLTokenizer is pointing at, or undefined if the URLTokenizer
+       * hasn't started or has finished tokenizing.
+       */
       current() {
         return this._currentToken;
       }
+      /**
+       * Advance to the next URLToken and return whether or not a URLToken was found.
+       */
       next() {
         if (!hasCurrentCharacter(this)) {
           this._currentToken = void 0;
@@ -41266,6 +41751,9 @@ var require_dist8 = __commonJS({
         this.response = response;
         Object.setPrototypeOf(this, RestError.prototype);
       }
+      /**
+       * Logging method for util.inspect in Node
+       */
       [custom]() {
         return `RestError: ${this.message} 
  ${errorSanitizer.sanitize(this)}`;
@@ -41316,6 +41804,11 @@ var require_dist8 = __commonJS({
         this.keepAliveAgents = {};
         this.cookieJar = new tough__namespace.CookieJar(void 0, { looseMode: true });
       }
+      /**
+       * Provides minimum viable error handling and the logic that executes the abstract methods.
+       * @param httpRequest - Object representing the outgoing HTTP request.
+       * @returns An object representing the incoming HTTP response.
+       */
       async sendRequest(httpRequest) {
         var _a;
         if (!httpRequest && typeof httpRequest !== "object") {
@@ -41389,6 +41882,9 @@ var require_dist8 = __commonJS({
           body,
           headers: httpRequest.headers.rawHeaders(),
           method: httpRequest.method,
+          // the types for RequestInit are from the browser, which expects AbortSignal to
+          // have `reason` and `throwIfAborted`, but these don't exist on our polyfill
+          // for Node.
           signal: abortController$1.signal,
           redirect: "manual"
         }, platformSpecificRequestInit);
@@ -41486,9 +41982,16 @@ var require_dist8 = __commonJS({
           return isHttps ? https__namespace.globalAgent : http__namespace.globalAgent;
         }
       }
+      /**
+       * Uses `node-fetch` to perform the request.
+       */
+      // eslint-disable-next-line @azure/azure-sdk/ts-apisurface-standardized-verbs
       async fetch(input, init) {
         return node_fetch__default["default"](input, init);
       }
+      /**
+       * Prepares a request based on the provided web resource.
+       */
       async prepareRequest(httpRequest) {
         const requestInit = {};
         if (this.cookieJar && !httpRequest.headers.get("Cookie")) {
@@ -41507,6 +42010,9 @@ var require_dist8 = __commonJS({
         requestInit.compress = httpRequest.decompressResponse;
         return requestInit;
       }
+      /**
+       * Process an HTTP response. Handles persisting a cookie for subsequent requests if the response has a "Set-Cookie" header.
+       */
       async processRequest(operationResponse) {
         if (this.cookieJar) {
           const setCookieHeader = operationResponse.headers.get("Set-Cookie");
@@ -41544,13 +42050,27 @@ var require_dist8 = __commonJS({
       return result;
     }
     var BaseRequestPolicy = class {
+      /**
+       * The main method to implement that manipulates a request/response.
+       */
       constructor(_nextPolicy, _options) {
         this._nextPolicy = _nextPolicy;
         this._options = _options;
       }
+      /**
+       * Get whether or not a log with the provided log level should be logged.
+       * @param logLevel - The log level of the log that will be logged.
+       * @returns Whether or not a log with the provided log level should be logged.
+       */
       shouldLog(logLevel) {
         return this._options.shouldLog(logLevel);
       }
+      /**
+       * Attempt to log the provided message to the provided logger. If no logger was provided or if
+       * the log level does not meat the logger's threshold, then nothing will be logged.
+       * @param logLevel - The log level of this log.
+       * @param message - The message of this log.
+       */
       log(logLevel, message) {
         this._options.log(logLevel, message);
       }
@@ -41559,9 +42079,20 @@ var require_dist8 = __commonJS({
       constructor(_logger) {
         this._logger = _logger;
       }
+      /**
+       * Get whether or not a log with the provided log level should be logged.
+       * @param logLevel - The log level of the log that will be logged.
+       * @returns Whether or not a log with the provided log level should be logged.
+       */
       shouldLog(logLevel) {
         return !!this._logger && logLevel !== exports.HttpPipelineLogLevel.OFF && logLevel <= this._logger.minimumLogLevel;
       }
+      /**
+       * Attempt to log the provided message to the provided logger. If no logger was provided or if
+       * the log level does not meet the logger's threshold, then nothing will be logged.
+       * @param logLevel - The log level of this log.
+       * @param message - The message of this log.
+       */
       log(logLevel, message) {
         if (this._logger && this.shouldLog(logLevel)) {
           this._logger.log(logLevel, message);
@@ -41703,7 +42234,7 @@ var require_dist8 = __commonJS({
         includeRoot: (_b = options.includeRoot) !== null && _b !== void 0 ? _b : false,
         xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY
       };
-      return parse(jsonContentTypes, xmlContentTypes, response, updatedOptions).then((parsedResponse) => {
+      return parse3(jsonContentTypes, xmlContentTypes, response, updatedOptions).then((parsedResponse) => {
         if (!shouldDeserializeResponse(parsedResponse)) {
           return parsedResponse;
         }
@@ -41794,7 +42325,7 @@ var require_dist8 = __commonJS({
       }
       return { error, shouldReturnResponse: false };
     }
-    function parse(jsonContentTypes, xmlContentTypes, operationResponse, opts) {
+    function parse3(jsonContentTypes, xmlContentTypes, operationResponse, opts) {
       var _a;
       const errorHandler = (err) => {
         const msg = `Error "${err}" occurred while parsing the response body - ${operationResponse.bodyAsText}.`;
@@ -41832,10 +42363,23 @@ var require_dist8 = __commonJS({
       };
     }
     var KeepAlivePolicy = class extends BaseRequestPolicy {
+      /**
+       * Creates an instance of KeepAlivePolicy.
+       *
+       * @param nextPolicy -
+       * @param options -
+       * @param keepAliveOptions -
+       */
       constructor(nextPolicy, options, keepAliveOptions) {
         super(nextPolicy, options);
         this.keepAliveOptions = keepAliveOptions;
       }
+      /**
+       * Sends out request.
+       *
+       * @param request -
+       * @returns
+       */
       async sendRequest(request) {
         request.keepAlive = this.keepAliveOptions.enable;
         return this._nextPolicy.sendRequest(request);
@@ -41921,6 +42465,14 @@ var require_dist8 = __commonJS({
       maxRetryDelayInMs: DEFAULT_CLIENT_MAX_RETRY_INTERVAL
     };
     var ExponentialRetryPolicy = class extends BaseRequestPolicy {
+      /**
+       * @param nextPolicy - The next RequestPolicy in the pipeline chain.
+       * @param options - The options for this RequestPolicy.
+       * @param retryCount - The client retry count.
+       * @param retryInterval - The client retry interval, in milliseconds.
+       * @param minRetryInterval - The minimum retry interval, in milliseconds.
+       * @param maxRetryInterval - The maximum retry interval, in milliseconds.
+       */
       constructor(nextPolicy, options, retryCount, retryInterval, maxRetryInterval) {
         super(nextPolicy, options);
         this.retryCount = isNumber(retryCount) ? retryCount : DEFAULT_CLIENT_RETRY_COUNT;
@@ -41977,15 +42529,39 @@ var require_dist8 = __commonJS({
         this.logger = logger$12;
         this.sanitizer = new Sanitizer({ allowedHeaderNames, allowedQueryParameters });
       }
+      /**
+       * Header names whose values will be logged when logging is enabled. Defaults to
+       * Date, traceparent, x-ms-client-request-id, and x-ms-request id.  Any headers
+       * specified in this field will be added to that list.  Any other values will
+       * be written to logs as "REDACTED".
+       * @deprecated Pass these into the constructor instead.
+       */
       get allowedHeaderNames() {
         return this.sanitizer.allowedHeaderNames;
       }
+      /**
+       * Header names whose values will be logged when logging is enabled. Defaults to
+       * Date, traceparent, x-ms-client-request-id, and x-ms-request id.  Any headers
+       * specified in this field will be added to that list.  Any other values will
+       * be written to logs as "REDACTED".
+       * @deprecated Pass these into the constructor instead.
+       */
       set allowedHeaderNames(allowedHeaderNames) {
         this.sanitizer.allowedHeaderNames = allowedHeaderNames;
       }
+      /**
+       * Query string names whose values will be logged when logging is enabled. By default no
+       * query string values are logged.
+       * @deprecated Pass these into the constructor instead.
+       */
       get allowedQueryParameters() {
         return this.sanitizer.allowedQueryParameters;
       }
+      /**
+       * Query string names whose values will be logged when logging is enabled. By default no
+       * query string values are logged.
+       * @deprecated Pass these into the constructor instead.
+       */
       set allowedQueryParameters(allowedQueryParameters) {
         this.sanitizer.allowedQueryParameters = allowedQueryParameters;
       }
@@ -42083,6 +42659,9 @@ var require_dist8 = __commonJS({
         this.addUserAgentHeader(request);
         return this._nextPolicy.sendRequest(request);
       }
+      /**
+       * Adds the user agent header to the outgoing request.
+       */
       addUserAgentHeader(request) {
         if (!request.headers) {
           request.headers = new HttpHeaders();
@@ -42104,6 +42683,7 @@ var require_dist8 = __commonJS({
       forcedRefreshWindowInMs: 1e3,
       retryIntervalInMs: 3e3,
       refreshWindowInMs: 1e3 * 60 * 2
+      // Start refreshing 2m before expiry
     };
     async function beginRefresh(getAccessToken, retryIntervalInMs, timeoutInMs) {
       async function tryGetAccessToken() {
@@ -42133,13 +42713,24 @@ var require_dist8 = __commonJS({
       let token = null;
       const options = Object.assign(Object.assign({}, DEFAULT_CYCLER_OPTIONS), tokenCyclerOptions);
       const cycler = {
+        /**
+         * Produces true if a refresh job is currently in progress.
+         */
         get isRefreshing() {
           return refreshWorker !== null;
         },
+        /**
+         * Produces true if the cycler SHOULD refresh (we are within the refresh
+         * window and not already refreshing)
+         */
         get shouldRefresh() {
           var _a;
           return !cycler.isRefreshing && ((_a = token === null || token === void 0 ? void 0 : token.expiresOnTimestamp) !== null && _a !== void 0 ? _a : 0) - options.refreshWindowInMs < Date.now();
         },
+        /**
+         * Produces true if the cycler MUST refresh (null or nearly-expired
+         * token).
+         */
         get mustRefresh() {
           return token === null || token.expiresOnTimestamp - options.forcedRefreshWindowInMs < Date.now();
         }
@@ -42151,6 +42742,7 @@ var require_dist8 = __commonJS({
           refreshWorker = beginRefresh(
             tryGetAccessToken,
             options.retryIntervalInMs,
+            // If we don't have a token, then we should timeout immediately
             (_a = token === null || token === void 0 ? void 0 : token.expiresOnTimestamp) !== null && _a !== void 0 ? _a : Date.now()
           ).then((_token) => {
             refreshWorker = null;
@@ -42174,7 +42766,11 @@ var require_dist8 = __commonJS({
       };
     }
     function bearerTokenAuthenticationPolicy(credential, scopes) {
-      const getToken = createTokenCycler(credential, scopes);
+      const getToken = createTokenCycler(
+        credential,
+        scopes
+        /* , options */
+      );
       class BearerTokenAuthenticationPolicy extends BaseRequestPolicy {
         constructor(nextPolicy, options) {
           super(nextPolicy, options);
@@ -42207,9 +42803,23 @@ var require_dist8 = __commonJS({
       };
     }
     var DisableResponseDecompressionPolicy = class extends BaseRequestPolicy {
+      /**
+       * Creates an instance of DisableResponseDecompressionPolicy.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
+      // The parent constructor is protected.
+      /* eslint-disable-next-line @typescript-eslint/no-useless-constructor */
       constructor(nextPolicy, options) {
         super(nextPolicy, options);
       }
+      /**
+       * Sends out request.
+       *
+       * @param request -
+       * @returns
+       */
       async sendRequest(request) {
         request.decompressResponse = false;
         return this._nextPolicy.sendRequest(request);
@@ -42249,9 +42859,15 @@ var require_dist8 = __commonJS({
       };
     }
     var NdJsonPolicy = class extends BaseRequestPolicy {
+      /**
+       * Creates an instance of KeepAlivePolicy.
+       */
       constructor(nextPolicy, options) {
         super(nextPolicy, options);
       }
+      /**
+       * Sends a request.
+       */
       async sendRequest(request) {
         if (typeof request.body === "string" && request.body.startsWith("[")) {
           const body = JSON.parse(request.body);
@@ -42694,6 +43310,11 @@ var require_dist8 = __commonJS({
       }
     };
     var ServiceClient = class {
+      /**
+       * The ServiceClient constructor
+       * @param credentials - The credentials used for authentication with the service.
+       * @param options - The service client options that govern the behavior of the client.
+       */
       constructor(credentials, options) {
         if (!options) {
           options = {};
@@ -42744,6 +43365,9 @@ var require_dist8 = __commonJS({
         }
         this._requestPolicyFactories = requestPolicyFactories;
       }
+      /**
+       * Send the provided httpRequest.
+       */
       sendRequest(options) {
         if (options === null || options === void 0 || typeof options !== "object") {
           throw new Error("options cannot be null or undefined and it must be of type object.");
@@ -42768,6 +43392,12 @@ var require_dist8 = __commonJS({
         }
         return httpPipeline.sendRequest(httpRequest);
       }
+      /**
+       * Send an HTTP request that is populated using the provided OperationSpec.
+       * @param operationArguments - The arguments that the HTTP request's templated values will be populated from.
+       * @param operationSpec - The OperationSpec to use to populate the httpRequest.
+       * @param callback - The callback to call when the response is received.
+       */
       async sendOperationRequest(operationArguments, operationSpec, callback) {
         var _a;
         if (typeof operationArguments.options === "function") {
@@ -43174,13 +43804,24 @@ var require_dist8 = __commonJS({
     }
     var TokenRefreshBufferMs = 2 * 60 * 1e3;
     var ExpiringAccessTokenCache = class {
+      /**
+       * Constructs an instance of {@link ExpiringAccessTokenCache} with
+       * an optional expiration buffer time.
+       */
       constructor(tokenRefreshBufferMs = TokenRefreshBufferMs) {
         this.cachedToken = void 0;
         this.tokenRefreshBufferMs = tokenRefreshBufferMs;
       }
+      /**
+       * Saves an access token into the internal in-memory cache.
+       * @param accessToken - Access token or undefined to clear the cache.
+       */
       setCachedToken(accessToken) {
         this.cachedToken = accessToken;
       }
+      /**
+       * Returns the cached access token, or `undefined` if one is not cached or the cached one is expiring soon.
+       */
       getCachedToken() {
         if (this.cachedToken && Date.now() + this.tokenRefreshBufferMs >= this.cachedToken.expiresOnTimestamp) {
           this.cachedToken = void 0;
@@ -43195,15 +43836,29 @@ var require_dist8 = __commonJS({
         this.requiredMillisecondsBeforeNewRefresh = requiredMillisecondsBeforeNewRefresh;
         this.lastCalled = 0;
       }
+      /**
+       * Returns true if the required milliseconds(defaulted to 30000) have been passed signifying
+       * that we are ready for a new refresh.
+       */
       isReady() {
         return !this.lastCalled || Date.now() - this.lastCalled > this.requiredMillisecondsBeforeNewRefresh;
       }
+      /**
+       * Stores the time in which it is called,
+       * then requests a new token,
+       * then sets this.promise to undefined,
+       * then returns the token.
+       */
       async getToken(options) {
         this.lastCalled = Date.now();
         const token = await this.credential.getToken(this.scopes, options);
         this.promise = void 0;
         return token || void 0;
       }
+      /**
+       * Requests a new token if we're not currently waiting for a new token.
+       * Returns null if the required time between each call hasn't been reached.
+       */
       refresh(options) {
         if (!this.promise) {
           this.promise = this.getToken(options);
@@ -43214,6 +43869,13 @@ var require_dist8 = __commonJS({
     var HeaderConstants = Constants.HeaderConstants;
     var DEFAULT_AUTHORIZATION_SCHEME = "Basic";
     var BasicAuthenticationCredentials = class {
+      /**
+       * Creates a new BasicAuthenticationCredentials object.
+       *
+       * @param userName - User name.
+       * @param password - Password.
+       * @param authorizationScheme - The authorization scheme.
+       */
       constructor(userName, password, authorizationScheme = DEFAULT_AUTHORIZATION_SCHEME) {
         this.authorizationScheme = DEFAULT_AUTHORIZATION_SCHEME;
         if (userName === null || userName === void 0 || typeof userName.valueOf() !== "string") {
@@ -43226,6 +43888,12 @@ var require_dist8 = __commonJS({
         this.password = password;
         this.authorizationScheme = authorizationScheme;
       }
+      /**
+       * Signs a request with the Authentication header.
+       *
+       * @param webResource - The WebResourceLike to be signed.
+       * @returns The signed request object.
+       */
       signRequest(webResource) {
         const credentials = `${this.userName}:${this.password}`;
         const encodedCredentials = `${this.authorizationScheme} ${encodeString(credentials)}`;
@@ -43236,6 +43904,9 @@ var require_dist8 = __commonJS({
       }
     };
     var ApiKeyCredentials = class {
+      /**
+       * @param options - Specifies the options to be provided for auth. Either header or query needs to be provided.
+       */
       constructor(options) {
         if (!options || options && !options.inHeader && !options.inQuery) {
           throw new Error(`options cannot be null or undefined. Either "inHeader" or "inQuery" property of the options object needs to be provided.`);
@@ -43243,6 +43914,12 @@ var require_dist8 = __commonJS({
         this.inHeader = options.inHeader;
         this.inQuery = options.inQuery;
       }
+      /**
+       * Signs a request with the values provided in the inHeader and inQuery parameter.
+       *
+       * @param webResource - The WebResourceLike to be signed.
+       * @returns The signed request object.
+       */
       signRequest(webResource) {
         if (!webResource) {
           return Promise.reject(new Error(`webResource cannot be null or undefined and must be of type "object".`));
@@ -43273,6 +43950,11 @@ var require_dist8 = __commonJS({
       }
     };
     var TopicCredentials = class extends ApiKeyCredentials {
+      /**
+       * Creates a new EventGrid TopicCredentials object.
+       *
+       * @param topicKey - The EventGrid topic key
+       */
       constructor(topicKey) {
         if (!topicKey || topicKey && typeof topicKey !== "string") {
           throw new Error("topicKey cannot be null or undefined and must be of type string.");
@@ -43355,11 +44037,11 @@ var require_dist8 = __commonJS({
 });
 
 // node_modules/@azure/core-paging/dist/index.js
-var require_dist9 = __commonJS({
+var require_dist7 = __commonJS({
   "node_modules/@azure/core-paging/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var tslib = require_tslib();
+    var tslib = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     function getPagedAsyncIterator(pagedResult) {
       var _a;
       const iter = getItemAsyncIterator(pagedResult);
@@ -43451,12 +44133,12 @@ var require_dist9 = __commonJS({
 });
 
 // node_modules/@azure/core-lro/dist/index.js
-var require_dist10 = __commonJS({
+var require_dist8 = __commonJS({
   "node_modules/@azure/core-lro/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var logger$1 = require_dist5();
-    var abortController = require_dist3();
+    var logger$1 = require_dist3();
+    var abortController = require_dist();
     var logger = logger$1.createClientLogger("core-lro");
     var POLL_INTERVAL_IN_MS = 2e3;
     var terminalStates = ["succeeded", "canceled", "failed"];
@@ -43705,7 +44387,7 @@ var require_dist10 = __commonJS({
       return void 0;
     }
     function calculatePollingIntervalFromDate(retryAfterDate) {
-      const timeNow = Math.floor(new Date().getTime());
+      const timeNow = Math.floor((/* @__PURE__ */ new Date()).getTime());
       const retryAfterTime = retryAfterDate.getTime();
       if (timeNow < retryAfterTime) {
         return retryAfterTime - timeNow;
@@ -43806,6 +44488,10 @@ var require_dist10 = __commonJS({
         getOperationStatus,
         getResourceLocation,
         options,
+        /**
+         * The expansion here is intentional because `lro` could be an object that
+         * references an inner this, so we need to preserve a reference to it.
+         */
         poll: async (location, inputOptions) => lro.sendPollRequest(location, inputOptions),
         setErrorAsResult
       });
@@ -43834,6 +44520,11 @@ var require_dist10 = __commonJS({
       });
     }
     var createStateProxy$1 = () => ({
+      /**
+       * The state at this point is created to be of type OperationState<TResult>.
+       * It will be updated later to be of type TState when the
+       * customer-provided callback, `updateState`, is called during polling.
+       */
       initState: (config) => ({ status: "running", config }),
       setCanceled: (state) => state.status = "canceled",
       setError: (state, error) => state.error = error,
@@ -44052,6 +44743,9 @@ var require_dist10 = __commonJS({
         logger.error("`cancelOperation` is deprecated because it wasn't implemented");
         return this;
       }
+      /**
+       * Serializes the Poller operation.
+       */
       toString() {
         return JSON.stringify({
           state: this.state
@@ -44073,6 +44767,71 @@ var require_dist10 = __commonJS({
       }
     };
     var Poller = class {
+      /**
+       * A poller needs to be initialized by passing in at least the basic properties of the `PollOperation<TState, TResult>`.
+       *
+       * When writing an implementation of a Poller, this implementation needs to deal with the initialization
+       * of any custom state beyond the basic definition of the poller. The basic poller assumes that the poller's
+       * operation has already been defined, at least its basic properties. The code below shows how to approach
+       * the definition of the constructor of a new custom poller.
+       *
+       * ```ts
+       * export class MyPoller extends Poller<MyOperationState, string> {
+       *   constructor({
+       *     // Anything you might need outside of the basics
+       *   }) {
+       *     let state: MyOperationState = {
+       *       privateProperty: private,
+       *       publicProperty: public,
+       *     };
+       *
+       *     const operation = {
+       *       state,
+       *       update,
+       *       cancel,
+       *       toString
+       *     }
+       *
+       *     // Sending the operation to the parent's constructor.
+       *     super(operation);
+       *
+       *     // You can assign more local properties here.
+       *   }
+       * }
+       * ```
+       *
+       * Inside of this constructor, a new promise is created. This will be used to
+       * tell the user when the poller finishes (see `pollUntilDone()`). The promise's
+       * resolve and reject methods are also used internally to control when to resolve
+       * or reject anyone waiting for the poller to finish.
+       *
+       * The constructor of a custom implementation of a poller is where any serialized version of
+       * a previous poller's operation should be deserialized into the operation sent to the
+       * base constructor. For example:
+       *
+       * ```ts
+       * export class MyPoller extends Poller<MyOperationState, string> {
+       *   constructor(
+       *     baseOperation: string | undefined
+       *   ) {
+       *     let state: MyOperationState = {};
+       *     if (baseOperation) {
+       *       state = {
+       *         ...JSON.parse(baseOperation).state,
+       *         ...state
+       *       };
+       *     }
+       *     const operation = {
+       *       state,
+       *       // ...
+       *     }
+       *     super(operation);
+       *   }
+       * }
+       * ```
+       *
+       * @param operation - Must contain the basic properties of `PollOperation<State, TResult>`.
+       */
       constructor(operation) {
         this.resolveOnUnsuccessful = false;
         this.stopped = true;
@@ -44085,6 +44844,10 @@ var require_dist10 = __commonJS({
         this.promise.catch(() => {
         });
       }
+      /**
+       * Starts a loop that will break only if the poller is done
+       * or if the poller is stopped.
+       */
       async startPolling(pollOptions = {}) {
         if (this.stopped) {
           this.stopped = false;
@@ -44094,6 +44857,14 @@ var require_dist10 = __commonJS({
           await this.delay();
         }
       }
+      /**
+       * pollOnce does one polling, by calling to the update method of the underlying
+       * poll operation to make any relevant change effective.
+       *
+       * It only optionally receives an object with an abortSignal property, from \@azure/abort-controller's AbortSignalLike.
+       *
+       * @param options - Optional properties passed to the operation's update method.
+       */
       async pollOnce(options = {}) {
         if (!this.isDone()) {
           this.operation = await this.operation.update({
@@ -44103,14 +44874,33 @@ var require_dist10 = __commonJS({
         }
         this.processUpdatedState();
       }
+      /**
+       * fireProgress calls the functions passed in via onProgress the method of the poller.
+       *
+       * It loops over all of the callbacks received from onProgress, and executes them, sending them
+       * the current operation state.
+       *
+       * @param state - The current operation state.
+       */
       fireProgress(state) {
         for (const callback of this.pollProgressCallbacks) {
           callback(state);
         }
       }
+      /**
+       * Invokes the underlying operation's cancel method.
+       */
       async cancelOnce(options = {}) {
         this.operation = await this.operation.cancel(options);
       }
+      /**
+       * Returns a promise that will resolve once a single polling request finishes.
+       * It does this by calling the update method of the Poller's operation.
+       *
+       * It only optionally receives an object with an abortSignal property, from \@azure/abort-controller's AbortSignalLike.
+       *
+       * @param options - Optional properties passed to the operation's update method.
+       */
       poll(options = {}) {
         if (!this.pollOncePromise) {
           this.pollOncePromise = this.pollOnce(options);
@@ -44141,6 +44931,9 @@ var require_dist10 = __commonJS({
           this.resolve(this.getResult());
         }
       }
+      /**
+       * Returns a promise that will resolve once the underlying operation is completed.
+       */
       async pollUntilDone(pollOptions = {}) {
         if (this.stopped) {
           this.startPolling(pollOptions).catch(this.reject);
@@ -44148,16 +44941,28 @@ var require_dist10 = __commonJS({
         this.processUpdatedState();
         return this.promise;
       }
+      /**
+       * Invokes the provided callback after each polling is completed,
+       * sending the current state of the poller's operation.
+       *
+       * It returns a method that can be used to stop receiving updates on the given callback function.
+       */
       onProgress(callback) {
         this.pollProgressCallbacks.push(callback);
         return () => {
           this.pollProgressCallbacks = this.pollProgressCallbacks.filter((c) => c !== callback);
         };
       }
+      /**
+       * Returns true if the poller has finished polling.
+       */
       isDone() {
         const state = this.operation.state;
         return Boolean(state.isCompleted || state.isCancelled || state.error);
       }
+      /**
+       * Stops the poller from continuing to poll.
+       */
       stopPolling() {
         if (!this.stopped) {
           this.stopped = true;
@@ -44166,9 +44971,21 @@ var require_dist10 = __commonJS({
           }
         }
       }
+      /**
+       * Returns true if the poller is stopped.
+       */
       isStopped() {
         return this.stopped;
       }
+      /**
+       * Attempts to cancel the underlying operation.
+       *
+       * It only optionally receives an object with an abortSignal property, from \@azure/abort-controller's AbortSignalLike.
+       *
+       * If it's called again before it finishes, it will throw an error.
+       *
+       * @param options - Optional properties passed to the operation's update method.
+       */
       cancelOperation(options = {}) {
         if (!this.cancelPromise) {
           this.cancelPromise = this.cancelOnce(options);
@@ -44177,13 +44994,71 @@ var require_dist10 = __commonJS({
         }
         return this.cancelPromise;
       }
+      /**
+       * Returns the state of the operation.
+       *
+       * Even though TState will be the same type inside any of the methods of any extension of the Poller class,
+       * implementations of the pollers can customize what's shared with the public by writing their own
+       * version of the `getOperationState` method, and by defining two types, one representing the internal state of the poller
+       * and a public type representing a safe to share subset of the properties of the internal state.
+       * Their definition of getOperationState can then return their public type.
+       *
+       * Example:
+       *
+       * ```ts
+       * // Let's say we have our poller's operation state defined as:
+       * interface MyOperationState extends PollOperationState<ResultType> {
+       *   privateProperty?: string;
+       *   publicProperty?: string;
+       * }
+       *
+       * // To allow us to have a true separation of public and private state, we have to define another interface:
+       * interface PublicState extends PollOperationState<ResultType> {
+       *   publicProperty?: string;
+       * }
+       *
+       * // Then, we define our Poller as follows:
+       * export class MyPoller extends Poller<MyOperationState, ResultType> {
+       *   // ... More content is needed here ...
+       *
+       *   public getOperationState(): PublicState {
+       *     const state: PublicState = this.operation.state;
+       *     return {
+       *       // Properties from PollOperationState<TResult>
+       *       isStarted: state.isStarted,
+       *       isCompleted: state.isCompleted,
+       *       isCancelled: state.isCancelled,
+       *       error: state.error,
+       *       result: state.result,
+       *
+       *       // The only other property needed by PublicState.
+       *       publicProperty: state.publicProperty
+       *     }
+       *   }
+       * }
+       * ```
+       *
+       * You can see this in the tests of this repository, go to the file:
+       * `../test/utils/testPoller.ts`
+       * and look for the getOperationState implementation.
+       */
       getOperationState() {
         return this.operation.state;
       }
+      /**
+       * Returns the result value of the operation,
+       * regardless of the state of the poller.
+       * It can return undefined or an incomplete form of the final TResult value
+       * depending on the implementation.
+       */
       getResult() {
         const state = this.operation.state;
         return state.result;
       }
+      /**
+       * Returns a serialized version of the poller's operation
+       * by invoking the operation's toString method.
+       */
       toString() {
         return this.operation.toString();
       }
@@ -44198,6 +45073,9 @@ var require_dist10 = __commonJS({
         this.config = { intervalInMs };
         operation.setPollerConfig(this.config);
       }
+      /**
+       * The method used by the poller to wait before attempting to update its operation.
+       */
       delay() {
         return new Promise((resolve) => setTimeout(() => resolve(), this.config.intervalInMs));
       }
@@ -44211,20 +45089,20 @@ var require_dist10 = __commonJS({
 });
 
 // node_modules/@azure/storage-blob/dist/index.js
-var require_dist11 = __commonJS({
+var require_dist9 = __commonJS({
   "node_modules/@azure/storage-blob/dist/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var coreHttp = require_dist8();
-    var tslib = require_tslib();
-    var coreTracing = require_dist7();
-    var logger$1 = require_dist5();
-    var abortController = require_dist3();
+    var coreHttp = require_dist6();
+    var tslib = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
+    var coreTracing = require_dist5();
+    var logger$1 = require_dist3();
+    var abortController = require_dist();
     var os = require("os");
-    var crypto = require("crypto");
+    var crypto7 = require("crypto");
     var stream = require("stream");
-    require_dist9();
-    var coreLro = require_dist10();
+    require_dist7();
+    var coreLro = require_dist8();
     var events = require("events");
     var fs2 = require("fs");
     var util = require("util");
@@ -52691,7 +53569,7 @@ var require_dist11 = __commonJS({
         }
       }
     };
-    var version = {
+    var version3 = {
       parameterPath: "version",
       mapper: {
         defaultValue: "2021-10-04",
@@ -54217,9 +55095,19 @@ var require_dist11 = __commonJS({
       }
     };
     var Service = class {
+      /**
+       * Initialize a new instance of the class Service class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * Sets properties for a storage account's Blob service endpoint, including properties for Storage
+       * Analytics and CORS (Cross-Origin Resource Sharing) rules
+       * @param blobServiceProperties The StorageService properties.
+       * @param options The options parameters.
+       */
       setProperties(blobServiceProperties2, options) {
         const operationArguments = {
           blobServiceProperties: blobServiceProperties2,
@@ -54227,24 +55115,45 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, setPropertiesOperationSpec);
       }
+      /**
+       * gets the properties of a storage account's Blob service, including properties for Storage Analytics
+       * and CORS (Cross-Origin Resource Sharing) rules.
+       * @param options The options parameters.
+       */
       getProperties(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getPropertiesOperationSpec$2);
       }
+      /**
+       * Retrieves statistics related to replication for the Blob service. It is only available on the
+       * secondary location endpoint when read-access geo-redundant replication is enabled for the storage
+       * account.
+       * @param options The options parameters.
+       */
       getStatistics(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getStatisticsOperationSpec);
       }
+      /**
+       * The List Containers Segment operation returns a list of the containers under the specified account
+       * @param options The options parameters.
+       */
       listContainersSegment(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, listContainersSegmentOperationSpec);
       }
+      /**
+       * Retrieves a user delegation key for the Blob service. This is only a valid operation when using
+       * bearer token authentication.
+       * @param keyInfo Key information
+       * @param options The options parameters.
+       */
       getUserDelegationKey(keyInfo2, options) {
         const operationArguments = {
           keyInfo: keyInfo2,
@@ -54252,12 +55161,24 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, getUserDelegationKeyOperationSpec);
       }
+      /**
+       * Returns the sku name and account kind
+       * @param options The options parameters.
+       */
       getAccountInfo(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getAccountInfoOperationSpec$2);
       }
+      /**
+       * The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+       * @param contentLength The length of the request.
+       * @param multipartContentType Required. The value of this header must be multipart/mixed with a batch
+       *                             boundary. Example header value: multipart/mixed; boundary=batch_<GUID>
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       submitBatch(contentLength2, multipartContentType2, body2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -54267,6 +55188,12 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, submitBatchOperationSpec$1);
       }
+      /**
+       * The Filter Blobs operation enables callers to list blobs across all containers whose tags match a
+       * given search expression.  Filter blobs searches across all containers within a storage account but
+       * can be scoped within the expression to a single container.
+       * @param options The options parameters.
+       */
       filterBlobs(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
@@ -54274,7 +55201,11 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, filterBlobsOperationSpec$1);
       }
     };
-    var xmlSerializer$5 = new coreHttp__namespace.Serializer(Mappers, true);
+    var xmlSerializer$5 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
     var setPropertiesOperationSpec = {
       path: "/",
       httpMethod: "PUT",
@@ -54297,7 +55228,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId
       ],
       isXML: true,
@@ -54325,7 +55256,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -54352,7 +55283,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -54382,7 +55313,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -54412,7 +55343,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId
       ],
       isXML: true,
@@ -54434,7 +55365,7 @@ var require_dist11 = __commonJS({
       },
       queryParameters: [comp, restype1],
       urlParameters: [url],
-      headerParameters: [version, accept1],
+      headerParameters: [version3, accept1],
       isXML: true,
       serializer: xmlSerializer$5
     };
@@ -54460,7 +55391,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         contentLength,
         multipartContentType
@@ -54492,7 +55423,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -54500,51 +55431,93 @@ var require_dist11 = __commonJS({
       serializer: xmlSerializer$5
     };
     var Container = class {
+      /**
+       * Initialize a new instance of the class Container class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * creates a new container under the specified account. If the container with the same name already
+       * exists, the operation fails
+       * @param options The options parameters.
+       */
       create(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, createOperationSpec$2);
       }
+      /**
+       * returns all user-defined metadata and system properties for the specified container. The data
+       * returned does not include the container's list of blobs
+       * @param options The options parameters.
+       */
       getProperties(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getPropertiesOperationSpec$1);
       }
+      /**
+       * operation marks the specified container for deletion. The container and any blobs contained within
+       * it are later deleted during garbage collection
+       * @param options The options parameters.
+       */
       delete(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, deleteOperationSpec$1);
       }
+      /**
+       * operation sets one or more user-defined name-value pairs for the specified container.
+       * @param options The options parameters.
+       */
       setMetadata(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, setMetadataOperationSpec$1);
       }
+      /**
+       * gets the permissions for the specified container. The permissions indicate whether container data
+       * may be accessed publicly.
+       * @param options The options parameters.
+       */
       getAccessPolicy(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getAccessPolicyOperationSpec);
       }
+      /**
+       * sets the permissions for the specified container. The permissions indicate whether blobs in a
+       * container may be accessed publicly.
+       * @param options The options parameters.
+       */
       setAccessPolicy(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, setAccessPolicyOperationSpec);
       }
+      /**
+       * Restores a previously-deleted container.
+       * @param options The options parameters.
+       */
       restore(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, restoreOperationSpec);
       }
+      /**
+       * Renames an existing container.
+       * @param sourceContainerName Required.  Specifies the name of the container to rename.
+       * @param options The options parameters.
+       */
       rename(sourceContainerName2, options) {
         const operationArguments = {
           sourceContainerName: sourceContainerName2,
@@ -54552,6 +55525,14 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, renameOperationSpec);
       }
+      /**
+       * The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+       * @param contentLength The length of the request.
+       * @param multipartContentType Required. The value of this header must be multipart/mixed with a batch
+       *                             boundary. Example header value: multipart/mixed; boundary=batch_<GUID>
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       submitBatch(contentLength2, multipartContentType2, body2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -54561,18 +55542,34 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, submitBatchOperationSpec);
       }
+      /**
+       * The Filter Blobs operation enables callers to list blobs in a container whose tags match a given
+       * search expression.  Filter blobs searches within the given container.
+       * @param options The options parameters.
+       */
       filterBlobs(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, filterBlobsOperationSpec);
       }
+      /**
+       * [Update] establishes and manages a lock on a container for delete operations. The lock duration can
+       * be 15 to 60 seconds, or can be infinite
+       * @param options The options parameters.
+       */
       acquireLease(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, acquireLeaseOperationSpec$1);
       }
+      /**
+       * [Update] establishes and manages a lock on a container for delete operations. The lock duration can
+       * be 15 to 60 seconds, or can be infinite
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param options The options parameters.
+       */
       releaseLease(leaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -54580,6 +55577,12 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, releaseLeaseOperationSpec$1);
       }
+      /**
+       * [Update] establishes and manages a lock on a container for delete operations. The lock duration can
+       * be 15 to 60 seconds, or can be infinite
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param options The options parameters.
+       */
       renewLease(leaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -54587,12 +55590,26 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, renewLeaseOperationSpec$1);
       }
+      /**
+       * [Update] establishes and manages a lock on a container for delete operations. The lock duration can
+       * be 15 to 60 seconds, or can be infinite
+       * @param options The options parameters.
+       */
       breakLease(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, breakLeaseOperationSpec$1);
       }
+      /**
+       * [Update] establishes and manages a lock on a container for delete operations. The lock duration can
+       * be 15 to 60 seconds, or can be infinite
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param proposedLeaseId Proposed lease ID, in a GUID string format. The Blob service returns 400
+       *                        (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor
+       *                        (String) for a list of valid GUID string formats.
+       * @param options The options parameters.
+       */
       changeLease(leaseId2, proposedLeaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -54601,12 +55618,24 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, changeLeaseOperationSpec$1);
       }
+      /**
+       * [Update] The List Blobs operation returns a list of the blobs under the specified container
+       * @param options The options parameters.
+       */
       listBlobFlatSegment(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, listBlobFlatSegmentOperationSpec);
       }
+      /**
+       * [Update] The List Blobs operation returns a list of the blobs under the specified container
+       * @param delimiter When the request includes this parameter, the operation returns a BlobPrefix
+       *                  element in the response body that acts as a placeholder for all blobs whose names begin with the
+       *                  same substring up to the appearance of the delimiter character. The delimiter may be a single
+       *                  character or a string.
+       * @param options The options parameters.
+       */
       listBlobHierarchySegment(delimiter2, options) {
         const operationArguments = {
           delimiter: delimiter2,
@@ -54614,6 +55643,10 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, listBlobHierarchySegmentOperationSpec);
       }
+      /**
+       * Returns the sku name and account kind
+       * @param options The options parameters.
+       */
       getAccountInfo(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
@@ -54621,7 +55654,11 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, getAccountInfoOperationSpec$1);
       }
     };
-    var xmlSerializer$4 = new coreHttp__namespace.Serializer(Mappers, true);
+    var xmlSerializer$4 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
     var createOperationSpec$2 = {
       path: "/{containerName}",
       httpMethod: "PUT",
@@ -54637,7 +55674,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, restype2],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -54663,7 +55700,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, restype2],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId
@@ -54686,7 +55723,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, restype2],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -54715,7 +55752,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -54756,7 +55793,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId
@@ -54786,7 +55823,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         access,
         leaseId,
@@ -54817,7 +55854,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         deletedContainerName,
@@ -54845,7 +55882,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         sourceContainerName,
@@ -54880,7 +55917,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         contentLength,
         multipartContentType
@@ -54913,7 +55950,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -54939,7 +55976,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -54970,7 +56007,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55000,7 +56037,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55030,7 +56067,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55060,7 +56097,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55096,7 +56133,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -55128,7 +56165,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -55149,38 +56186,76 @@ var require_dist11 = __commonJS({
       },
       queryParameters: [comp, restype1],
       urlParameters: [url],
-      headerParameters: [version, accept1],
+      headerParameters: [version3, accept1],
       isXML: true,
       serializer: xmlSerializer$4
     };
     var Blob$1 = class {
+      /**
+       * Initialize a new instance of the class Blob class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * The Download operation reads or downloads a blob from the system, including its metadata and
+       * properties. You can also call Download to read a snapshot.
+       * @param options The options parameters.
+       */
       download(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, downloadOperationSpec);
       }
+      /**
+       * The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system
+       * properties for the blob. It does not return the content of the blob.
+       * @param options The options parameters.
+       */
       getProperties(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getPropertiesOperationSpec);
       }
+      /**
+       * If the storage account's soft delete feature is disabled then, when a blob is deleted, it is
+       * permanently removed from the storage account. If the storage account's soft delete feature is
+       * enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible
+       * immediately. However, the blob service retains the blob or snapshot for the number of days specified
+       * by the DeleteRetentionPolicy section of [Storage service properties]
+       * (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is
+       * permanently removed from the storage account. Note that you continue to be charged for the
+       * soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the
+       * "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You
+       * can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a
+       * soft-deleted blob or snapshot causes the service to return an HTTP status code of 404
+       * (ResourceNotFound).
+       * @param options The options parameters.
+       */
       delete(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, deleteOperationSpec);
       }
+      /**
+       * Undelete a blob that was previously soft deleted
+       * @param options The options parameters.
+       */
       undelete(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, undeleteOperationSpec);
       }
+      /**
+       * Sets the time a blob will expire and be deleted.
+       * @param expiryOptions Required. Indicates mode of the expiry time
+       * @param options The options parameters.
+       */
       setExpiry(expiryOptions2, options) {
         const operationArguments = {
           expiryOptions: expiryOptions2,
@@ -55188,24 +56263,41 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, setExpiryOperationSpec);
       }
+      /**
+       * The Set HTTP Headers operation sets system properties on the blob
+       * @param options The options parameters.
+       */
       setHttpHeaders(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, setHttpHeadersOperationSpec);
       }
+      /**
+       * The Set Immutability Policy operation sets the immutability policy on the blob
+       * @param options The options parameters.
+       */
       setImmutabilityPolicy(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, setImmutabilityPolicyOperationSpec);
       }
+      /**
+       * The Delete Immutability Policy operation deletes the immutability policy on the blob
+       * @param options The options parameters.
+       */
       deleteImmutabilityPolicy(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, deleteImmutabilityPolicyOperationSpec);
       }
+      /**
+       * The Set Legal Hold operation sets a legal hold on the blob.
+       * @param legalHold Specified if a legal hold should be set on the blob.
+       * @param options The options parameters.
+       */
       setLegalHold(legalHold2, options) {
         const operationArguments = {
           legalHold: legalHold2,
@@ -55213,18 +56305,34 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, setLegalHoldOperationSpec);
       }
+      /**
+       * The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more
+       * name-value pairs
+       * @param options The options parameters.
+       */
       setMetadata(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, setMetadataOperationSpec);
       }
+      /**
+       * [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete
+       * operations
+       * @param options The options parameters.
+       */
       acquireLease(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, acquireLeaseOperationSpec);
       }
+      /**
+       * [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete
+       * operations
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param options The options parameters.
+       */
       releaseLease(leaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -55232,6 +56340,12 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, releaseLeaseOperationSpec);
       }
+      /**
+       * [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete
+       * operations
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param options The options parameters.
+       */
       renewLease(leaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -55239,6 +56353,15 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, renewLeaseOperationSpec);
       }
+      /**
+       * [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete
+       * operations
+       * @param leaseId Specifies the current lease ID on the resource.
+       * @param proposedLeaseId Proposed lease ID, in a GUID string format. The Blob service returns 400
+       *                        (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor
+       *                        (String) for a list of valid GUID string formats.
+       * @param options The options parameters.
+       */
       changeLease(leaseId2, proposedLeaseId2, options) {
         const operationArguments = {
           leaseId: leaseId2,
@@ -55247,18 +56370,35 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, changeLeaseOperationSpec);
       }
+      /**
+       * [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete
+       * operations
+       * @param options The options parameters.
+       */
       breakLease(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, breakLeaseOperationSpec);
       }
+      /**
+       * The Create Snapshot operation creates a read-only snapshot of a blob
+       * @param options The options parameters.
+       */
       createSnapshot(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, createSnapshotOperationSpec);
       }
+      /**
+       * The Start Copy From URL operation copies a blob or an internet resource to a new blob.
+       * @param copySource Specifies the name of the source page blob snapshot. This value is a URL of up to
+       *                   2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would
+       *                   appear in a request URI. The source blob must either be public or must be authenticated via a shared
+       *                   access signature.
+       * @param options The options parameters.
+       */
       startCopyFromURL(copySource2, options) {
         const operationArguments = {
           copySource: copySource2,
@@ -55266,6 +56406,15 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, startCopyFromURLOperationSpec);
       }
+      /**
+       * The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return
+       * a response until the copy is complete.
+       * @param copySource Specifies the name of the source page blob snapshot. This value is a URL of up to
+       *                   2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would
+       *                   appear in a request URI. The source blob must either be public or must be authenticated via a shared
+       *                   access signature.
+       * @param options The options parameters.
+       */
       copyFromURL(copySource2, options) {
         const operationArguments = {
           copySource: copySource2,
@@ -55273,6 +56422,13 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, copyFromURLOperationSpec);
       }
+      /**
+       * The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
+       * blob with zero length and full metadata.
+       * @param copyId The copy identifier provided in the x-ms-copy-id header of the original Copy Blob
+       *               operation.
+       * @param options The options parameters.
+       */
       abortCopyFromURL(copyId2, options) {
         const operationArguments = {
           copyId: copyId2,
@@ -55280,6 +56436,15 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, abortCopyFromURLOperationSpec);
       }
+      /**
+       * The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium
+       * storage account and on a block blob in a blob storage account (locally redundant storage only). A
+       * premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block
+       * blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's
+       * ETag.
+       * @param tier Indicates the tier to be set on the blob.
+       * @param options The options parameters.
+       */
       setTier(tier2, options) {
         const operationArguments = {
           tier: tier2,
@@ -55287,24 +56452,41 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, setTierOperationSpec);
       }
+      /**
+       * Returns the sku name and account kind
+       * @param options The options parameters.
+       */
       getAccountInfo(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getAccountInfoOperationSpec);
       }
+      /**
+       * The Query operation enables users to select/project on blob data by providing simple query
+       * expressions.
+       * @param options The options parameters.
+       */
       query(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, queryOperationSpec);
       }
+      /**
+       * The Get Tags operation enables users to get the tags associated with a blob.
+       * @param options The options parameters.
+       */
       getTags(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getTagsOperationSpec);
       }
+      /**
+       * The Set Tags operation enables users to set tags on a blob.
+       * @param options The options parameters.
+       */
       setTags(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
@@ -55312,7 +56494,11 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, setTagsOperationSpec);
       }
     };
-    var xmlSerializer$3 = new coreHttp__namespace.Serializer(Mappers, true);
+    var xmlSerializer$3 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
     var downloadOperationSpec = {
       path: "/{containerName}/{blob}",
       httpMethod: "GET",
@@ -55343,7 +56529,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55381,7 +56567,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55417,7 +56603,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55446,7 +56632,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp8],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -55468,7 +56654,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp11],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         expiryOptions,
@@ -55492,7 +56678,7 @@ var require_dist11 = __commonJS({
       queryParameters: [comp, timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55526,7 +56712,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp12],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifUnmodifiedSince,
@@ -55551,7 +56737,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp12],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1
       ],
@@ -55573,7 +56759,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp13],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         legalHold
@@ -55596,7 +56782,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp6],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -55629,7 +56815,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp10],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55659,7 +56845,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp10],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55688,7 +56874,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp10],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55717,7 +56903,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp10],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55747,7 +56933,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp10],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -55776,7 +56962,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp14],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -55809,7 +56995,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -55851,7 +57037,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         metadata,
@@ -55899,7 +57085,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55931,7 +57117,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -55956,7 +57142,7 @@ var require_dist11 = __commonJS({
       },
       queryParameters: [comp, restype1],
       urlParameters: [url],
-      headerParameters: [version, accept1],
+      headerParameters: [version3, accept1],
       isXML: true,
       serializer: xmlSerializer$3
     };
@@ -55993,7 +57179,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         leaseId,
         ifModifiedSince,
@@ -56031,7 +57217,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56062,7 +57248,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         leaseId,
         ifTags,
@@ -56075,9 +57261,20 @@ var require_dist11 = __commonJS({
       serializer: xmlSerializer$3
     };
     var PageBlob = class {
+      /**
+       * Initialize a new instance of the class PageBlob class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * The Create operation creates a new page blob.
+       * @param contentLength The length of the request.
+       * @param blobContentLength This header specifies the maximum size for the page blob, up to 1 TB. The
+       *                          page blob size must be aligned to a 512-byte boundary.
+       * @param options The options parameters.
+       */
       create(contentLength2, blobContentLength2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56086,6 +57283,12 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, createOperationSpec$1);
       }
+      /**
+       * The Upload Pages operation writes a range of pages to a page blob
+       * @param contentLength The length of the request.
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       uploadPages(contentLength2, body2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56094,6 +57297,11 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, uploadPagesOperationSpec);
       }
+      /**
+       * The Clear Pages operation clears a set of pages from a page blob
+       * @param contentLength The length of the request.
+       * @param options The options parameters.
+       */
       clearPages(contentLength2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56101,6 +57309,17 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, clearPagesOperationSpec);
       }
+      /**
+       * The Upload Pages operation writes a range of pages to a page blob where the contents are read from a
+       * URL
+       * @param sourceUrl Specify a URL to the copy source.
+       * @param sourceRange Bytes of source data in the specified range. The length of this range should
+       *                    match the ContentLength header and x-ms-range/Range destination range header.
+       * @param contentLength The length of the request.
+       * @param range The range of bytes to which the source range would be written. The range should be 512
+       *              aligned and range-end is required.
+       * @param options The options parameters.
+       */
       uploadPagesFromURL(sourceUrl2, sourceRange2, contentLength2, range2, options) {
         const operationArguments = {
           sourceUrl: sourceUrl2,
@@ -56111,18 +57330,34 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, uploadPagesFromURLOperationSpec);
       }
+      /**
+       * The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a
+       * page blob
+       * @param options The options parameters.
+       */
       getPageRanges(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getPageRangesOperationSpec);
       }
+      /**
+       * The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were
+       * changed between target blob and previous snapshot.
+       * @param options The options parameters.
+       */
       getPageRangesDiff(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
         };
         return this.client.sendOperationRequest(operationArguments, getPageRangesDiffOperationSpec);
       }
+      /**
+       * Resize the Blob
+       * @param blobContentLength This header specifies the maximum size for the page blob, up to 1 TB. The
+       *                          page blob size must be aligned to a 512-byte boundary.
+       * @param options The options parameters.
+       */
       resize(blobContentLength2, options) {
         const operationArguments = {
           blobContentLength: blobContentLength2,
@@ -56130,6 +57365,13 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, resizeOperationSpec);
       }
+      /**
+       * Update the sequence number of the blob
+       * @param sequenceNumberAction Required if the x-ms-blob-sequence-number header is set for the request.
+       *                             This property applies to page blobs only. This property indicates how the service should modify the
+       *                             blob's sequence number
+       * @param options The options parameters.
+       */
       updateSequenceNumber(sequenceNumberAction2, options) {
         const operationArguments = {
           sequenceNumberAction: sequenceNumberAction2,
@@ -56137,6 +57379,18 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, updateSequenceNumberOperationSpec);
       }
+      /**
+       * The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob.
+       * The snapshot is copied such that only the differential changes between the previously copied
+       * snapshot are transferred to the destination. The copied snapshots are complete copies of the
+       * original snapshot and can be read or copied from as usual. This API is supported since REST version
+       * 2016-05-31.
+       * @param copySource Specifies the name of the source page blob snapshot. This value is a URL of up to
+       *                   2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would
+       *                   appear in a request URI. The source blob must either be public or must be authenticated via a shared
+       *                   access signature.
+       * @param options The options parameters.
+       */
       copyIncremental(copySource2, options) {
         const operationArguments = {
           copySource: copySource2,
@@ -56145,8 +57399,16 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, copyIncrementalOperationSpec);
       }
     };
-    var xmlSerializer$2 = new coreHttp__namespace.Serializer(Mappers, true);
-    var serializer$2 = new coreHttp__namespace.Serializer(Mappers, false);
+    var xmlSerializer$2 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
+    var serializer$2 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      false
+    );
     var createOperationSpec$1 = {
       path: "/{containerName}/{blob}",
       httpMethod: "PUT",
@@ -56162,7 +57424,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56211,7 +57473,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp19],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         contentLength,
         leaseId,
@@ -56252,7 +57514,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp19],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56290,7 +57552,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp19],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56344,7 +57606,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56381,7 +57643,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56411,7 +57673,7 @@ var require_dist11 = __commonJS({
       queryParameters: [comp, timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56444,7 +57706,7 @@ var require_dist11 = __commonJS({
       queryParameters: [comp, timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56474,7 +57736,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp21],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         ifModifiedSince,
@@ -56488,9 +57750,18 @@ var require_dist11 = __commonJS({
       serializer: xmlSerializer$2
     };
     var AppendBlob = class {
+      /**
+       * Initialize a new instance of the class AppendBlob class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * The Create Append Blob operation creates a new append blob.
+       * @param contentLength The length of the request.
+       * @param options The options parameters.
+       */
       create(contentLength2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56498,6 +57769,14 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, createOperationSpec);
       }
+      /**
+       * The Append Block operation commits a new block of data to the end of an existing append blob. The
+       * Append Block operation is permitted only if the blob was created with x-ms-blob-type set to
+       * AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
+       * @param contentLength The length of the request.
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       appendBlock(contentLength2, body2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56506,6 +57785,15 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, appendBlockOperationSpec);
       }
+      /**
+       * The Append Block operation commits a new block of data to the end of an existing append blob where
+       * the contents are read from a source url. The Append Block operation is permitted only if the blob
+       * was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version
+       * 2015-02-21 version or later.
+       * @param sourceUrl Specify a URL to the copy source.
+       * @param contentLength The length of the request.
+       * @param options The options parameters.
+       */
       appendBlockFromUrl(sourceUrl2, contentLength2, options) {
         const operationArguments = {
           sourceUrl: sourceUrl2,
@@ -56514,6 +57802,11 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, appendBlockFromUrlOperationSpec);
       }
+      /**
+       * The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version
+       * 2019-12-12 version or later.
+       * @param options The options parameters.
+       */
       seal(options) {
         const operationArguments = {
           options: coreHttp__namespace.operationOptionsToRequestOptionsBase(options || {})
@@ -56521,8 +57814,16 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, sealOperationSpec);
       }
     };
-    var xmlSerializer$1 = new coreHttp__namespace.Serializer(Mappers, true);
-    var serializer$1 = new coreHttp__namespace.Serializer(Mappers, false);
+    var xmlSerializer$1 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
+    var serializer$1 = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      false
+    );
     var createOperationSpec = {
       path: "/{containerName}/{blob}",
       httpMethod: "PUT",
@@ -56538,7 +57839,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56584,7 +57885,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp22],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         contentLength,
         leaseId,
@@ -56622,7 +57923,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp22],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56667,7 +57968,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds, comp23],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -56681,9 +57982,22 @@ var require_dist11 = __commonJS({
       serializer: xmlSerializer$1
     };
     var BlockBlob = class {
+      /**
+       * Initialize a new instance of the class BlockBlob class.
+       * @param client Reference to the service client
+       */
       constructor(client) {
         this.client = client;
       }
+      /**
+       * The Upload Block Blob operation updates the content of an existing block blob. Updating an existing
+       * block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put
+       * Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a
+       * partial update of the content of a block blob, use the Put Block List operation.
+       * @param contentLength The length of the request.
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       upload(contentLength2, body2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56692,6 +58006,19 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, uploadOperationSpec);
       }
+      /**
+       * The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read
+       * from a given URL.  This API is supported beginning with the 2020-04-08 version. Partial updates are
+       * not supported with Put Blob from URL; the content of an existing blob is overwritten with the
+       * content of the new blob.  To perform partial updates to a block blob’s contents using a source URL,
+       * use the Put Block from URL API in conjunction with Put Block List.
+       * @param contentLength The length of the request.
+       * @param copySource Specifies the name of the source page blob snapshot. This value is a URL of up to
+       *                   2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would
+       *                   appear in a request URI. The source blob must either be public or must be authenticated via a shared
+       *                   access signature.
+       * @param options The options parameters.
+       */
       putBlobFromUrl(contentLength2, copySource2, options) {
         const operationArguments = {
           contentLength: contentLength2,
@@ -56700,6 +58027,15 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, putBlobFromUrlOperationSpec);
       }
+      /**
+       * The Stage Block operation creates a new block to be committed as part of a blob
+       * @param blockId A valid Base64 string value that identifies the block. Prior to encoding, the string
+       *                must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified
+       *                for the blockid parameter must be the same size for each block.
+       * @param contentLength The length of the request.
+       * @param body Initial data
+       * @param options The options parameters.
+       */
       stageBlock(blockId2, contentLength2, body2, options) {
         const operationArguments = {
           blockId: blockId2,
@@ -56709,6 +58045,16 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, stageBlockOperationSpec);
       }
+      /**
+       * The Stage Block operation creates a new block to be committed as part of a blob where the contents
+       * are read from a URL.
+       * @param blockId A valid Base64 string value that identifies the block. Prior to encoding, the string
+       *                must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified
+       *                for the blockid parameter must be the same size for each block.
+       * @param contentLength The length of the request.
+       * @param sourceUrl Specify a URL to the copy source.
+       * @param options The options parameters.
+       */
       stageBlockFromURL(blockId2, contentLength2, sourceUrl2, options) {
         const operationArguments = {
           blockId: blockId2,
@@ -56718,6 +58064,17 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, stageBlockFromURLOperationSpec);
       }
+      /**
+       * The Commit Block List operation writes a blob by specifying the list of block IDs that make up the
+       * blob. In order to be written as part of a blob, a block must have been successfully written to the
+       * server in a prior Put Block operation. You can call Put Block List to update a blob by uploading
+       * only those blocks that have changed, then committing the new and existing blocks together. You can
+       * do this by specifying whether to commit a block from the committed block list or from the
+       * uncommitted block list, or to commit the most recently uploaded version of the block, whichever list
+       * it may belong to.
+       * @param blocks Blob Blocks.
+       * @param options The options parameters.
+       */
       commitBlockList(blocks2, options) {
         const operationArguments = {
           blocks: blocks2,
@@ -56725,6 +58082,13 @@ var require_dist11 = __commonJS({
         };
         return this.client.sendOperationRequest(operationArguments, commitBlockListOperationSpec);
       }
+      /**
+       * The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block
+       * blob
+       * @param listType Specifies whether to return the list of committed blocks, the list of uncommitted
+       *                 blocks, or both lists together.
+       * @param options The options parameters.
+       */
       getBlockList(listType2, options) {
         const operationArguments = {
           listType: listType2,
@@ -56733,8 +58097,16 @@ var require_dist11 = __commonJS({
         return this.client.sendOperationRequest(operationArguments, getBlockListOperationSpec);
       }
     };
-    var xmlSerializer = new coreHttp__namespace.Serializer(Mappers, true);
-    var serializer = new coreHttp__namespace.Serializer(Mappers, false);
+    var xmlSerializer = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      true
+    );
+    var serializer = new coreHttp__namespace.Serializer(
+      Mappers,
+      /* isXml */
+      false
+    );
     var uploadOperationSpec = {
       path: "/{containerName}/{blob}",
       httpMethod: "PUT",
@@ -56751,7 +58123,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         contentLength,
         metadata,
@@ -56799,7 +58171,7 @@ var require_dist11 = __commonJS({
       queryParameters: [timeoutInSeconds],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56858,7 +58230,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         contentLength,
         leaseId,
@@ -56893,7 +58265,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         contentLength,
@@ -56933,7 +58305,7 @@ var require_dist11 = __commonJS({
       headerParameters: [
         contentType,
         accept,
-        version,
+        version3,
         requestId,
         metadata,
         leaseId,
@@ -56986,7 +58358,7 @@ var require_dist11 = __commonJS({
       ],
       urlParameters: [url],
       headerParameters: [
-        version,
+        version3,
         requestId,
         accept1,
         leaseId,
@@ -57933,15 +59305,27 @@ var require_dist11 = __commonJS({
       return split.join("/");
     }
     var StorageBrowserPolicy = class extends coreHttp.BaseRequestPolicy {
+      /**
+       * Creates an instance of StorageBrowserPolicy.
+       * @param nextPolicy -
+       * @param options -
+       */
+      // The base class has a protected constructor. Adding a public one to enable constructing of this class.
+      /* eslint-disable-next-line @typescript-eslint/no-useless-constructor*/
       constructor(nextPolicy, options) {
         super(nextPolicy, options);
       }
+      /**
+       * Sends out request.
+       *
+       * @param request -
+       */
       async sendRequest(request) {
         if (coreHttp.isNode) {
           return this._nextPolicy.sendRequest(request);
         }
         if (request.method.toUpperCase() === "GET" || request.method.toUpperCase() === "HEAD") {
-          request.url = setURLParameter(request.url, URLConstants.Parameters.FORCE_BROWSER_NO_CACHE, new Date().getTime().toString());
+          request.url = setURLParameter(request.url, URLConstants.Parameters.FORCE_BROWSER_NO_CACHE, (/* @__PURE__ */ new Date()).getTime().toString());
         }
         request.headers.remove(HeaderConstants.COOKIE);
         request.headers.remove(HeaderConstants.CONTENT_LENGTH);
@@ -57949,6 +59333,12 @@ var require_dist11 = __commonJS({
       }
     };
     var StorageBrowserPolicyFactory = class {
+      /**
+       * Creates a StorageBrowserPolicyFactory object.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
       create(nextPolicy, options) {
         return new StorageBrowserPolicy(nextPolicy, options);
       }
@@ -57965,9 +59355,17 @@ var require_dist11 = __commonJS({
       retryPolicyType: exports.StorageRetryPolicyType.EXPONENTIAL,
       secondaryHost: "",
       tryTimeoutInMs: void 0
+      // Use server side default timeout strategy
     };
     var RETRY_ABORT_ERROR = new abortController.AbortError("The operation was aborted.");
     var StorageRetryPolicy = class extends coreHttp.BaseRequestPolicy {
+      /**
+       * Creates an instance of RetryPolicy.
+       *
+       * @param nextPolicy -
+       * @param options -
+       * @param retryOptions -
+       */
       constructor(nextPolicy, options, retryOptions = DEFAULT_RETRY_OPTIONS) {
         super(nextPolicy, options);
         this.retryOptions = {
@@ -57979,9 +59377,24 @@ var require_dist11 = __commonJS({
           secondaryHost: retryOptions.secondaryHost ? retryOptions.secondaryHost : DEFAULT_RETRY_OPTIONS.secondaryHost
         };
       }
+      /**
+       * Sends request.
+       *
+       * @param request -
+       */
       async sendRequest(request) {
         return this.attemptSendRequest(request, false, 1);
       }
+      /**
+       * Decide and perform next retry. Won't mutate request parameter.
+       *
+       * @param request -
+       * @param secondaryHas404 -  If attempt was against the secondary & it returned a StatusNotFound (404), then
+       *                                   the resource was not found. This may be due to replication delay. So, in this
+       *                                   case, we'll never try the secondary again for this operation.
+       * @param attempt -           How many retries has been attempted to performed, starting from 1, which includes
+       *                                   the attempt will be performed by this method call.
+       */
       async attemptSendRequest(request, secondaryHas404, attempt) {
         const newRequest = request.clone();
         const isPrimaryRetry = secondaryHas404 || !this.retryOptions.secondaryHost || !(request.method === "GET" || request.method === "HEAD" || request.method === "OPTIONS") || attempt % 2 === 1;
@@ -58008,6 +59421,14 @@ var require_dist11 = __commonJS({
         await this.delay(isPrimaryRetry, attempt, request.abortSignal);
         return this.attemptSendRequest(request, secondaryHas404, ++attempt);
       }
+      /**
+       * Decide whether to retry according to last HTTP response and retry counters.
+       *
+       * @param isPrimaryRetry -
+       * @param attempt -
+       * @param response -
+       * @param err -
+       */
       shouldRetry(isPrimaryRetry, attempt, response, err) {
         if (attempt >= this.retryOptions.maxTries) {
           logger.info(`RetryPolicy: Attempt(s) ${attempt} >= maxTries ${this.retryOptions.maxTries}, no further try.`);
@@ -58023,6 +59444,7 @@ var require_dist11 = __commonJS({
           "TIMEOUT",
           "EPIPE",
           "REQUEST_SEND_ERROR"
+          // For default xhr based http client provided in ms-rest-js
         ];
         if (err) {
           for (const retriableError of retriableErrors) {
@@ -58049,6 +59471,13 @@ var require_dist11 = __commonJS({
         }
         return false;
       }
+      /**
+       * Delay a calculated time between retries.
+       *
+       * @param isPrimaryRetry -
+       * @param attempt -
+       * @param abortSignal -
+       */
       async delay(isPrimaryRetry, attempt, abortSignal) {
         let delayTimeInMs = 0;
         if (isPrimaryRetry) {
@@ -58068,41 +59497,92 @@ var require_dist11 = __commonJS({
       }
     };
     var StorageRetryPolicyFactory = class {
+      /**
+       * Creates an instance of StorageRetryPolicyFactory.
+       * @param retryOptions -
+       */
       constructor(retryOptions) {
         this.retryOptions = retryOptions;
       }
+      /**
+       * Creates a StorageRetryPolicy object.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
       create(nextPolicy, options) {
         return new StorageRetryPolicy(nextPolicy, options, this.retryOptions);
       }
     };
     var CredentialPolicy = class extends coreHttp.BaseRequestPolicy {
+      /**
+       * Sends out request.
+       *
+       * @param request -
+       */
       sendRequest(request) {
         return this._nextPolicy.sendRequest(this.signRequest(request));
       }
+      /**
+       * Child classes must implement this method with request signing. This method
+       * will be executed in {@link sendRequest}.
+       *
+       * @param request -
+       */
       signRequest(request) {
         return request;
       }
     };
     var AnonymousCredentialPolicy = class extends CredentialPolicy {
+      /**
+       * Creates an instance of AnonymousCredentialPolicy.
+       * @param nextPolicy -
+       * @param options -
+       */
+      // The base class has a protected constructor. Adding a public one to enable constructing of this class.
+      /* eslint-disable-next-line @typescript-eslint/no-useless-constructor*/
       constructor(nextPolicy, options) {
         super(nextPolicy, options);
       }
     };
     var Credential = class {
+      /**
+       * Creates a RequestPolicy object.
+       *
+       * @param _nextPolicy -
+       * @param _options -
+       */
       create(_nextPolicy, _options) {
         throw new Error("Method should be implemented in children classes.");
       }
     };
     var AnonymousCredential = class extends Credential {
+      /**
+       * Creates an {@link AnonymousCredentialPolicy} object.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
       create(nextPolicy, options) {
         return new AnonymousCredentialPolicy(nextPolicy, options);
       }
     };
     var TelemetryPolicy = class extends coreHttp.BaseRequestPolicy {
+      /**
+       * Creates an instance of TelemetryPolicy.
+       * @param nextPolicy -
+       * @param options -
+       * @param telemetry -
+       */
       constructor(nextPolicy, options, telemetry) {
         super(nextPolicy, options);
         this.telemetry = telemetry;
       }
+      /**
+       * Sends out request.
+       *
+       * @param request -
+       */
       async sendRequest(request) {
         if (coreHttp.isNode) {
           if (!request.headers) {
@@ -58116,6 +59596,10 @@ var require_dist11 = __commonJS({
       }
     };
     var TelemetryPolicyFactory = class {
+      /**
+       * Creates an instance of TelemetryPolicyFactory.
+       * @param telemetry -
+       */
       constructor(telemetry) {
         const userAgentInfo = [];
         if (coreHttp.isNode) {
@@ -58139,6 +59623,12 @@ var require_dist11 = __commonJS({
         }
         this.telemetryString = userAgentInfo.join(" ");
       }
+      /**
+       * Creates a TelemetryPolicy object.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
       create(nextPolicy, options) {
         return new TelemetryPolicy(nextPolicy, options, this.telemetryString);
       }
@@ -58149,7 +59639,13 @@ var require_dist11 = __commonJS({
     }
     var Constants = {
       DefaultScope: "/.default",
+      /**
+       * Defines constants for use with HTTP headers.
+       */
       HeaderConstants: {
+        /**
+         * The Authorization header.
+         */
         AUTHORIZATION: "authorization"
       }
     };
@@ -58157,6 +59653,7 @@ var require_dist11 = __commonJS({
       forcedRefreshWindowInMs: 1e3,
       retryIntervalInMs: 3e3,
       refreshWindowInMs: 1e3 * 60 * 2
+      // Start refreshing 2m before expiry
     };
     async function beginRefresh(getAccessToken, retryIntervalInMs, timeoutInMs) {
       async function tryGetAccessToken() {
@@ -58186,13 +59683,24 @@ var require_dist11 = __commonJS({
       let token = null;
       const options = Object.assign(Object.assign({}, DEFAULT_CYCLER_OPTIONS), tokenCyclerOptions);
       const cycler = {
+        /**
+         * Produces true if a refresh job is currently in progress.
+         */
         get isRefreshing() {
           return refreshWorker !== null;
         },
+        /**
+         * Produces true if the cycler SHOULD refresh (we are within the refresh
+         * window and not already refreshing)
+         */
         get shouldRefresh() {
           var _a;
           return !cycler.isRefreshing && ((_a = token === null || token === void 0 ? void 0 : token.expiresOnTimestamp) !== null && _a !== void 0 ? _a : 0) - options.refreshWindowInMs < Date.now();
         },
+        /**
+         * Produces true if the cycler MUST refresh (null or nearly-expired
+         * token).
+         */
         get mustRefresh() {
           return token === null || token.expiresOnTimestamp - options.forcedRefreshWindowInMs < Date.now();
         }
@@ -58204,6 +59712,7 @@ var require_dist11 = __commonJS({
           refreshWorker = beginRefresh(
             tryGetAccessToken,
             options.retryIntervalInMs,
+            // If we don't have a token, then we should timeout immediately
             (_a = token === null || token === void 0 ? void 0 : token.expiresOnTimestamp) !== null && _a !== void 0 ? _a : Date.now()
           ).then((_token) => {
             refreshWorker = null;
@@ -58296,10 +59805,22 @@ var require_dist11 = __commonJS({
       return Array.isArray(castPipeline.factories) && typeof castPipeline.options === "object" && typeof castPipeline.toServiceClientOptions === "function";
     }
     var Pipeline = class {
+      /**
+       * Creates an instance of Pipeline. Customize HTTPClient by implementing IHttpClient interface.
+       *
+       * @param factories -
+       * @param options -
+       */
       constructor(factories, options = {}) {
         this.factories = factories;
         this.options = Object.assign(Object.assign({}, options), { httpClient: options.httpClient || getCachedDefaultHttpClient() });
       }
+      /**
+       * Transfer Pipeline object to ServiceClientOptions object which is required by
+       * ServiceClient constructor.
+       *
+       * @returns The ServiceClientOptions object from this Pipeline.
+       */
       toServiceClientOptions() {
         return {
           httpClient: this.options.httpClient,
@@ -58320,6 +59841,9 @@ var require_dist11 = __commonJS({
         coreHttp.generateClientRequestIdPolicy(),
         new StorageBrowserPolicyFactory(),
         new StorageRetryPolicyFactory(pipelineOptions.retryOptions),
+        // Default deserializationPolicy is provided by protocol layer
+        // Use customized XML char key of "#" so we could deserialize metadata
+        // with "_" key
         coreHttp.deserializationPolicy(void 0, { xmlCharKey: "#" }),
         coreHttp.logPolicy({
           logger: logger.info,
@@ -58335,12 +59859,23 @@ var require_dist11 = __commonJS({
       return new Pipeline(factories, pipelineOptions);
     }
     var StorageSharedKeyCredentialPolicy = class extends CredentialPolicy {
+      /**
+       * Creates an instance of StorageSharedKeyCredentialPolicy.
+       * @param nextPolicy -
+       * @param options -
+       * @param factory -
+       */
       constructor(nextPolicy, options, factory) {
         super(nextPolicy, options);
         this.factory = factory;
       }
+      /**
+       * Signs request.
+       *
+       * @param request -
+       */
       signRequest(request) {
-        request.headers.set(HeaderConstants.X_MS_DATE, new Date().toUTCString());
+        request.headers.set(HeaderConstants.X_MS_DATE, (/* @__PURE__ */ new Date()).toUTCString());
         if (request.body && (typeof request.body === "string" || request.body !== void 0) && request.body.length > 0) {
           request.headers.set(HeaderConstants.CONTENT_LENGTH, Buffer.byteLength(request.body));
         }
@@ -58362,6 +59897,13 @@ var require_dist11 = __commonJS({
         request.headers.set(HeaderConstants.AUTHORIZATION, `SharedKey ${this.factory.accountName}:${signature}`);
         return request;
       }
+      /**
+       * Retrieve header value according to shared key sign rules.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/authenticate-with-shared-key
+       *
+       * @param request -
+       * @param headerName -
+       */
       getHeaderValueToSign(request, headerName) {
         const value = request.headers.get(headerName);
         if (!value) {
@@ -58372,6 +59914,19 @@ var require_dist11 = __commonJS({
         }
         return value;
       }
+      /**
+       * To construct the CanonicalizedHeaders portion of the signature string, follow these steps:
+       * 1. Retrieve all headers for the resource that begin with x-ms-, including the x-ms-date header.
+       * 2. Convert each HTTP header name to lowercase.
+       * 3. Sort the headers lexicographically by header name, in ascending order.
+       *    Each header may appear only once in the string.
+       * 4. Replace any linear whitespace in the header value with a single space.
+       * 5. Trim any whitespace around the colon in the header.
+       * 6. Finally, append a new-line character to each canonicalized header in the resulting list.
+       *    Construct the CanonicalizedHeaders string by concatenating all headers in this list into a single string.
+       *
+       * @param request -
+       */
       getCanonicalizedHeadersString(request) {
         let headersArray = request.headers.headersArray().filter((value) => {
           return value.name.toLowerCase().startsWith(HeaderConstants.PREFIX_FOR_STORAGE);
@@ -58392,6 +59947,11 @@ var require_dist11 = __commonJS({
         });
         return canonicalizedHeadersStringToSign;
       }
+      /**
+       * Retrieves the webResource canonicalized resource string.
+       *
+       * @param request -
+       */
       getCanonicalizedResourceString(request) {
         const path = getURLPath(request.url) || "/";
         let canonicalizedResourceString = "";
@@ -58417,21 +59977,43 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var StorageSharedKeyCredential = class extends Credential {
+      /**
+       * Creates an instance of StorageSharedKeyCredential.
+       * @param accountName -
+       * @param accountKey -
+       */
       constructor(accountName, accountKey) {
         super();
         this.accountName = accountName;
         this.accountKey = Buffer.from(accountKey, "base64");
       }
+      /**
+       * Creates a StorageSharedKeyCredentialPolicy object.
+       *
+       * @param nextPolicy -
+       * @param options -
+       */
       create(nextPolicy, options) {
         return new StorageSharedKeyCredentialPolicy(nextPolicy, options, this);
       }
+      /**
+       * Generates a hash signature for an HTTP request or for a SAS.
+       *
+       * @param stringToSign -
+       */
       computeHMACSHA256(stringToSign) {
-        return crypto.createHmac("sha256", this.accountKey).update(stringToSign, "utf8").digest("base64");
+        return crypto7.createHmac("sha256", this.accountKey).update(stringToSign, "utf8").digest("base64");
       }
     };
     var packageName = "azure-storage-blob";
     var packageVersion = "12.12.0";
     var StorageClientContext = class extends coreHttp__namespace.ServiceClient {
+      /**
+       * Initializes a new instance of the StorageClientContext class.
+       * @param url The URL of the service account, container, or blob that is the target of the desired
+       *            operation.
+       * @param options The parameter options
+       */
       constructor(url2, options) {
         if (url2 === void 0) {
           throw new Error("'url' cannot be null");
@@ -58451,6 +60033,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var StorageClient = class {
+      /**
+       * Creates an instance of StorageClient.
+       * @param url - url to resource
+       * @param pipeline - request policy pipeline.
+       */
       constructor(url2, pipeline) {
         this.url = escapeURLPath(url2);
         this.accountName = getAccountNameFromUrl(url2);
@@ -58476,6 +60063,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
     function convertTracingToRequestOptionsBase(options) {
       var _a, _b;
       return {
+        // By passing spanOptions if they exist at runtime, we're backwards compatible with @azure/core-tracing@preview.13 and earlier.
         spanOptions: (_a = options === null || options === void 0 ? void 0 : options.tracingOptions) === null || _a === void 0 ? void 0 : _a.spanOptions,
         tracingContext: (_b = options === null || options === void 0 ? void 0 : options.tracingOptions) === null || _b === void 0 ? void 0 : _b.tracingContext
       };
@@ -58494,6 +60082,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.setImmutabilityPolicy = false;
         this.permanentDelete = false;
       }
+      /**
+       * Creates a {@link BlobSASPermissions} from the specified permissions string. This method will throw an
+       * Error if it encounters a character that does not correspond to a valid permission.
+       *
+       * @param permissions -
+       */
       static parse(permissions) {
         const blobSASPermissions = new BlobSASPermissions();
         for (const char of permissions) {
@@ -58537,6 +60131,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return blobSASPermissions;
       }
+      /**
+       * Creates a {@link BlobSASPermissions} from a raw object which contains same keys as it
+       * and boolean values for them.
+       *
+       * @param permissionLike -
+       */
       static from(permissionLike) {
         const blobSASPermissions = new BlobSASPermissions();
         if (permissionLike.read) {
@@ -58574,6 +60174,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return blobSASPermissions;
       }
+      /**
+       * Converts the given permissions to a string. Using this method will guarantee the permissions are in an
+       * order accepted by the service.
+       *
+       * @returns A string which represents the BlobSASPermissions
+       */
       toString() {
         const permissions = [];
         if (this.read) {
@@ -58628,6 +60234,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.permanentDelete = false;
         this.filterByTags = false;
       }
+      /**
+       * Creates an {@link ContainerSASPermissions} from the specified permissions string. This method will throw an
+       * Error if it encounters a character that does not correspond to a valid permission.
+       *
+       * @param permissions -
+       */
       static parse(permissions) {
         const containerSASPermissions = new ContainerSASPermissions();
         for (const char of permissions) {
@@ -58677,6 +60289,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return containerSASPermissions;
       }
+      /**
+       * Creates a {@link ContainerSASPermissions} from a raw object which contains same keys as it
+       * and boolean values for them.
+       *
+       * @param permissionLike -
+       */
       static from(permissionLike) {
         const containerSASPermissions = new ContainerSASPermissions();
         if (permissionLike.read) {
@@ -58720,6 +60338,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return containerSASPermissions;
       }
+      /**
+       * Converts the given permissions to a string. Using this method will guarantee the permissions are in an
+       * order accepted by the service.
+       *
+       * The order of the characters should be as specified here to ensure correctness.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas
+       *
+       */
       toString() {
         const permissions = [];
         if (this.read) {
@@ -58765,13 +60391,23 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var UserDelegationKeyCredential = class {
+      /**
+       * Creates an instance of UserDelegationKeyCredential.
+       * @param accountName -
+       * @param userDelegationKey -
+       */
       constructor(accountName, userDelegationKey) {
         this.accountName = accountName;
         this.userDelegationKey = userDelegationKey;
         this.key = Buffer.from(userDelegationKey.value, "base64");
       }
+      /**
+       * Generates a hash signature for an HTTP request or for a SAS.
+       *
+       * @param stringToSign -
+       */
       computeHMACSHA256(stringToSign) {
-        return crypto.createHmac("sha256", this.key).update(stringToSign, "utf8").digest("base64");
+        return crypto7.createHmac("sha256", this.key).update(stringToSign, "utf8").digest("base64");
       }
     };
     function ipRangeToString(ipRange) {
@@ -58783,8 +60419,8 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       SASProtocol["HttpsAndHttp"] = "https,http";
     })(exports.SASProtocol || (exports.SASProtocol = {}));
     var SASQueryParameters = class {
-      constructor(version2, signature, permissionsOrOptions, services, resourceTypes, protocol, startsOn, expiresOn2, ipRange, identifier, resource, cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType2, userDelegationKey, preauthorizedAgentObjectId, correlationId, encryptionScope2) {
-        this.version = version2;
+      constructor(version4, signature, permissionsOrOptions, services, resourceTypes, protocol, startsOn, expiresOn2, ipRange, identifier, resource, cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType2, userDelegationKey, preauthorizedAgentObjectId, correlationId, encryptionScope2) {
+        this.version = version4;
         this.signature = signature;
         if (permissionsOrOptions !== void 0 && typeof permissionsOrOptions !== "string") {
           this.permissions = permissionsOrOptions.permissions;
@@ -58840,6 +60476,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         }
       }
+      /**
+       * Optional. IP range allowed for this SAS.
+       *
+       * @readonly
+       */
       get ipRange() {
         if (this.ipRangeInner) {
           return {
@@ -58849,6 +60490,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return void 0;
       }
+      /**
+       * Encodes all SAS query parameters into a string that can be appended to a URL.
+       *
+       */
       toString() {
         const params = [
           "sv",
@@ -58959,6 +60604,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return queries.join("&");
       }
+      /**
+       * A private helper method used to filter and append query key/value pairs into an array.
+       *
+       * @param queries -
+       * @param key -
+       * @param value -
+       */
       tryAppendQueryParameter(queries, key, value) {
         if (!value) {
           return;
@@ -58971,7 +60623,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     function generateBlobSASQueryParameters(blobSASSignatureValues, sharedKeyCredentialOrUserDelegationKey, accountName) {
-      const version2 = blobSASSignatureValues.version ? blobSASSignatureValues.version : SERVICE_VERSION;
+      const version4 = blobSASSignatureValues.version ? blobSASSignatureValues.version : SERVICE_VERSION;
       const sharedKeyCredential = sharedKeyCredentialOrUserDelegationKey instanceof StorageSharedKeyCredential ? sharedKeyCredentialOrUserDelegationKey : void 0;
       let userDelegationKeyCredential;
       if (sharedKeyCredential === void 0 && accountName !== void 0) {
@@ -58980,25 +60632,25 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       if (sharedKeyCredential === void 0 && userDelegationKeyCredential === void 0) {
         throw TypeError("Invalid sharedKeyCredential, userDelegationKey or accountName.");
       }
-      if (version2 >= "2020-12-06") {
+      if (version4 >= "2020-12-06") {
         if (sharedKeyCredential !== void 0) {
           return generateBlobSASQueryParameters20201206(blobSASSignatureValues, sharedKeyCredential);
         } else {
           return generateBlobSASQueryParametersUDK20201206(blobSASSignatureValues, userDelegationKeyCredential);
         }
       }
-      if (version2 >= "2018-11-09") {
+      if (version4 >= "2018-11-09") {
         if (sharedKeyCredential !== void 0) {
           return generateBlobSASQueryParameters20181109(blobSASSignatureValues, sharedKeyCredential);
         } else {
-          if (version2 >= "2020-02-10") {
+          if (version4 >= "2020-02-10") {
             return generateBlobSASQueryParametersUDK20200210(blobSASSignatureValues, userDelegationKeyCredential);
           } else {
             return generateBlobSASQueryParametersUDK20181109(blobSASSignatureValues, userDelegationKeyCredential);
           }
         }
       }
-      if (version2 >= "2015-04-05") {
+      if (version4 >= "2015-04-05") {
         if (sharedKeyCredential !== void 0) {
           return generateBlobSASQueryParameters20150405(blobSASSignatureValues, sharedKeyCredential);
         } else {
@@ -59293,47 +60945,52 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       return elements.join("");
     }
     function SASSignatureValuesSanityCheckAndAutofill(blobSASSignatureValues) {
-      const version2 = blobSASSignatureValues.version ? blobSASSignatureValues.version : SERVICE_VERSION;
-      if (blobSASSignatureValues.snapshotTime && version2 < "2018-11-09") {
+      const version4 = blobSASSignatureValues.version ? blobSASSignatureValues.version : SERVICE_VERSION;
+      if (blobSASSignatureValues.snapshotTime && version4 < "2018-11-09") {
         throw RangeError("'version' must be >= '2018-11-09' when providing 'snapshotTime'.");
       }
       if (blobSASSignatureValues.blobName === void 0 && blobSASSignatureValues.snapshotTime) {
         throw RangeError("Must provide 'blobName' when providing 'snapshotTime'.");
       }
-      if (blobSASSignatureValues.versionId && version2 < "2019-10-10") {
+      if (blobSASSignatureValues.versionId && version4 < "2019-10-10") {
         throw RangeError("'version' must be >= '2019-10-10' when providing 'versionId'.");
       }
       if (blobSASSignatureValues.blobName === void 0 && blobSASSignatureValues.versionId) {
         throw RangeError("Must provide 'blobName' when providing 'versionId'.");
       }
-      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.setImmutabilityPolicy && version2 < "2020-08-04") {
+      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.setImmutabilityPolicy && version4 < "2020-08-04") {
         throw RangeError("'version' must be >= '2020-08-04' when provided 'i' permission.");
       }
-      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.deleteVersion && version2 < "2019-10-10") {
+      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.deleteVersion && version4 < "2019-10-10") {
         throw RangeError("'version' must be >= '2019-10-10' when providing 'x' permission.");
       }
-      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.permanentDelete && version2 < "2019-10-10") {
+      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.permanentDelete && version4 < "2019-10-10") {
         throw RangeError("'version' must be >= '2019-10-10' when providing 'y' permission.");
       }
-      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.tag && version2 < "2019-12-12") {
+      if (blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.tag && version4 < "2019-12-12") {
         throw RangeError("'version' must be >= '2019-12-12' when providing 't' permission.");
       }
-      if (version2 < "2020-02-10" && blobSASSignatureValues.permissions && (blobSASSignatureValues.permissions.move || blobSASSignatureValues.permissions.execute)) {
+      if (version4 < "2020-02-10" && blobSASSignatureValues.permissions && (blobSASSignatureValues.permissions.move || blobSASSignatureValues.permissions.execute)) {
         throw RangeError("'version' must be >= '2020-02-10' when providing the 'm' or 'e' permission.");
       }
-      if (version2 < "2021-04-10" && blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.filterByTags) {
+      if (version4 < "2021-04-10" && blobSASSignatureValues.permissions && blobSASSignatureValues.permissions.filterByTags) {
         throw RangeError("'version' must be >= '2021-04-10' when providing the 'f' permission.");
       }
-      if (version2 < "2020-02-10" && (blobSASSignatureValues.preauthorizedAgentObjectId || blobSASSignatureValues.correlationId)) {
+      if (version4 < "2020-02-10" && (blobSASSignatureValues.preauthorizedAgentObjectId || blobSASSignatureValues.correlationId)) {
         throw RangeError("'version' must be >= '2020-02-10' when providing 'preauthorizedAgentObjectId' or 'correlationId'.");
       }
-      if (blobSASSignatureValues.encryptionScope && version2 < "2020-12-06") {
+      if (blobSASSignatureValues.encryptionScope && version4 < "2020-12-06") {
         throw RangeError("'version' must be >= '2020-12-06' when provided 'encryptionScope' in SAS.");
       }
-      blobSASSignatureValues.version = version2;
+      blobSASSignatureValues.version = version4;
       return blobSASSignatureValues;
     }
     var BlobLeaseClient = class {
+      /**
+       * Creates an instance of BlobLeaseClient.
+       * @param client - The client to make the lease operation requests.
+       * @param leaseId - Initial proposed lease id.
+       */
       constructor(client, leaseId2) {
         const clientContext = new StorageClientContext(client.url, client.pipeline.toServiceClientOptions());
         this._url = client.url;
@@ -59349,12 +61006,34 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         this._leaseId = leaseId2;
       }
+      /**
+       * Gets the lease Id.
+       *
+       * @readonly
+       */
       get leaseId() {
         return this._leaseId;
       }
+      /**
+       * Gets the url.
+       *
+       * @readonly
+       */
       get url() {
         return this._url;
       }
+      /**
+       * Establishes and manages a lock on a container for delete operations, or on a blob
+       * for write and delete operations.
+       * The lock duration can be 15 to 60 seconds, or can be infinite.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-container
+       * and
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-blob
+       *
+       * @param duration - Must be between 15 to 60 seconds, or infinite (-1)
+       * @param options - option to configure lease management operations.
+       * @returns Response data for acquire lease operation.
+       */
       async acquireLease(duration2, options = {}) {
         var _a, _b, _c, _d, _e, _f;
         const { span, updatedOptions } = createSpan("BlobLeaseClient-acquireLease", options);
@@ -59373,6 +61052,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * To change the ID of the lease.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-container
+       * and
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-blob
+       *
+       * @param proposedLeaseId - the proposed new lease Id.
+       * @param options - option to configure lease management operations.
+       * @returns Response data for change lease operation.
+       */
       async changeLease(proposedLeaseId2, options = {}) {
         var _a, _b, _c, _d, _e, _f;
         const { span, updatedOptions } = createSpan("BlobLeaseClient-changeLease", options);
@@ -59393,6 +61082,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * To free the lease if it is no longer needed so that another client may
+       * immediately acquire a lease against the container or the blob.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-container
+       * and
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-blob
+       *
+       * @param options - option to configure lease management operations.
+       * @returns Response data for release lease operation.
+       */
       async releaseLease(options = {}) {
         var _a, _b, _c, _d, _e, _f;
         const { span, updatedOptions } = createSpan("BlobLeaseClient-releaseLease", options);
@@ -59411,6 +61110,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * To renew the lease.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-container
+       * and
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-blob
+       *
+       * @param options - Optional option to configure lease management operations.
+       * @returns Response data for renew lease operation.
+       */
       async renewLease(options = {}) {
         var _a, _b, _c, _d, _e, _f;
         const { span, updatedOptions } = createSpan("BlobLeaseClient-renewLease", options);
@@ -59429,6 +61137,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * To end the lease but ensure that another client cannot acquire a new lease
+       * until the current lease period has expired.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-container
+       * and
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/lease-blob
+       *
+       * @param breakPeriod - Break period
+       * @param options - Optional options to configure lease management operations.
+       * @returns Response data for break lease operation.
+       */
       async breakLease(breakPeriod2, options = {}) {
         var _a, _b, _c, _d, _e, _f;
         const { span, updatedOptions } = createSpan("BlobLeaseClient-breakLease", options);
@@ -59450,6 +61169,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var RetriableReadableStream = class extends stream.Readable {
+      /**
+       * Creates an instance of RetriableReadableStream.
+       *
+       * @param source - The current ReadableStream returned from getter
+       * @param getter - A method calling downloading request returning
+       *                                      a new ReadableStream from specified offset
+       * @param offset - Offset position in original data source to read
+       * @param count - How much data in original data source to read
+       * @param options -
+       */
       constructor(source, getter, offset, count, options = {}) {
         super({ highWaterMark: options.highWaterMark });
         this.retries = 0;
@@ -59524,145 +61253,441 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var BlobDownloadResponse = class {
+      /**
+       * Creates an instance of BlobDownloadResponse.
+       *
+       * @param originalResponse -
+       * @param getter -
+       * @param offset -
+       * @param count -
+       * @param options -
+       */
       constructor(originalResponse, getter, offset, count, options = {}) {
         this.originalResponse = originalResponse;
         this.blobDownloadStream = new RetriableReadableStream(this.originalResponse.readableStreamBody, getter, offset, count, options);
       }
+      /**
+       * Indicates that the service supports
+       * requests for partial file content.
+       *
+       * @readonly
+       */
       get acceptRanges() {
         return this.originalResponse.acceptRanges;
       }
+      /**
+       * Returns if it was previously specified
+       * for the file.
+       *
+       * @readonly
+       */
       get cacheControl() {
         return this.originalResponse.cacheControl;
       }
+      /**
+       * Returns the value that was specified
+       * for the 'x-ms-content-disposition' header and specifies how to process the
+       * response.
+       *
+       * @readonly
+       */
       get contentDisposition() {
         return this.originalResponse.contentDisposition;
       }
+      /**
+       * Returns the value that was specified
+       * for the Content-Encoding request header.
+       *
+       * @readonly
+       */
       get contentEncoding() {
         return this.originalResponse.contentEncoding;
       }
+      /**
+       * Returns the value that was specified
+       * for the Content-Language request header.
+       *
+       * @readonly
+       */
       get contentLanguage() {
         return this.originalResponse.contentLanguage;
       }
+      /**
+       * The current sequence number for a
+       * page blob. This header is not returned for block blobs or append blobs.
+       *
+       * @readonly
+       */
       get blobSequenceNumber() {
         return this.originalResponse.blobSequenceNumber;
       }
+      /**
+       * The blob's type. Possible values include:
+       * 'BlockBlob', 'PageBlob', 'AppendBlob'.
+       *
+       * @readonly
+       */
       get blobType() {
         return this.originalResponse.blobType;
       }
+      /**
+       * The number of bytes present in the
+       * response body.
+       *
+       * @readonly
+       */
       get contentLength() {
         return this.originalResponse.contentLength;
       }
+      /**
+       * If the file has an MD5 hash and the
+       * request is to read the full file, this response header is returned so that
+       * the client can check for message content integrity. If the request is to
+       * read a specified range and the 'x-ms-range-get-content-md5' is set to
+       * true, then the request returns an MD5 hash for the range, as long as the
+       * range size is less than or equal to 4 MB. If neither of these sets of
+       * conditions is true, then no value is returned for the 'Content-MD5'
+       * header.
+       *
+       * @readonly
+       */
       get contentMD5() {
         return this.originalResponse.contentMD5;
       }
+      /**
+       * Indicates the range of bytes returned if
+       * the client requested a subset of the file by setting the Range request
+       * header.
+       *
+       * @readonly
+       */
       get contentRange() {
         return this.originalResponse.contentRange;
       }
+      /**
+       * The content type specified for the file.
+       * The default content type is 'application/octet-stream'
+       *
+       * @readonly
+       */
       get contentType() {
         return this.originalResponse.contentType;
       }
+      /**
+       * Conclusion time of the last attempted
+       * Copy File operation where this file was the destination file. This value
+       * can specify the time of a completed, aborted, or failed copy attempt.
+       *
+       * @readonly
+       */
       get copyCompletedOn() {
         return this.originalResponse.copyCompletedOn;
       }
+      /**
+       * String identifier for the last attempted Copy
+       * File operation where this file was the destination file.
+       *
+       * @readonly
+       */
       get copyId() {
         return this.originalResponse.copyId;
       }
+      /**
+       * Contains the number of bytes copied and
+       * the total bytes in the source in the last attempted Copy File operation
+       * where this file was the destination file. Can show between 0 and
+       * Content-Length bytes copied.
+       *
+       * @readonly
+       */
       get copyProgress() {
         return this.originalResponse.copyProgress;
       }
+      /**
+       * URL up to 2KB in length that specifies the
+       * source file used in the last attempted Copy File operation where this file
+       * was the destination file.
+       *
+       * @readonly
+       */
       get copySource() {
         return this.originalResponse.copySource;
       }
+      /**
+       * State of the copy operation
+       * identified by 'x-ms-copy-id'. Possible values include: 'pending',
+       * 'success', 'aborted', 'failed'
+       *
+       * @readonly
+       */
       get copyStatus() {
         return this.originalResponse.copyStatus;
       }
+      /**
+       * Only appears when
+       * x-ms-copy-status is failed or pending. Describes cause of fatal or
+       * non-fatal copy operation failure.
+       *
+       * @readonly
+       */
       get copyStatusDescription() {
         return this.originalResponse.copyStatusDescription;
       }
+      /**
+       * When a blob is leased,
+       * specifies whether the lease is of infinite or fixed duration. Possible
+       * values include: 'infinite', 'fixed'.
+       *
+       * @readonly
+       */
       get leaseDuration() {
         return this.originalResponse.leaseDuration;
       }
+      /**
+       * Lease state of the blob. Possible
+       * values include: 'available', 'leased', 'expired', 'breaking', 'broken'.
+       *
+       * @readonly
+       */
       get leaseState() {
         return this.originalResponse.leaseState;
       }
+      /**
+       * The current lease status of the
+       * blob. Possible values include: 'locked', 'unlocked'.
+       *
+       * @readonly
+       */
       get leaseStatus() {
         return this.originalResponse.leaseStatus;
       }
+      /**
+       * A UTC date/time value generated by the service that
+       * indicates the time at which the response was initiated.
+       *
+       * @readonly
+       */
       get date() {
         return this.originalResponse.date;
       }
+      /**
+       * The number of committed blocks
+       * present in the blob. This header is returned only for append blobs.
+       *
+       * @readonly
+       */
       get blobCommittedBlockCount() {
         return this.originalResponse.blobCommittedBlockCount;
       }
+      /**
+       * The ETag contains a value that you can use to
+       * perform operations conditionally, in quotes.
+       *
+       * @readonly
+       */
       get etag() {
         return this.originalResponse.etag;
       }
+      /**
+       * The number of tags associated with the blob
+       *
+       * @readonly
+       */
       get tagCount() {
         return this.originalResponse.tagCount;
       }
+      /**
+       * The error code.
+       *
+       * @readonly
+       */
       get errorCode() {
         return this.originalResponse.errorCode;
       }
+      /**
+       * The value of this header is set to
+       * true if the file data and application metadata are completely encrypted
+       * using the specified algorithm. Otherwise, the value is set to false (when
+       * the file is unencrypted, or if only parts of the file/application metadata
+       * are encrypted).
+       *
+       * @readonly
+       */
       get isServerEncrypted() {
         return this.originalResponse.isServerEncrypted;
       }
+      /**
+       * If the blob has a MD5 hash, and if
+       * request contains range header (Range or x-ms-range), this response header
+       * is returned with the value of the whole blob's MD5 value. This value may
+       * or may not be equal to the value returned in Content-MD5 header, with the
+       * latter calculated from the requested range.
+       *
+       * @readonly
+       */
       get blobContentMD5() {
         return this.originalResponse.blobContentMD5;
       }
+      /**
+       * Returns the date and time the file was last
+       * modified. Any operation that modifies the file or its properties updates
+       * the last modified time.
+       *
+       * @readonly
+       */
       get lastModified() {
         return this.originalResponse.lastModified;
       }
+      /**
+       * Returns the UTC date and time generated by the service that indicates the time at which the blob was
+       * last read or written to.
+       *
+       * @readonly
+       */
       get lastAccessed() {
         return this.originalResponse.lastAccessed;
       }
+      /**
+       * A name-value pair
+       * to associate with a file storage object.
+       *
+       * @readonly
+       */
       get metadata() {
         return this.originalResponse.metadata;
       }
+      /**
+       * This header uniquely identifies the request
+       * that was made and can be used for troubleshooting the request.
+       *
+       * @readonly
+       */
       get requestId() {
         return this.originalResponse.requestId;
       }
+      /**
+       * If a client request id header is sent in the request, this header will be present in the
+       * response with the same value.
+       *
+       * @readonly
+       */
       get clientRequestId() {
         return this.originalResponse.clientRequestId;
       }
+      /**
+       * Indicates the version of the Blob service used
+       * to execute the request.
+       *
+       * @readonly
+       */
       get version() {
         return this.originalResponse.version;
       }
+      /**
+       * Indicates the versionId of the downloaded blob version.
+       *
+       * @readonly
+       */
       get versionId() {
         return this.originalResponse.versionId;
       }
+      /**
+       * Indicates whether version of this blob is a current version.
+       *
+       * @readonly
+       */
       get isCurrentVersion() {
         return this.originalResponse.isCurrentVersion;
       }
+      /**
+       * The SHA-256 hash of the encryption key used to encrypt the blob. This value is only returned
+       * when the blob was encrypted with a customer-provided key.
+       *
+       * @readonly
+       */
       get encryptionKeySha256() {
         return this.originalResponse.encryptionKeySha256;
       }
+      /**
+       * If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to
+       * true, then the request returns a crc64 for the range, as long as the range size is less than
+       * or equal to 4 MB. If both x-ms-range-get-content-crc64 & x-ms-range-get-content-md5 is
+       * specified in the same request, it will fail with 400(Bad Request)
+       */
       get contentCrc64() {
         return this.originalResponse.contentCrc64;
       }
+      /**
+       * Object Replication Policy Id of the destination blob.
+       *
+       * @readonly
+       */
       get objectReplicationDestinationPolicyId() {
         return this.originalResponse.objectReplicationDestinationPolicyId;
       }
+      /**
+       * Parsed Object Replication Policy Id, Rule Id(s) and status of the source blob.
+       *
+       * @readonly
+       */
       get objectReplicationSourceProperties() {
         return this.originalResponse.objectReplicationSourceProperties;
       }
+      /**
+       * If this blob has been sealed.
+       *
+       * @readonly
+       */
       get isSealed() {
         return this.originalResponse.isSealed;
       }
+      /**
+       * UTC date/time value generated by the service that indicates the time at which the blob immutability policy will expire.
+       *
+       * @readonly
+       */
       get immutabilityPolicyExpiresOn() {
         return this.originalResponse.immutabilityPolicyExpiresOn;
       }
+      /**
+       * Indicates immutability policy mode.
+       *
+       * @readonly
+       */
       get immutabilityPolicyMode() {
         return this.originalResponse.immutabilityPolicyMode;
       }
+      /**
+       * Indicates if a legal hold is present on the blob.
+       *
+       * @readonly
+       */
       get legalHold() {
         return this.originalResponse.legalHold;
       }
+      /**
+       * The response body as a browser Blob.
+       * Always undefined in node.js.
+       *
+       * @readonly
+       */
       get contentAsBlob() {
         return this.originalResponse.blobBody;
       }
+      /**
+       * The response body as a node.js Readable stream.
+       * Always undefined in the browser.
+       *
+       * It will automatically retry when internal read stream unexpected ends.
+       *
+       * @readonly
+       */
       get readableStreamBody() {
         return coreHttp.isNode ? this.blobDownloadStream : void 0;
       }
+      /**
+       * The HTTP response.
+       */
       get _response() {
         return this.originalResponse._response;
       }
@@ -59672,6 +61697,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
     var AVRO_CODEC_KEY = "avro.codec";
     var AVRO_SCHEMA_KEY = "avro.schema";
     var AvroParser = class {
+      /**
+       * Reads a fixed number of bytes from the stream.
+       *
+       * @param stream -
+       * @param length -
+       * @param options -
+       */
       static async readFixedBytes(stream2, length, options = {}) {
         const bytes = await stream2.read(length, { abortSignal: options.abortSignal });
         if (bytes.length !== length) {
@@ -59679,10 +61711,19 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return bytes;
       }
+      /**
+       * Reads a single byte from the stream.
+       *
+       * @param stream -
+       * @param options -
+       */
       static async readByte(stream2, options = {}) {
         const buf = await AvroParser.readFixedBytes(stream2, 1, options);
         return buf[0];
       }
+      // int and long are stored in variable-length zig-zag coding.
+      // variable-length: https://lucene.apache.org/core/3_5_0/fileformats.html#VInt
+      // zig-zag: https://developers.google.com/protocol-buffers/docs/encoding?csw=1#types
       static async readZigZagLong(stream2, options = {}) {
         let zigZagEncoded = 0;
         let significanceInBit = 0;
@@ -59802,6 +61843,9 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       AvroPrimitive2["STRING"] = "string";
     })(AvroPrimitive || (AvroPrimitive = {}));
     var AvroType = class {
+      /**
+       * Determines the AvroType from the Avro Schema.
+       */
       static fromSchema(schema) {
         if (typeof schema === "string") {
           return AvroType.fromStringSchema(schema);
@@ -60124,6 +62168,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var BlobQuickQueryStream = class extends stream.Readable {
+      /**
+       * Creates an instance of BlobQuickQueryStream.
+       *
+       * @param source - The current ReadableStream returned from getter
+       * @param options -
+       */
       constructor(source, options = {}) {
         super();
         this.avroPaused = true;
@@ -60219,115 +62269,357 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var BlobQueryResponse = class {
+      /**
+       * Creates an instance of BlobQueryResponse.
+       *
+       * @param originalResponse -
+       * @param options -
+       */
       constructor(originalResponse, options = {}) {
         this.originalResponse = originalResponse;
         this.blobDownloadStream = new BlobQuickQueryStream(this.originalResponse.readableStreamBody, options);
       }
+      /**
+       * Indicates that the service supports
+       * requests for partial file content.
+       *
+       * @readonly
+       */
       get acceptRanges() {
         return this.originalResponse.acceptRanges;
       }
+      /**
+       * Returns if it was previously specified
+       * for the file.
+       *
+       * @readonly
+       */
       get cacheControl() {
         return this.originalResponse.cacheControl;
       }
+      /**
+       * Returns the value that was specified
+       * for the 'x-ms-content-disposition' header and specifies how to process the
+       * response.
+       *
+       * @readonly
+       */
       get contentDisposition() {
         return this.originalResponse.contentDisposition;
       }
+      /**
+       * Returns the value that was specified
+       * for the Content-Encoding request header.
+       *
+       * @readonly
+       */
       get contentEncoding() {
         return this.originalResponse.contentEncoding;
       }
+      /**
+       * Returns the value that was specified
+       * for the Content-Language request header.
+       *
+       * @readonly
+       */
       get contentLanguage() {
         return this.originalResponse.contentLanguage;
       }
+      /**
+       * The current sequence number for a
+       * page blob. This header is not returned for block blobs or append blobs.
+       *
+       * @readonly
+       */
       get blobSequenceNumber() {
         return this.originalResponse.blobSequenceNumber;
       }
+      /**
+       * The blob's type. Possible values include:
+       * 'BlockBlob', 'PageBlob', 'AppendBlob'.
+       *
+       * @readonly
+       */
       get blobType() {
         return this.originalResponse.blobType;
       }
+      /**
+       * The number of bytes present in the
+       * response body.
+       *
+       * @readonly
+       */
       get contentLength() {
         return this.originalResponse.contentLength;
       }
+      /**
+       * If the file has an MD5 hash and the
+       * request is to read the full file, this response header is returned so that
+       * the client can check for message content integrity. If the request is to
+       * read a specified range and the 'x-ms-range-get-content-md5' is set to
+       * true, then the request returns an MD5 hash for the range, as long as the
+       * range size is less than or equal to 4 MB. If neither of these sets of
+       * conditions is true, then no value is returned for the 'Content-MD5'
+       * header.
+       *
+       * @readonly
+       */
       get contentMD5() {
         return this.originalResponse.contentMD5;
       }
+      /**
+       * Indicates the range of bytes returned if
+       * the client requested a subset of the file by setting the Range request
+       * header.
+       *
+       * @readonly
+       */
       get contentRange() {
         return this.originalResponse.contentRange;
       }
+      /**
+       * The content type specified for the file.
+       * The default content type is 'application/octet-stream'
+       *
+       * @readonly
+       */
       get contentType() {
         return this.originalResponse.contentType;
       }
+      /**
+       * Conclusion time of the last attempted
+       * Copy File operation where this file was the destination file. This value
+       * can specify the time of a completed, aborted, or failed copy attempt.
+       *
+       * @readonly
+       */
       get copyCompletedOn() {
         return void 0;
       }
+      /**
+       * String identifier for the last attempted Copy
+       * File operation where this file was the destination file.
+       *
+       * @readonly
+       */
       get copyId() {
         return this.originalResponse.copyId;
       }
+      /**
+       * Contains the number of bytes copied and
+       * the total bytes in the source in the last attempted Copy File operation
+       * where this file was the destination file. Can show between 0 and
+       * Content-Length bytes copied.
+       *
+       * @readonly
+       */
       get copyProgress() {
         return this.originalResponse.copyProgress;
       }
+      /**
+       * URL up to 2KB in length that specifies the
+       * source file used in the last attempted Copy File operation where this file
+       * was the destination file.
+       *
+       * @readonly
+       */
       get copySource() {
         return this.originalResponse.copySource;
       }
+      /**
+       * State of the copy operation
+       * identified by 'x-ms-copy-id'. Possible values include: 'pending',
+       * 'success', 'aborted', 'failed'
+       *
+       * @readonly
+       */
       get copyStatus() {
         return this.originalResponse.copyStatus;
       }
+      /**
+       * Only appears when
+       * x-ms-copy-status is failed or pending. Describes cause of fatal or
+       * non-fatal copy operation failure.
+       *
+       * @readonly
+       */
       get copyStatusDescription() {
         return this.originalResponse.copyStatusDescription;
       }
+      /**
+       * When a blob is leased,
+       * specifies whether the lease is of infinite or fixed duration. Possible
+       * values include: 'infinite', 'fixed'.
+       *
+       * @readonly
+       */
       get leaseDuration() {
         return this.originalResponse.leaseDuration;
       }
+      /**
+       * Lease state of the blob. Possible
+       * values include: 'available', 'leased', 'expired', 'breaking', 'broken'.
+       *
+       * @readonly
+       */
       get leaseState() {
         return this.originalResponse.leaseState;
       }
+      /**
+       * The current lease status of the
+       * blob. Possible values include: 'locked', 'unlocked'.
+       *
+       * @readonly
+       */
       get leaseStatus() {
         return this.originalResponse.leaseStatus;
       }
+      /**
+       * A UTC date/time value generated by the service that
+       * indicates the time at which the response was initiated.
+       *
+       * @readonly
+       */
       get date() {
         return this.originalResponse.date;
       }
+      /**
+       * The number of committed blocks
+       * present in the blob. This header is returned only for append blobs.
+       *
+       * @readonly
+       */
       get blobCommittedBlockCount() {
         return this.originalResponse.blobCommittedBlockCount;
       }
+      /**
+       * The ETag contains a value that you can use to
+       * perform operations conditionally, in quotes.
+       *
+       * @readonly
+       */
       get etag() {
         return this.originalResponse.etag;
       }
+      /**
+       * The error code.
+       *
+       * @readonly
+       */
       get errorCode() {
         return this.originalResponse.errorCode;
       }
+      /**
+       * The value of this header is set to
+       * true if the file data and application metadata are completely encrypted
+       * using the specified algorithm. Otherwise, the value is set to false (when
+       * the file is unencrypted, or if only parts of the file/application metadata
+       * are encrypted).
+       *
+       * @readonly
+       */
       get isServerEncrypted() {
         return this.originalResponse.isServerEncrypted;
       }
+      /**
+       * If the blob has a MD5 hash, and if
+       * request contains range header (Range or x-ms-range), this response header
+       * is returned with the value of the whole blob's MD5 value. This value may
+       * or may not be equal to the value returned in Content-MD5 header, with the
+       * latter calculated from the requested range.
+       *
+       * @readonly
+       */
       get blobContentMD5() {
         return this.originalResponse.blobContentMD5;
       }
+      /**
+       * Returns the date and time the file was last
+       * modified. Any operation that modifies the file or its properties updates
+       * the last modified time.
+       *
+       * @readonly
+       */
       get lastModified() {
         return this.originalResponse.lastModified;
       }
+      /**
+       * A name-value pair
+       * to associate with a file storage object.
+       *
+       * @readonly
+       */
       get metadata() {
         return this.originalResponse.metadata;
       }
+      /**
+       * This header uniquely identifies the request
+       * that was made and can be used for troubleshooting the request.
+       *
+       * @readonly
+       */
       get requestId() {
         return this.originalResponse.requestId;
       }
+      /**
+       * If a client request id header is sent in the request, this header will be present in the
+       * response with the same value.
+       *
+       * @readonly
+       */
       get clientRequestId() {
         return this.originalResponse.clientRequestId;
       }
+      /**
+       * Indicates the version of the File service used
+       * to execute the request.
+       *
+       * @readonly
+       */
       get version() {
         return this.originalResponse.version;
       }
+      /**
+       * The SHA-256 hash of the encryption key used to encrypt the blob. This value is only returned
+       * when the blob was encrypted with a customer-provided key.
+       *
+       * @readonly
+       */
       get encryptionKeySha256() {
         return this.originalResponse.encryptionKeySha256;
       }
+      /**
+       * If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to
+       * true, then the request returns a crc64 for the range, as long as the range size is less than
+       * or equal to 4 MB. If both x-ms-range-get-content-crc64 & x-ms-range-get-content-md5 is
+       * specified in the same request, it will fail with 400(Bad Request)
+       */
       get contentCrc64() {
         return this.originalResponse.contentCrc64;
       }
+      /**
+       * The response body as a browser Blob.
+       * Always undefined in node.js.
+       *
+       * @readonly
+       */
       get blobBody() {
         return void 0;
       }
+      /**
+       * The response body as a node.js Readable stream.
+       * Always undefined in the browser.
+       *
+       * It will parse avor data returned by blob query.
+       *
+       * @readonly
+       */
       get readableStreamBody() {
         return coreHttp.isNode ? this.blobDownloadStream : void 0;
       }
+      /**
+       * The HTTP response.
+       */
       get _response() {
         return this.originalResponse._response;
       }
@@ -60493,6 +62785,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       BatchStates2[BatchStates2["Error"] = 1] = "Error";
     })(BatchStates || (BatchStates = {}));
     var Batch = class {
+      /**
+       * Creates an instance of Batch.
+       * @param concurrency -
+       */
       constructor(concurrency = 5) {
         this.actives = 0;
         this.completed = 0;
@@ -60505,6 +62801,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.concurrency = concurrency;
         this.emitter = new events.EventEmitter();
       }
+      /**
+       * Add a operation into queue.
+       *
+       * @param operation -
+       */
       addOperation(operation) {
         this.operations.push(async () => {
           try {
@@ -60518,6 +62819,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Start execute operations in the queue.
+       *
+       */
       async do() {
         if (this.operations.length === 0) {
           return Promise.resolve();
@@ -60531,12 +62836,21 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           });
         });
       }
+      /**
+       * Get next operation to be executed. Return null when reaching ends.
+       *
+       */
       nextOperation() {
         if (this.offset < this.operations.length) {
           return this.operations[this.offset++];
         }
         return null;
       }
+      /**
+       * Start execute operations. One one the most important difference between
+       * this method with do() is that do() wraps as an sync method.
+       *
+       */
       parallelExecute() {
         if (this.state === BatchStates.Error) {
           return;
@@ -60556,6 +62870,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var BuffersStream = class extends stream.Readable {
+      /**
+       * Creates an instance of BuffersStream that will emit the data
+       * contained in the array of buffers.
+       *
+       * @param buffers - Array of buffers containing the data
+       * @param byteLength - The total length of data contained in the buffers
+       */
       constructor(buffers, byteLength, options) {
         super(options);
         this.buffers = buffers;
@@ -60571,6 +62892,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           throw new Error("Data size shouldn't be larger than the total length of buffers.");
         }
       }
+      /**
+       * Internal _read() that will be called when the stream wants to pull more data in.
+       *
+       * @param size - Optional. The size of data to be read
+       */
       _read(size) {
         if (this.pushedBytesLength >= this.byteLength) {
           this.push(null);
@@ -60629,9 +62955,21 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           this.fill(buffers, totalLength);
         }
       }
+      /**
+       * The size of the data contained in the pooled buffers.
+       */
       get size() {
         return this._size;
       }
+      /**
+       * Fill the internal buffers with data in the input buffers serially
+       * with respect to the total length and the total capacity of the internal buffers.
+       * Data copied will be shift out of the input buffers.
+       *
+       * @param buffers - Input buffers containing the data to be filled in the pooled buffer
+       * @param totalLength - Total length of the data to be filled in.
+       *
+       */
       fill(buffers, totalLength) {
         this._size = Math.min(this.capacity, totalLength);
         let i = 0, j = 0, targetOffset = 0, sourceOffset = 0, totalCopiedNum = 0;
@@ -60656,11 +62994,27 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           buffers[0] = buffers[0].slice(sourceOffset);
         }
       }
+      /**
+       * Get the readable stream assembled from all the data in the internal buffers.
+       *
+       */
       getReadableStream() {
         return new BuffersStream(this.buffers, this.size);
       }
     };
     var BufferScheduler = class {
+      /**
+       * Creates an instance of BufferScheduler.
+       *
+       * @param readable - A Node.js Readable stream
+       * @param bufferSize - Buffer size of every maintained buffer
+       * @param maxBuffers - How many buffers can be allocated
+       * @param outgoingHandler - An async function scheduled to be
+       *                                          triggered when a buffer fully filled
+       *                                          with stream data
+       * @param concurrency - Concurrency of executing outgoingHandlers (>0)
+       * @param encoding - [Optional] Encoding of Readable stream when it's a string stream
+       */
       constructor(readable, bufferSize, maxBuffers, outgoingHandler, concurrency, encoding) {
         this.emitter = new events.EventEmitter();
         this.offset = 0;
@@ -60688,6 +63042,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.concurrency = concurrency;
         this.encoding = encoding;
       }
+      /**
+       * Start the scheduler, will return error when stream of any of the outgoingHandlers
+       * returns error.
+       *
+       */
       async do() {
         return new Promise((resolve, reject) => {
           this.readable.on("data", (data) => {
@@ -60727,10 +63086,20 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           });
         });
       }
+      /**
+       * Insert a new data into unresolved array.
+       *
+       * @param data -
+       */
       appendUnresolvedData(data) {
         this.unresolvedDataArray.push(data);
         this.unresolvedLength += data.length;
       }
+      /**
+       * Try to shift a buffer with size in blockSize. The buffer returned may be less
+       * than blockSize when data in unresolvedDataArray is less than bufferSize.
+       *
+       */
       shiftBufferFromUnresolvedDataArray(buffer) {
         if (!buffer) {
           buffer = new PooledBuffer(this.bufferSize, this.unresolvedDataArray, this.unresolvedLength);
@@ -60740,6 +63109,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.unresolvedLength -= buffer.size;
         return buffer;
       }
+      /**
+       * Resolve data in unresolvedDataArray. For every buffer with size in blockSize
+       * shifted, it will try to get (or allocate a buffer) from incoming, and fill it,
+       * then push it into outgoing to be handled by outgoing handler.
+       *
+       * Return false when available buffers in incoming are not enough, else true.
+       *
+       * @returns Return false when buffers in incoming are not enough, else true.
+       */
       resolveData() {
         while (this.unresolvedLength >= this.bufferSize) {
           let buffer;
@@ -60759,6 +63137,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return true;
       }
+      /**
+       * Try to trigger a outgoing handler for every buffer in outgoing. Stop when
+       * concurrency reaches.
+       */
       async triggerOutgoingHandlers() {
         let buffer;
         do {
@@ -60771,6 +63153,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         } while (buffer);
       }
+      /**
+       * Trigger a outgoing handler for a buffer shifted from outgoing.
+       *
+       * @param buffer -
+       */
       async triggerOutgoingHandler(buffer) {
         const bufferLength = buffer.size;
         this.executingOutgoingHandlers++;
@@ -60785,6 +63172,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.reuseBuffer(buffer);
         this.emitter.emit("checkEnd");
       }
+      /**
+       * Return buffer used by outgoing handler into incoming.
+       *
+       * @param buffer -
+       */
       reuseBuffer(buffer) {
         this.incoming.push(buffer);
         if (!this.isError && this.resolveData() && !this.isStreamEnd) {
@@ -60912,27 +63304,118 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this._snapshot = getURLParameter(this.url, URLConstants.Parameters.SNAPSHOT);
         this._versionId = getURLParameter(this.url, URLConstants.Parameters.VERSIONID);
       }
+      /**
+       * The name of the blob.
+       */
       get name() {
         return this._name;
       }
+      /**
+       * The name of the storage container the blob is associated with.
+       */
       get containerName() {
         return this._containerName;
       }
+      /**
+       * Creates a new BlobClient object identical to the source but with the specified snapshot timestamp.
+       * Provide "" will remove the snapshot and return a Client to the base blob.
+       *
+       * @param snapshot - The snapshot timestamp.
+       * @returns A new BlobClient object identical to the source but with the specified snapshot timestamp
+       */
       withSnapshot(snapshot2) {
         return new BlobClient(setURLParameter(this.url, URLConstants.Parameters.SNAPSHOT, snapshot2.length === 0 ? void 0 : snapshot2), this.pipeline);
       }
+      /**
+       * Creates a new BlobClient object pointing to a version of this blob.
+       * Provide "" will remove the versionId and return a Client to the base blob.
+       *
+       * @param versionId - The versionId.
+       * @returns A new BlobClient object pointing to the version of this blob.
+       */
       withVersion(versionId2) {
         return new BlobClient(setURLParameter(this.url, URLConstants.Parameters.VERSIONID, versionId2.length === 0 ? void 0 : versionId2), this.pipeline);
       }
+      /**
+       * Creates a AppendBlobClient object.
+       *
+       */
       getAppendBlobClient() {
         return new AppendBlobClient(this.url, this.pipeline);
       }
+      /**
+       * Creates a BlockBlobClient object.
+       *
+       */
       getBlockBlobClient() {
         return new BlockBlobClient(this.url, this.pipeline);
       }
+      /**
+       * Creates a PageBlobClient object.
+       *
+       */
       getPageBlobClient() {
         return new PageBlobClient(this.url, this.pipeline);
       }
+      /**
+       * Reads or downloads a blob from the system, including its metadata and properties.
+       * You can also call Get Blob to read a snapshot.
+       *
+       * * In Node.js, data returns in a Readable stream readableStreamBody
+       * * In browsers, data returns in a promise blobBody
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob
+       *
+       * @param offset - From which position of the blob to download, greater than or equal to 0
+       * @param count - How much data to be downloaded, greater than 0. Will download to the end when undefined
+       * @param options - Optional options to Blob Download operation.
+       *
+       *
+       * Example usage (Node.js):
+       *
+       * ```js
+       * // Download and convert a blob to a string
+       * const downloadBlockBlobResponse = await blobClient.download();
+       * const downloaded = await streamToBuffer(downloadBlockBlobResponse.readableStreamBody);
+       * console.log("Downloaded blob content:", downloaded.toString());
+       *
+       * async function streamToBuffer(readableStream) {
+       * return new Promise((resolve, reject) => {
+       * const chunks = [];
+       * readableStream.on("data", (data) => {
+       * chunks.push(data instanceof Buffer ? data : Buffer.from(data));
+       * });
+       * readableStream.on("end", () => {
+       * resolve(Buffer.concat(chunks));
+       * });
+       * readableStream.on("error", reject);
+       * });
+       * }
+       * ```
+       *
+       * Example usage (browser):
+       *
+       * ```js
+       * // Download and convert a blob to a string
+       * const downloadBlockBlobResponse = await blobClient.download();
+       * const downloaded = await blobToString(await downloadBlockBlobResponse.blobBody);
+       * console.log(
+       *   "Downloaded blob content",
+       *   downloaded
+       * );
+       *
+       * async function blobToString(blob: Blob): Promise<string> {
+       *   const fileReader = new FileReader();
+       *   return new Promise<string>((resolve, reject) => {
+       *     fileReader.onloadend = (ev: any) => {
+       *       resolve(ev.target!.result);
+       *     };
+       *     fileReader.onerror = reject;
+       *     fileReader.readAsText(blob);
+       *   });
+       * }
+       * ```
+       */
       async download(offset = 0, count, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -60942,6 +63425,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         try {
           const res = await this.blobContext.download(Object.assign({ abortSignal: options.abortSignal, leaseAccessConditions: options.conditions, modifiedAccessConditions: Object.assign(Object.assign({}, options.conditions), { ifTags: (_a = options.conditions) === null || _a === void 0 ? void 0 : _a.tagConditions }), requestOptions: {
             onDownloadProgress: coreHttp.isNode ? void 0 : options.onProgress
+            // for Node.js, progress is reported by RetriableReadableStream
           }, range: offset === 0 && !count ? void 0 : rangeToString({ offset, count }), rangeGetContentMD5: options.rangeGetContentMD5, rangeGetContentCRC64: options.rangeGetContentCrc64, snapshot: options.snapshot, cpkInfo: options.customerProvidedKey }, convertTracingToRequestOptionsBase(updatedOptions)));
           const wrappedRes = Object.assign(Object.assign({}, res), { _response: res._response, objectReplicationDestinationPolicyId: res.objectReplicationPolicyId, objectReplicationSourceProperties: parseObjectReplicationRecord(res.objectReplicationRules) });
           if (!coreHttp.isNode) {
@@ -60991,6 +63475,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns true if the Azure blob resource represented by this client exists; false otherwise.
+       *
+       * NOTE: use this function with care since an existing blob might be deleted by other clients or
+       * applications. Vice versa new blobs might be added by other clients or applications after this
+       * function completes.
+       *
+       * @param options - options to Exists operation.
+       */
       async exists(options = {}) {
         const { span, updatedOptions } = createSpan("BlobClient-exists", options);
         try {
@@ -61017,6 +63510,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns all user-defined metadata, standard HTTP properties, and system properties
+       * for the blob. It does not return the content of the blob.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-properties
+       *
+       * WARNING: The `metadata` object returned in the response will have its keys in lowercase, even if
+       * they originally contained uppercase characters. This differs from the metadata keys returned by
+       * the methods of {@link ContainerClient} that list blobs using the `includeMetadata` option, which
+       * will retain their original casing.
+       *
+       * @param options - Optional options to Get Properties operation.
+       */
       async getProperties(options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-getProperties", options);
@@ -61035,6 +63540,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Marks the specified blob or snapshot for deletion. The blob is later deleted
+       * during garbage collection. Note that in order to delete a blob, you must delete
+       * all of its snapshots. You can delete both at the same time with the Delete
+       * Blob operation.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/delete-blob
+       *
+       * @param options - Optional options to Blob Delete operation.
+       */
       async delete(options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-delete", options);
@@ -61051,6 +63565,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Marks the specified blob or snapshot for deletion if it exists. The blob is later deleted
+       * during garbage collection. Note that in order to delete a blob, you must delete
+       * all of its snapshots. You can delete both at the same time with the Delete
+       * Blob operation.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/delete-blob
+       *
+       * @param options - Optional options to Blob Delete operation.
+       */
       async deleteIfExists(options = {}) {
         var _a, _b;
         const { span, updatedOptions } = createSpan("BlobClient-deleteIfExists", options);
@@ -61074,6 +63597,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Restores the contents and metadata of soft deleted blob and any associated
+       * soft deleted snapshots. Undelete Blob is supported only on version 2017-07-29
+       * or later.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/undelete-blob
+       *
+       * @param options - Optional options to Blob Undelete operation.
+       */
       async undelete(options = {}) {
         const { span, updatedOptions } = createSpan("BlobClient-undelete", options);
         try {
@@ -61088,6 +63619,21 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets system properties on the blob.
+       *
+       * If no value provided, or no value provided for the specified blob HTTP headers,
+       * these blob HTTP headers without a value will be cleared.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-properties
+       *
+       * @param blobHTTPHeaders - If no value provided, or no value provided for
+       *                                                   the specified blob HTTP headers, these blob HTTP
+       *                                                   headers without a value will be cleared.
+       *                                                   A common header to set is `blobContentType`
+       *                                                   enabling the browser to provide functionality
+       *                                                   based on file type.
+       * @param options - Optional options to Blob Set HTTP Headers operation.
+       */
       async setHTTPHeaders(blobHTTPHeaders, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-setHTTPHeaders", options);
@@ -61105,6 +63651,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets user-defined metadata for the specified blob as one or more name-value pairs.
+       *
+       * If no option provided, or no metadata defined in the parameter, the blob
+       * metadata will be removed.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-metadata
+       *
+       * @param metadata - Replace existing metadata with this value.
+       *                               If no value provided the existing metadata will be removed.
+       * @param options - Optional options to Set Metadata operation.
+       */
       async setMetadata(metadata2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-setMetadata", options);
@@ -61122,6 +63679,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets tags on the underlying blob.
+       * A blob can have up to 10 tags. Tag keys must be between 1 and 128 characters.  Tag values must be between 0 and 256 characters.
+       * Valid tag key and value characters include lower and upper case letters, digits (0-9),
+       * space (' '), plus ('+'), minus ('-'), period ('.'), foward slash ('/'), colon (':'), equals ('='), and underscore ('_').
+       *
+       * @param tags -
+       * @param options -
+       */
       async setTags(tags2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-setTags", options);
@@ -61137,6 +63703,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Gets the tags associated with the underlying blob.
+       *
+       * @param options -
+       */
       async getTags(options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-getTags", options);
@@ -61154,9 +63725,21 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Get a {@link BlobLeaseClient} that manages leases on the blob.
+       *
+       * @param proposeLeaseId - Initial proposed lease Id.
+       * @returns A new BlobLeaseClient object for managing leases on the blob.
+       */
       getBlobLeaseClient(proposeLeaseId) {
         return new BlobLeaseClient(this, proposeLeaseId);
       }
+      /**
+       * Creates a read-only snapshot of a blob.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-blob
+       *
+       * @param options - Optional options to the Blob Create Snapshot operation.
+       */
       async createSnapshot(options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-createSnapshot", options);
@@ -61174,6 +63757,78 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Asynchronously copies a blob to a destination within the storage account.
+       * This method returns a long running operation poller that allows you to wait
+       * indefinitely until the copy is completed.
+       * You can also cancel a copy before it is completed by calling `cancelOperation` on the poller.
+       * Note that the onProgress callback will not be invoked if the operation completes in the first
+       * request, and attempting to cancel a completed copy will result in an error being thrown.
+       *
+       * In version 2012-02-12 and later, the source for a Copy Blob operation can be
+       * a committed blob in any Azure storage account.
+       * Beginning with version 2015-02-21, the source for a Copy Blob operation can be
+       * an Azure file in any Azure storage account.
+       * Only storage accounts created on or after June 7th, 2012 allow the Copy Blob
+       * operation to copy from another storage account.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob
+       *
+       * Example using automatic polling:
+       *
+       * ```js
+       * const copyPoller = await blobClient.beginCopyFromURL('url');
+       * const result = await copyPoller.pollUntilDone();
+       * ```
+       *
+       * Example using manual polling:
+       *
+       * ```js
+       * const copyPoller = await blobClient.beginCopyFromURL('url');
+       * while (!poller.isDone()) {
+       *    await poller.poll();
+       * }
+       * const result = copyPoller.getResult();
+       * ```
+       *
+       * Example using progress updates:
+       *
+       * ```js
+       * const copyPoller = await blobClient.beginCopyFromURL('url', {
+       *   onProgress(state) {
+       *     console.log(`Progress: ${state.copyProgress}`);
+       *   }
+       * });
+       * const result = await copyPoller.pollUntilDone();
+       * ```
+       *
+       * Example using a changing polling interval (default 15 seconds):
+       *
+       * ```js
+       * const copyPoller = await blobClient.beginCopyFromURL('url', {
+       *   intervalInMs: 1000 // poll blob every 1 second for copy progress
+       * });
+       * const result = await copyPoller.pollUntilDone();
+       * ```
+       *
+       * Example using copy cancellation:
+       *
+       * ```js
+       * const copyPoller = await blobClient.beginCopyFromURL('url');
+       * // cancel operation after starting it.
+       * try {
+       *   await copyPoller.cancelOperation();
+       *   // calls to get the result now throw PollerCancelledError
+       *   await copyPoller.getResult();
+       * } catch (err) {
+       *   if (err.name === 'PollerCancelledError') {
+       *     console.log('The copy was cancelled.');
+       *   }
+       * }
+       * ```
+       *
+       * @param copySource - url to the source Azure Blob/File.
+       * @param options - Optional options to the Blob Start Copy From URL operation.
+       */
       async beginCopyFromURL(copySource2, options = {}) {
         const client = {
           abortCopyFromURL: (...args) => this.abortCopyFromURL(...args),
@@ -61191,6 +63846,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         await poller.poll();
         return poller;
       }
+      /**
+       * Aborts a pending asynchronous Copy Blob operation, and leaves a destination blob with zero
+       * length and full metadata. Version 2012-02-12 and newer.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob
+       *
+       * @param copyId - Id of the Copy From URL operation.
+       * @param options - Optional options to the Blob Abort Copy From URL operation.
+       */
       async abortCopyFromURL(copyId2, options = {}) {
         const { span, updatedOptions } = createSpan("BlobClient-abortCopyFromURL", options);
         try {
@@ -61205,6 +63868,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The synchronous Copy From URL operation copies a blob or an internet resource to a new blob. It will not
+       * return a response until the copy is complete.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url
+       *
+       * @param copySource - The source URL to copy from, Shared Access Signature(SAS) maybe needed for authentication
+       * @param options -
+       */
       async syncCopyFromURL(copySource2, options = {}) {
         var _a, _b, _c;
         const { span, updatedOptions } = createSpan("BlobClient-syncCopyFromURL", options);
@@ -61227,6 +63898,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets the tier on a blob. The operation is allowed on a page blob in a premium
+       * storage account and on a block blob in a blob storage account (locally redundant
+       * storage only). A premium page blob's tier determines the allowed size, IOPS,
+       * and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive
+       * storage type. This operation does not update the blob's ETag.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-tier
+       *
+       * @param tier - The tier to be set on the blob. Valid values are Hot, Cool, or Archive.
+       * @param options - Optional options to the Blob Set Tier operation.
+       */
       async setAccessTier(tier2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobClient-setAccessTier", options);
@@ -61328,6 +64010,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * ONLY AVAILABLE IN NODE.JS RUNTIME.
+       *
+       * Downloads an Azure Blob to a local file.
+       * Fails if the the given file path already exits.
+       * Offset and count are optional, pass 0 and undefined respectively to download the entire blob.
+       *
+       * @param filePath -
+       * @param offset - From which position of the block blob to download.
+       * @param count - How much data to be downloaded. Will download to the end when passing undefined.
+       * @param options - Options to Blob download options.
+       * @returns The response data for blob download operation,
+       *                                                 but with readableStreamBody set to undefined since its
+       *                                                 content is already read and written into a local file
+       *                                                 at the specified path.
+       */
       async downloadToFile(filePath, offset = 0, count, options = {}) {
         const { span, updatedOptions } = createSpan("BlobClient-downloadToFile", options);
         try {
@@ -61376,6 +64074,19 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           throw new Error("Unable to extract blobName and containerName with provided information.");
         }
       }
+      /**
+       * Asynchronously copies a blob to a destination within the storage account.
+       * In version 2012-02-12 and later, the source for a Copy Blob operation can be
+       * a committed blob in any Azure storage account.
+       * Beginning with version 2015-02-21, the source for a Copy Blob operation can be
+       * an Azure file in any Azure storage account.
+       * Only storage accounts created on or after June 7th, 2012 allow the Copy Blob
+       * operation to copy from another storage account.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob
+       *
+       * @param copySource - url to the source Azure Blob/File.
+       * @param options - Optional options to the Blob Start Copy From URL operation.
+       */
       async startCopyFromURL(copySource2, options = {}) {
         var _a, _b, _c;
         const { span, updatedOptions } = createSpan("BlobClient-startCopyFromURL", options);
@@ -61399,6 +64110,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Only available for BlobClient constructed with a shared key credential.
+       *
+       * Generates a Blob Service Shared Access Signature (SAS) URI based on the client properties
+       * and parameters passed in. The SAS is signed by the shared key credential of the client.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas
+       *
+       * @param options - Optional parameters.
+       * @returns The SAS URI consisting of the URI to the resource represented by this client, followed by the generated SAS token.
+       */
       generateSasUrl(options) {
         return new Promise((resolve) => {
           if (!(this.credential instanceof StorageSharedKeyCredential)) {
@@ -61408,6 +64130,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           resolve(appendToURLQuery(this.url, sas));
         });
       }
+      /**
+       * Delete the immutablility policy on the blob.
+       *
+       * @param options - Optional options to delete immutability policy on the blob.
+       */
       async deleteImmutabilityPolicy(options) {
         const { span, updatedOptions } = createSpan("BlobClient-deleteImmutabilityPolicy", options);
         try {
@@ -61422,6 +64149,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Set immutablility policy on the blob.
+       *
+       * @param options - Optional options to set immutability policy on the blob.
+       */
       async setImmutabilityPolicy(immutabilityPolicy, options) {
         const { span, updatedOptions } = createSpan("BlobClient-setImmutabilityPolicy", options);
         try {
@@ -61436,6 +64168,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Set legal hold on the blob.
+       *
+       * @param options - Optional options to set legal hold on the blob.
+       */
       async setLegalHold(legalHoldEnabled, options) {
         const { span, updatedOptions } = createSpan("BlobClient-setLegalHold", options);
         try {
@@ -61493,9 +64230,31 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         super(url2, pipeline);
         this.appendBlobContext = new AppendBlob(this.storageClientContext);
       }
+      /**
+       * Creates a new AppendBlobClient object identical to the source but with the
+       * specified snapshot timestamp.
+       * Provide "" will remove the snapshot and return a Client to the base blob.
+       *
+       * @param snapshot - The snapshot timestamp.
+       * @returns A new AppendBlobClient object identical to the source but with the specified snapshot timestamp.
+       */
       withSnapshot(snapshot2) {
         return new AppendBlobClient(setURLParameter(this.url, URLConstants.Parameters.SNAPSHOT, snapshot2.length === 0 ? void 0 : snapshot2), this.pipeline);
       }
+      /**
+       * Creates a 0-length append blob. Call AppendBlock to append data to an append blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param options - Options to the Append Block Create operation.
+       *
+       *
+       * Example usage:
+       *
+       * ```js
+       * const appendBlobClient = containerClient.getAppendBlobClient("<blob name>");
+       * await appendBlobClient.create();
+       * ```
+       */
       async create(options = {}) {
         var _a, _b, _c;
         const { span, updatedOptions } = createSpan("AppendBlobClient-create", options);
@@ -61513,6 +64272,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a 0-length append blob. Call AppendBlock to append data to an append blob.
+       * If the blob with the same name already exists, the content of the existing blob will remain unchanged.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param options -
+       */
       async createIfNotExists(options = {}) {
         var _a, _b;
         const { span, updatedOptions } = createSpan("AppendBlobClient-createIfNotExists", options);
@@ -61537,6 +64303,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Seals the append blob, making it read only.
+       *
+       * @param options -
+       */
       async seal(options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("AppendBlobClient-seal", options);
@@ -61553,6 +64324,30 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Commits a new block of data to the end of the existing append blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/append-block
+       *
+       * @param body - Data to be appended.
+       * @param contentLength - Length of the body in bytes.
+       * @param options - Options to the Append Block operation.
+       *
+       *
+       * Example usage:
+       *
+       * ```js
+       * const content = "Hello World!";
+       *
+       * // Create a new append blob and append data to the blob.
+       * const newAppendBlobClient = containerClient.getAppendBlobClient("<blob name>");
+       * await newAppendBlobClient.create();
+       * await newAppendBlobClient.appendBlock(content, content.length);
+       *
+       * // Append data to an existing append blob.
+       * const existingAppendBlobClient = containerClient.getAppendBlobClient("<blob name>");
+       * await existingAppendBlobClient.appendBlock(content, content.length);
+       * ```
+       */
       async appendBlock(body2, contentLength2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("AppendBlobClient-appendBlock", options);
@@ -61572,6 +64367,20 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The Append Block operation commits a new block of data to the end of an existing append blob
+       * where the contents are read from a source url.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url
+       *
+       * @param sourceURL -
+       *                 The url to the blob that will be the source of the copy. A source blob in the same storage account can
+       *                 be authenticated via Shared Key. However, if the source is a blob in another account, the source blob
+       *                 must either be public or must be authenticated via a shared access signature. If the source blob is
+       *                 public, no authentication is required to perform the operation.
+       * @param sourceOffset - Offset in source to be appended
+       * @param count - Number of bytes to be appended as a block
+       * @param options -
+       */
       async appendBlockFromURL(sourceURL, sourceOffset, count, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("AppendBlobClient-appendBlockFromURL", options);
@@ -61639,9 +64448,47 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.blockBlobContext = new BlockBlob(this.storageClientContext);
         this._blobContext = new Blob$1(this.storageClientContext);
       }
+      /**
+       * Creates a new BlockBlobClient object identical to the source but with the
+       * specified snapshot timestamp.
+       * Provide "" will remove the snapshot and return a URL to the base blob.
+       *
+       * @param snapshot - The snapshot timestamp.
+       * @returns A new BlockBlobClient object identical to the source but with the specified snapshot timestamp.
+       */
       withSnapshot(snapshot2) {
         return new BlockBlobClient(setURLParameter(this.url, URLConstants.Parameters.SNAPSHOT, snapshot2.length === 0 ? void 0 : snapshot2), this.pipeline);
       }
+      /**
+       * ONLY AVAILABLE IN NODE.JS RUNTIME.
+       *
+       * Quick query for a JSON or CSV formatted blob.
+       *
+       * Example usage (Node.js):
+       *
+       * ```js
+       * // Query and convert a blob to a string
+       * const queryBlockBlobResponse = await blockBlobClient.query("select * from BlobStorage");
+       * const downloaded = (await streamToBuffer(queryBlockBlobResponse.readableStreamBody)).toString();
+       * console.log("Query blob content:", downloaded);
+       *
+       * async function streamToBuffer(readableStream) {
+       *   return new Promise((resolve, reject) => {
+       *     const chunks = [];
+       *     readableStream.on("data", (data) => {
+       *       chunks.push(data instanceof Buffer ? data : Buffer.from(data));
+       *     });
+       *     readableStream.on("end", () => {
+       *       resolve(Buffer.concat(chunks));
+       *     });
+       *     readableStream.on("error", reject);
+       *   });
+       * }
+       * ```
+       *
+       * @param query -
+       * @param options -
+       */
       async query(query, options = {}) {
         var _a;
         ensureCpkIfSpecified(options.customerProvidedKey, this.isHttps);
@@ -61672,6 +64519,33 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a new block blob, or updates the content of an existing block blob.
+       * Updating an existing block blob overwrites any existing metadata on the blob.
+       * Partial updates are not supported; the content of the existing blob is
+       * overwritten with the new content. To perform a partial update of a block blob's,
+       * use {@link stageBlock} and {@link commitBlockList}.
+       *
+       * This is a non-parallel uploading method, please use {@link uploadFile},
+       * {@link uploadStream} or {@link uploadBrowserData} for better performance
+       * with concurrency uploading.
+       *
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param body - Blob, string, ArrayBuffer, ArrayBufferView or a function
+       *                               which returns a new Readable stream whose offset is from data source beginning.
+       * @param contentLength - Length of body in bytes. Use Buffer.byteLength() to calculate body length for a
+       *                               string including non non-Base64/Hex-encoded characters.
+       * @param options - Options to the Block Blob Upload operation.
+       * @returns Response data for the Block Blob Upload operation.
+       *
+       * Example usage:
+       *
+       * ```js
+       * const content = "Hello world!";
+       * const uploadBlobResponse = await blockBlobClient.upload(content, content.length);
+       * ```
+       */
       async upload(body2, contentLength2, options = {}) {
         var _a, _b, _c;
         options.conditions = options.conditions || {};
@@ -61691,6 +64565,24 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a new Block Blob where the contents of the blob are read from a given URL.
+       * This API is supported beginning with the 2020-04-08 version. Partial updates
+       * are not supported with Put Blob from URL; the content of an existing blob is overwritten with
+       * the content of the new blob.  To perform partial updates to a block blob’s contents using a
+       * source URL, use {@link stageBlockFromURL} and {@link commitBlockList}.
+       *
+       * @param sourceURL - Specifies the URL of the blob. The value
+       *                           may be a URL of up to 2 KB in length that specifies a blob.
+       *                           The value should be URL-encoded as it would appear
+       *                           in a request URI. The source blob must either be public
+       *                           or must be authenticated via a shared access signature.
+       *                           If the source blob is public, no authentication is required
+       *                           to perform the operation. Here are some examples of source object URLs:
+       *                           - https://myaccount.blob.core.windows.net/mycontainer/myblob
+       *                           - https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=<DateTime>
+       * @param options - Optional parameters.
+       */
       async syncUploadFromURL(sourceURL, options = {}) {
         var _a, _b, _c, _d, _e;
         options.conditions = options.conditions || {};
@@ -61714,6 +64606,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Uploads the specified block to the block blob's "staging area" to be later
+       * committed by a call to commitBlockList.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-block
+       *
+       * @param blockId - A 64-byte value that is base64-encoded
+       * @param body - Data to upload to the staging area.
+       * @param contentLength - Number of bytes to upload.
+       * @param options - Options to the Block Blob Stage Block operation.
+       * @returns Response data for the Block Blob Stage Block operation.
+       */
       async stageBlock(blockId2, body2, contentLength2, options = {}) {
         const { span, updatedOptions } = createSpan("BlockBlobClient-stageBlock", options);
         try {
@@ -61731,6 +64634,27 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The Stage Block From URL operation creates a new block to be committed as part
+       * of a blob where the contents are read from a URL.
+       * This API is available starting in version 2018-03-28.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/put-block-from-url
+       *
+       * @param blockId - A 64-byte value that is base64-encoded
+       * @param sourceURL - Specifies the URL of the blob. The value
+       *                           may be a URL of up to 2 KB in length that specifies a blob.
+       *                           The value should be URL-encoded as it would appear
+       *                           in a request URI. The source blob must either be public
+       *                           or must be authenticated via a shared access signature.
+       *                           If the source blob is public, no authentication is required
+       *                           to perform the operation. Here are some examples of source object URLs:
+       *                           - https://myaccount.blob.core.windows.net/mycontainer/myblob
+       *                           - https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=<DateTime>
+       * @param offset - From which position of the blob to download, greater than or equal to 0
+       * @param count - How much data to be downloaded, greater than 0. Will download to the end when undefined
+       * @param options - Options to the Block Blob Stage Block From URL operation.
+       * @returns Response data for the Block Blob Stage Block From URL operation.
+       */
       async stageBlockFromURL(blockId2, sourceURL, offset = 0, count, options = {}) {
         const { span, updatedOptions } = createSpan("BlockBlobClient-stageBlockFromURL", options);
         try {
@@ -61746,6 +64670,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Writes a blob by specifying the list of block IDs that make up the blob.
+       * In order to be written as part of a blob, a block must have been successfully written
+       * to the server in a prior {@link stageBlock} operation. You can call {@link commitBlockList} to
+       * update a blob by uploading only those blocks that have changed, then committing the new and existing
+       * blocks together. Any blocks not specified in the block list and permanently deleted.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-block-list
+       *
+       * @param blocks -  Array of 64-byte value that is base64-encoded
+       * @param options - Options to the Block Blob Commit Block List operation.
+       * @returns Response data for the Block Blob Commit Block List operation.
+       */
       async commitBlockList(blocks2, options = {}) {
         var _a, _b, _c;
         options.conditions = options.conditions || {};
@@ -61763,6 +64699,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns the list of blocks that have been uploaded as part of a block blob
+       * using the specified block list filter.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-block-list
+       *
+       * @param listType - Specifies whether to return the list of committed blocks,
+       *                                        the list of uncommitted blocks, or both lists together.
+       * @param options - Options to the Block Blob Get Block List operation.
+       * @returns Response data for the Block Blob Get Block List operation.
+       */
       async getBlockList(listType2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlockBlobClient-getBlockList", options);
@@ -61785,6 +64731,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      // High level functions
+      /**
+       * Uploads a Buffer(Node.js)/Blob(browsers)/ArrayBuffer/ArrayBufferView object to a BlockBlob.
+       *
+       * When data length is no more than the specifiled {@link BlockBlobParallelUploadOptions.maxSingleShotSize} (default is
+       * {@link BLOCK_BLOB_MAX_UPLOAD_BLOB_BYTES}), this method will use 1 {@link upload} call to finish the upload.
+       * Otherwise, this method will call {@link stageBlock} to upload blocks, and finally call {@link commitBlockList}
+       * to commit the block list.
+       *
+       * A common {@link BlockBlobParallelUploadOptions.blobHTTPHeaders} option to set is
+       * `blobContentType`, enabling the browser to provide
+       * functionality based on file type.
+       *
+       * @param data - Buffer(Node.js), Blob, ArrayBuffer or ArrayBufferView
+       * @param options -
+       */
       async uploadData(data, options = {}) {
         const { span, updatedOptions } = createSpan("BlockBlobClient-uploadData", options);
         try {
@@ -61813,6 +64775,25 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * ONLY AVAILABLE IN BROWSERS.
+       *
+       * Uploads a browser Blob/File/ArrayBuffer/ArrayBufferView object to block blob.
+       *
+       * When buffer length lesser than or equal to 256MB, this method will use 1 upload call to finish the upload.
+       * Otherwise, this method will call {@link stageBlock} to upload blocks, and finally call
+       * {@link commitBlockList} to commit the block list.
+       *
+       * A common {@link BlockBlobParallelUploadOptions.blobHTTPHeaders} option to set is
+       * `blobContentType`, enabling the browser to provide
+       * functionality based on file type.
+       *
+       * @deprecated Use {@link uploadData} instead.
+       *
+       * @param browserData - Blob, File, ArrayBuffer or ArrayBufferView
+       * @param options - Options to upload browser data.
+       * @returns Response data for the Blob Upload operation.
+       */
       async uploadBrowserData(browserData, options = {}) {
         const { span, updatedOptions } = createSpan("BlockBlobClient-uploadBrowserData", options);
         try {
@@ -61828,6 +64809,21 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       *
+       * Uploads data to block blob. Requires a bodyFactory as the data source,
+       * which need to return a {@link HttpRequestBody} object with the offset and size provided.
+       *
+       * When data length is no more than the specified {@link BlockBlobParallelUploadOptions.maxSingleShotSize} (default is
+       * {@link BLOCK_BLOB_MAX_UPLOAD_BLOB_BYTES}), this method will use 1 {@link upload} call to finish the upload.
+       * Otherwise, this method will call {@link stageBlock} to upload blocks, and finally call {@link commitBlockList}
+       * to commit the block list.
+       *
+       * @param bodyFactory -
+       * @param size - size of the data to upload.
+       * @param options - Options to Upload to Block Blob operation.
+       * @returns Response data for the Blob Upload operation.
+       */
       async uploadSeekableInternal(bodyFactory, size, options = {}) {
         if (!options.blockSize) {
           options.blockSize = 0;
@@ -61904,6 +64900,19 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * ONLY AVAILABLE IN NODE.JS RUNTIME.
+       *
+       * Uploads a local file in blocks to a block blob.
+       *
+       * When file size lesser than or equal to 256MB, this method will use 1 upload call to finish the upload.
+       * Otherwise, this method will call stageBlock to upload blocks, and finally call commitBlockList
+       * to commit the block list.
+       *
+       * @param filePath - Full path of local file
+       * @param options - Options to Upload to Block Blob operation.
+       * @returns Response data for the Blob Upload operation.
+       */
       async uploadFile(filePath, options = {}) {
         const { span, updatedOptions } = createSpan("BlockBlobClient-uploadFile", options);
         try {
@@ -61925,6 +64934,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * ONLY AVAILABLE IN NODE.JS RUNTIME.
+       *
+       * Uploads a Node.js Readable stream into block blob.
+       *
+       * PERFORMANCE IMPROVEMENT TIPS:
+       * * Input stream highWaterMark is better to set a same value with bufferSize
+       *    parameter, which will avoid Buffer.concat() operations.
+       *
+       * @param stream - Node.js Readable stream
+       * @param bufferSize - Size of every buffer allocated, also the block size in the uploaded block blob. Default value is 8MB
+       * @param maxConcurrency -  Max concurrency indicates the max number of buffers that can be allocated,
+       *                                 positive correlation with max uploading concurrency. Default value is 5
+       * @param options - Options to Upload Stream to Block Blob operation.
+       * @returns Response data for the Blob Upload operation.
+       */
       async uploadStream(stream2, bufferSize = DEFAULT_BLOCK_BUFFER_SIZE_BYTES, maxConcurrency = 5, options = {}) {
         if (!options.blobHTTPHeaders) {
           options.blobHTTPHeaders = {};
@@ -61956,6 +64981,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
                 options.onProgress({ loadedBytes: transferProgress });
               }
             },
+            // concurrency should set a smaller value than maxConcurrency, which is helpful to
+            // reduce the possibility when a outgoing handler waits for stream data, in
+            // this situation, outgoing handlers are blocked.
+            // Outgoing queue shouldn't be empty.
             Math.ceil(maxConcurrency / 4 * 3)
           );
           await scheduler.do();
@@ -62013,9 +65042,26 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         super(url2, pipeline);
         this.pageBlobContext = new PageBlob(this.storageClientContext);
       }
+      /**
+       * Creates a new PageBlobClient object identical to the source but with the
+       * specified snapshot timestamp.
+       * Provide "" will remove the snapshot and return a Client to the base blob.
+       *
+       * @param snapshot - The snapshot timestamp.
+       * @returns A new PageBlobClient object identical to the source but with the specified snapshot timestamp.
+       */
       withSnapshot(snapshot2) {
         return new PageBlobClient(setURLParameter(this.url, URLConstants.Parameters.SNAPSHOT, snapshot2.length === 0 ? void 0 : snapshot2), this.pipeline);
       }
+      /**
+       * Creates a page blob of the specified length. Call uploadPages to upload data
+       * data to a page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param size - size of the page blob.
+       * @param options - Options to the Page Blob Create operation.
+       * @returns Response data for the Page Blob Create operation.
+       */
       async create(size, options = {}) {
         var _a, _b, _c;
         options.conditions = options.conditions || {};
@@ -62033,6 +65079,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a page blob of the specified length. Call uploadPages to upload data
+       * data to a page blob. If the blob with the same name already exists, the content
+       * of the existing blob will remain unchanged.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param size - size of the page blob.
+       * @param options -
+       */
       async createIfNotExists(size, options = {}) {
         var _a, _b;
         const { span, updatedOptions } = createSpan("PageBlobClient-createIfNotExists", options);
@@ -62057,6 +65112,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Writes 1 or more pages to the page blob. The start and end offsets must be a multiple of 512.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-page
+       *
+       * @param body - Data to upload
+       * @param offset - Offset of destination page blob
+       * @param count - Content length of the body, also number of bytes to be uploaded
+       * @param options - Options to the Page Blob Upload Pages operation.
+       * @returns Response data for the Page Blob Upload Pages operation.
+       */
       async uploadPages(body2, offset, count, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62076,6 +65141,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The Upload Pages operation writes a range of pages to a page blob where the
+       * contents are read from a URL.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url
+       *
+       * @param sourceURL - Specify a URL to the copy source, Shared Access Signature(SAS) maybe needed for authentication
+       * @param sourceOffset - The source offset to copy from. Pass 0 to copy from the beginning of source page blob
+       * @param destOffset - Offset of destination page blob
+       * @param count - Number of bytes to be uploaded from source page blob
+       * @param options -
+       */
       async uploadPagesFromURL(sourceURL, sourceOffset, destOffset, count, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62099,6 +65175,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Frees the specified pages from the page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-page
+       *
+       * @param offset - Starting byte position of the pages to clear.
+       * @param count - Number of bytes to clear.
+       * @param options - Options to the Page Blob Clear Pages operation.
+       * @returns Response data for the Page Blob Clear Pages operation.
+       */
       async clearPages(offset = 0, count, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62115,6 +65200,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns the list of valid page ranges for a page blob or snapshot of a page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param options - Options to the Page Blob Get Ranges operation.
+       * @returns Response data for the Page Blob Get Ranges operation.
+       */
       async getPageRanges(offset = 0, count, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62131,6 +65225,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * getPageRangesSegment returns a single segment of page ranges starting from the
+       * specified Marker. Use an empty Marker to start enumeration from the beginning.
+       * After getting a segment, process it, and then call getPageRangesSegment again
+       * (passing the the previously-returned Marker) to get the next segment.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param marker - A string value that identifies the portion of the list to be returned with the next list operation.
+       * @param options - Options to PageBlob Get Page Ranges Segment operation.
+       */
       async listPageRangesSegment(offset = 0, count, marker2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("PageBlobClient-getPageRangesSegment", options);
@@ -62146,6 +65252,20 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns an AsyncIterableIterator for {@link PageBlobGetPageRangesResponseModel}
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param marker - A string value that identifies the portion of
+       *                          the get of page ranges to be returned with the next getting operation. The
+       *                          operation returns the ContinuationToken value within the response body if the
+       *                          getting operation did not return all page ranges remaining within the current page.
+       *                          The ContinuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of get
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to List Page Ranges operation.
+       */
       listPageRangeItemSegments(offset = 0, count, marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listPageRangeItemSegments_1() {
           let getPageRangeItemSegmentsResponse;
@@ -62158,6 +65278,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator of {@link PageRangeInfo} objects
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param options - Options to List Page Ranges operation.
+       */
       listPageRangeItems(offset = 0, count, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listPageRangeItems_1() {
           var e_1, _a;
@@ -62180,21 +65307,111 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to list of page ranges for a page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       *  .byPage() returns an async iterable iterator to list of page ranges for a page blob.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * // Get the pageBlobClient before you run these snippets,
+       * // Can be obtained from `blobServiceClient.getContainerClient("<your-container-name>").getPageBlobClient("<your-blob-name>");`
+       * let i = 1;
+       * for await (const pageRange of pageBlobClient.listPageRanges()) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * let iter = pageBlobClient.listPageRanges();
+       * let pageRangeItem = await iter.next();
+       * while (!pageRangeItem.done) {
+       *   console.log(`Page range ${i++}: ${pageRangeItem.value.start} - ${pageRangeItem.value.end}, IsClear: ${pageRangeItem.value.isClear}`);
+       *   pageRangeItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of pageBlobClient.listPageRanges().byPage({ maxPageSize: 20 })) {
+       *   for (const pageRange of response) {
+       *     console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = pageBlobClient.listPageRanges().byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 page ranges
+       * for (const pageRange of response) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       *
+       * // Passing next marker as continuationToken
+       *
+       * iterator = pageBlobClient.listPageRanges().byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints 10 page ranges
+       * for (const blob of response) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       * ```
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param options - Options to the Page Blob Get Ranges operation.
+       * @returns An asyncIterableIterator that supports paging.
+       */
       listPageRanges(offset = 0, count, options = {}) {
         options.conditions = options.conditions || {};
         const iter = this.listPageRangeItems(offset, count, options);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.listPageRangeItemSegments(offset, count, settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, options));
           }
         };
       }
+      /**
+       * Gets the collection of page ranges that differ between a specified snapshot and this page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       * @param offset - Starting byte position of the page blob
+       * @param count - Number of bytes to get ranges diff.
+       * @param prevSnapshot - Timestamp of snapshot to retrieve the difference.
+       * @param options - Options to the Page Blob Get Page Ranges Diff operation.
+       * @returns Response data for the Page Blob Get Page Range Diff operation.
+       */
       async getPageRangesDiff(offset, count, prevSnapshot, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62211,6 +65428,20 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * getPageRangesDiffSegment returns a single segment of page ranges starting from the
+       * specified Marker for difference between previous snapshot and the target page blob.
+       * Use an empty Marker to start enumeration from the beginning.
+       * After getting a segment, process it, and then call getPageRangesDiffSegment again
+       * (passing the the previously-returned Marker) to get the next segment.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param prevSnapshotOrUrl - Timestamp of snapshot to retrieve the difference or URL of snapshot to retrieve the difference.
+       * @param marker - A string value that identifies the portion of the get to be returned with the next get operation.
+       * @param options - Options to the Page Blob Get Page Ranges Diff operation.
+       */
       async listPageRangesDiffSegment(offset, count, prevSnapshotOrUrl, marker2, options) {
         var _a;
         const { span, updatedOptions } = createSpan("PageBlobClient-getPageRangesDiffSegment", options);
@@ -62229,6 +65460,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns an AsyncIterableIterator for {@link PageBlobGetPageRangesDiffResponseModel}
+       *
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param prevSnapshotOrUrl - Timestamp of snapshot to retrieve the difference or URL of snapshot to retrieve the difference.
+       * @param marker - A string value that identifies the portion of
+       *                          the get of page ranges to be returned with the next getting operation. The
+       *                          operation returns the ContinuationToken value within the response body if the
+       *                          getting operation did not return all page ranges remaining within the current page.
+       *                          The ContinuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of get
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to the Page Blob Get Page Ranges Diff operation.
+       */
       listPageRangeDiffItemSegments(offset, count, prevSnapshotOrUrl, marker2, options) {
         return tslib.__asyncGenerator(this, arguments, function* listPageRangeDiffItemSegments_1() {
           let getPageRangeItemSegmentsResponse;
@@ -62241,6 +65488,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator of {@link PageRangeInfo} objects
+       *
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param prevSnapshotOrUrl - Timestamp of snapshot to retrieve the difference or URL of snapshot to retrieve the difference.
+       * @param options - Options to the Page Blob Get Page Ranges Diff operation.
+       */
       listPageRangeDiffItems(offset, count, prevSnapshotOrUrl, options) {
         return tslib.__asyncGenerator(this, arguments, function* listPageRangeDiffItems_1() {
           var e_2, _a;
@@ -62263,21 +65518,112 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to list of page ranges that differ between a specified snapshot and this page blob.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       *  .byPage() returns an async iterable iterator to list of page ranges that differ between a specified snapshot and this page blob.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * // Get the pageBlobClient before you run these snippets,
+       * // Can be obtained from `blobServiceClient.getContainerClient("<your-container-name>").getPageBlobClient("<your-blob-name>");`
+       * let i = 1;
+       * for await (const pageRange of pageBlobClient.listPageRangesDiff()) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * let iter = pageBlobClient.listPageRangesDiff();
+       * let pageRangeItem = await iter.next();
+       * while (!pageRangeItem.done) {
+       *   console.log(`Page range ${i++}: ${pageRangeItem.value.start} - ${pageRangeItem.value.end}, IsClear: ${pageRangeItem.value.isClear}`);
+       *   pageRangeItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of pageBlobClient.listPageRangesDiff().byPage({ maxPageSize: 20 })) {
+       *   for (const pageRange of response) {
+       *     console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = pageBlobClient.listPageRangesDiff().byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 page ranges
+       * for (const pageRange of response) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       *
+       * // Passing next marker as continuationToken
+       *
+       * iterator = pageBlobClient.listPageRangesDiff().byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints 10 page ranges
+       * for (const blob of response) {
+       *   console.log(`Page range ${i++}: ${pageRange.start} - ${pageRange.end}`);
+       * }
+       * ```
+       * @param offset - Starting byte position of the page ranges.
+       * @param count - Number of bytes to get.
+       * @param prevSnapshot - Timestamp of snapshot to retrieve the difference.
+       * @param options - Options to the Page Blob Get Ranges operation.
+       * @returns An asyncIterableIterator that supports paging.
+       */
       listPageRangesDiff(offset, count, prevSnapshot, options = {}) {
         options.conditions = options.conditions || {};
         const iter = this.listPageRangeDiffItems(offset, count, prevSnapshot, Object.assign({}, options));
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.listPageRangeDiffItemSegments(offset, count, prevSnapshot, settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, options));
           }
         };
       }
+      /**
+       * Gets the collection of page ranges that differ between a specified snapshot and this page blob for managed disks.
+       * @see https://docs.microsoft.com/rest/api/storageservices/get-page-ranges
+       *
+       * @param offset - Starting byte position of the page blob
+       * @param count - Number of bytes to get ranges diff.
+       * @param prevSnapshotUrl - URL of snapshot to retrieve the difference.
+       * @param options - Options to the Page Blob Get Page Ranges Diff operation.
+       * @returns Response data for the Page Blob Get Page Range Diff operation.
+       */
       async getPageRangesDiffForManagedDisks(offset, count, prevSnapshotUrl2, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62294,6 +65640,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Resizes the page blob to the specified size (which must be a multiple of 512).
+       * @see https://docs.microsoft.com/rest/api/storageservices/set-blob-properties
+       *
+       * @param size - Target size
+       * @param options - Options to the Page Blob Resize operation.
+       * @returns Response data for the Page Blob Resize operation.
+       */
       async resize(size, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62310,6 +65664,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets a page blob's sequence number.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-properties
+       *
+       * @param sequenceNumberAction - Indicates how the service should modify the blob's sequence number.
+       * @param sequenceNumber - Required if sequenceNumberAction is max or update
+       * @param options - Options to the Page Blob Update Sequence Number operation.
+       * @returns Response data for the Page Blob Update Sequence Number operation.
+       */
       async updateSequenceNumber(sequenceNumberAction2, sequenceNumber, options = {}) {
         var _a;
         options.conditions = options.conditions || {};
@@ -62326,6 +65689,19 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Begins an operation to start an incremental copy from one page blob's snapshot to this page blob.
+       * The snapshot is copied such that only the differential changes between the previously
+       * copied snapshot are transferred to the destination.
+       * The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual.
+       * @see https://docs.microsoft.com/rest/api/storageservices/incremental-copy-blob
+       * @see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots
+       *
+       * @param copySource - Specifies the name of the source page blob snapshot. For example,
+       *                            https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=<DateTime>
+       * @param options - Options to the Page Blob Copy Incremental operation.
+       * @returns Response data for the Page Blob Copy Incremental operation.
+       */
       async startCopyIncremental(copySource2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("PageBlobClient-startCopyIncremental", options);
@@ -62368,6 +65744,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.perResponsePrefix = `--${this.responseBatchBoundary}${HTTP_LINE_ENDING}`;
         this.batchResponseEnding = `--${this.responseBatchBoundary}--`;
       }
+      // For example of response, please refer to https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch#response
       async parseBatchResponse() {
         if (this.batchResponse._response.status !== HTTPURLConnection.HTTP_ACCEPTED) {
           throw new Error(`Invalid state: batch request failed with status: '${this.batchResponse._response.status}'.`);
@@ -62451,6 +65828,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       MutexLockStatus2[MutexLockStatus2["UNLOCKED"] = 1] = "UNLOCKED";
     })(MutexLockStatus || (MutexLockStatus = {}));
     var Mutex = class {
+      /**
+       * Lock for a specific key. If the lock has been acquired by another customer, then
+       * will wait until getting the lock.
+       *
+       * @param key - lock key
+       */
       static async lock(key) {
         return new Promise((resolve) => {
           if (this.keys[key] === void 0 || this.keys[key] === MutexLockStatus.UNLOCKED) {
@@ -62464,6 +65847,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Unlock a key.
+       *
+       * @param key -
+       */
       static async unlock(key) {
         return new Promise((resolve) => {
           if (this.keys[key] === MutexLockStatus.LOCKED) {
@@ -62496,12 +65884,23 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.batch = "batch";
         this.batchRequest = new InnerBatchRequest();
       }
+      /**
+       * Get the value of Content-Type for a batch request.
+       * The value must be multipart/mixed with a batch boundary.
+       * Example: multipart/mixed; boundary=batch_a81786c8-e301-4e42-a729-a32ca24ae252
+       */
       getMultiPartContentType() {
         return this.batchRequest.getMultipartContentType();
       }
+      /**
+       * Get assembled HTTP request body for sub requests.
+       */
       getHttpRequestBody() {
         return this.batchRequest.getHttpRequestBody();
       }
+      /**
+       * Get sub requests that are added into the batch request.
+       */
       getSubRequests() {
         return this.batchRequest.getSubRequests();
       }
@@ -62608,6 +66007,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.batchRequestEnding = `--${this.boundary}--`;
         this.subRequests = /* @__PURE__ */ new Map();
       }
+      /**
+       * Create pipeline to assemble sub requests. The idea here is to use existing
+       * credential and serialization/deserialization components, with additional policies to
+       * filter unnecessary headers, assemble sub requests into request's body
+       * and intercept request from going to wire.
+       * @param credential -  Such as AnonymousCredential, StorageSharedKeyCredential or any credential from the `@azure/identity` package to authenticate requests to the service. You can also provide an object that implements the TokenCredential interface. If not specified, AnonymousCredential is used.
+       */
       createPipeline(credential) {
         const isAnonymousCreds = credential instanceof AnonymousCredential;
         const policyFactoryLength = 3 + (isAnonymousCreds ? 0 : 1);
@@ -62626,6 +66032,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           `${HeaderConstants.CONTENT_ID}: ${this.operationCount}`,
           "",
           `${request.method.toString()} ${getURLPathAndQuery(request.url)} ${HTTP_VERSION_1_1}${HTTP_LINE_ENDING}`
+          // sub request start line with method
         ].join(HTTP_LINE_ENDING);
         for (const header of request.headers.headersArray()) {
           this.body += `${header.name}: ${header.value}${HTTP_LINE_ENDING}`;
@@ -62645,6 +66052,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.subRequests.set(this.operationCount, subRequest);
         this.operationCount++;
       }
+      // Return the http request body with assembling the ending line to the sub request body.
       getHttpRequestBody() {
         return `${this.body}${this.batchRequestEnding}${HTTP_LINE_ENDING}`;
       }
@@ -62679,6 +66087,8 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     var BatchHeaderFilterPolicy = class extends coreHttp.BaseRequestPolicy {
+      // The base class has a protected constructor. Adding a public one to enable constructing of this class.
+      /* eslint-disable-next-line @typescript-eslint/no-useless-constructor*/
       constructor(nextPolicy, options) {
         super(nextPolicy, options);
       }
@@ -62718,6 +66128,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           this.serviceOrContainerContext = new Service(storageClientContext);
         }
       }
+      /**
+       * Creates a {@link BlobBatch}.
+       * A BlobBatch represents an aggregated set of operations on blobs.
+       */
       createBatch() {
         return new BlobBatch();
       }
@@ -62743,6 +66157,41 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return this.submitBatch(batch);
       }
+      /**
+       * Submit batch request which consists of multiple subrequests.
+       *
+       * Get `blobBatchClient` and other details before running the snippets.
+       * `blobServiceClient.getBlobBatchClient()` gives the `blobBatchClient`
+       *
+       * Example usage:
+       *
+       * ```js
+       * let batchRequest = new BlobBatch();
+       * await batchRequest.deleteBlob(urlInString0, credential0);
+       * await batchRequest.deleteBlob(urlInString1, credential1, {
+       *  deleteSnapshots: "include"
+       * });
+       * const batchResp = await blobBatchClient.submitBatch(batchRequest);
+       * console.log(batchResp.subResponsesSucceededCount);
+       * ```
+       *
+       * Example using a lease:
+       *
+       * ```js
+       * let batchRequest = new BlobBatch();
+       * await batchRequest.setBlobAccessTier(blockBlobClient0, "Cool");
+       * await batchRequest.setBlobAccessTier(blockBlobClient1, "Cool", {
+       *  conditions: { leaseId: leaseId }
+       * });
+       * const batchResp = await blobBatchClient.submitBatch(batchRequest);
+       * console.log(batchResp.subResponsesSucceededCount);
+       * ```
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch
+       *
+       * @param batchRequest - A set of Delete or SetTier operations.
+       * @param options -
+       */
       async submitBatch(batchRequest, options = {}) {
         if (!batchRequest || batchRequest.getSubRequests().size === 0) {
           throw new RangeError("Batch request should contain one or more sub requests.");
@@ -62817,9 +66266,28 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this._containerName = this.getContainerNameFromUrl();
         this.containerContext = new Container(this.storageClientContext);
       }
+      /**
+       * The name of the container.
+       */
       get containerName() {
         return this._containerName;
       }
+      /**
+       * Creates a new container under the specified account. If the container with
+       * the same name already exists, the operation fails.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/create-container
+       *
+       * @param options - Options to Container Create operation.
+       *
+       *
+       * Example usage:
+       *
+       * ```js
+       * const containerClient = blobServiceClient.getContainerClient("<container name>");
+       * const createContainerResponse = await containerClient.create();
+       * console.log("Container was created successfully", createContainerResponse.requestId);
+       * ```
+       */
       async create(options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-create", options);
         try {
@@ -62834,6 +66302,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a new container under the specified account. If the container with
+       * the same name already exists, it is not changed.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/create-container
+       *
+       * @param options -
+       */
       async createIfNotExists(options = {}) {
         var _a, _b;
         const { span, updatedOptions } = createSpan("ContainerClient-createIfNotExists", options);
@@ -62857,6 +66332,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns true if the Azure container resource represented by this client exists; false otherwise.
+       *
+       * NOTE: use this function with care since an existing container might be deleted by other clients or
+       * applications. Vice versa new containers with the same name might be added by other clients or
+       * applications after this function completes.
+       *
+       * @param options -
+       */
       async exists(options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-exists", options);
         try {
@@ -62882,18 +66366,61 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a {@link BlobClient}
+       *
+       * @param blobName - A blob name
+       * @returns A new BlobClient object for the given blob name.
+       */
       getBlobClient(blobName) {
         return new BlobClient(appendToURLPath(this.url, EscapePath(blobName)), this.pipeline);
       }
+      /**
+       * Creates an {@link AppendBlobClient}
+       *
+       * @param blobName - An append blob name
+       */
       getAppendBlobClient(blobName) {
         return new AppendBlobClient(appendToURLPath(this.url, EscapePath(blobName)), this.pipeline);
       }
+      /**
+       * Creates a {@link BlockBlobClient}
+       *
+       * @param blobName - A block blob name
+       *
+       *
+       * Example usage:
+       *
+       * ```js
+       * const content = "Hello world!";
+       *
+       * const blockBlobClient = containerClient.getBlockBlobClient("<blob name>");
+       * const uploadBlobResponse = await blockBlobClient.upload(content, content.length);
+       * ```
+       */
       getBlockBlobClient(blobName) {
         return new BlockBlobClient(appendToURLPath(this.url, EscapePath(blobName)), this.pipeline);
       }
+      /**
+       * Creates a {@link PageBlobClient}
+       *
+       * @param blobName - A page blob name
+       */
       getPageBlobClient(blobName) {
         return new PageBlobClient(appendToURLPath(this.url, EscapePath(blobName)), this.pipeline);
       }
+      /**
+       * Returns all user-defined metadata and system properties for the specified
+       * container. The data returned does not include the container's list of blobs.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties
+       *
+       * WARNING: The `metadata` object returned in the response will have its keys in lowercase, even if
+       * they originally contained uppercase characters. This differs from the metadata keys returned by
+       * the `listContainers` method of {@link BlobServiceClient} using the `includeMetadata` option, which
+       * will retain their original casing.
+       *
+       * @param options - Options to Container Get Properties operation.
+       */
       async getProperties(options = {}) {
         if (!options.conditions) {
           options.conditions = {};
@@ -62911,6 +66438,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Marks the specified container for deletion. The container and any blobs
+       * contained within it are later deleted during garbage collection.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/delete-container
+       *
+       * @param options - Options to Container Delete operation.
+       */
       async delete(options = {}) {
         if (!options.conditions) {
           options.conditions = {};
@@ -62928,6 +66462,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Marks the specified container for deletion if it exists. The container and any blobs
+       * contained within it are later deleted during garbage collection.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/delete-container
+       *
+       * @param options - Options to Container Delete operation.
+       */
       async deleteIfExists(options = {}) {
         var _a, _b;
         const { span, updatedOptions } = createSpan("ContainerClient-deleteIfExists", options);
@@ -62951,6 +66492,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets one or more user-defined name-value pairs for the specified container.
+       *
+       * If no option provided, or no metadata defined in the parameter, the container
+       * metadata will be removed.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-container-metadata
+       *
+       * @param metadata - Replace existing metadata with this value.
+       *                            If no value provided the existing metadata will be removed.
+       * @param options - Options to Container Set Metadata operation.
+       */
       async setMetadata(metadata2, options = {}) {
         if (!options.conditions) {
           options.conditions = {};
@@ -62971,6 +66524,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Gets the permissions for the specified container. The permissions indicate
+       * whether container data may be accessed publicly.
+       *
+       * WARNING: JavaScript Date will potentially lose precision when parsing startsOn and expiresOn strings.
+       * For example, new Date("2018-12-31T03:44:23.8827891Z").toISOString() will get "2018-12-31T03:44:23.882Z".
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl
+       *
+       * @param options - Options to Container Get Access Policy operation.
+       */
       async getAccessPolicy(options = {}) {
         if (!options.conditions) {
           options.conditions = {};
@@ -63019,6 +66583,23 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets the permissions for the specified container. The permissions indicate
+       * whether blobs in a container may be accessed publicly.
+       *
+       * When you set permissions for a container, the existing permissions are replaced.
+       * If no access or containerAcl provided, the existing container ACL will be
+       * removed.
+       *
+       * When you establish a stored access policy on a container, it may take up to 30 seconds to take effect.
+       * During this interval, a shared access signature that is associated with the stored access policy will
+       * fail with status code 403 (Forbidden), until the access policy becomes active.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-container-acl
+       *
+       * @param access - The level of public access to data in the container.
+       * @param containerAcl - Array of elements each having a unique Id and details of the access policy.
+       * @param options - Options to Container Set Access Policy operation.
+       */
       async setAccessPolicy(access2, containerAcl2, options = {}) {
         options.conditions = options.conditions || {};
         const { span, updatedOptions } = createSpan("ContainerClient-setAccessPolicy", options);
@@ -63045,9 +66626,37 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Get a {@link BlobLeaseClient} that manages leases on the container.
+       *
+       * @param proposeLeaseId - Initial proposed lease Id.
+       * @returns A new BlobLeaseClient object for managing leases on the container.
+       */
       getBlobLeaseClient(proposeLeaseId) {
         return new BlobLeaseClient(this, proposeLeaseId);
       }
+      /**
+       * Creates a new block blob, or updates the content of an existing block blob.
+       *
+       * Updating an existing block blob overwrites any existing metadata on the blob.
+       * Partial updates are not supported; the content of the existing blob is
+       * overwritten with the new content. To perform a partial update of a block blob's,
+       * use {@link BlockBlobClient.stageBlock} and {@link BlockBlobClient.commitBlockList}.
+       *
+       * This is a non-parallel uploading method, please use {@link BlockBlobClient.uploadFile},
+       * {@link BlockBlobClient.uploadStream} or {@link BlockBlobClient.uploadBrowserData} for better
+       * performance with concurrency uploading.
+       *
+       * @see https://docs.microsoft.com/rest/api/storageservices/put-blob
+       *
+       * @param blobName - Name of the block blob to create or update.
+       * @param body - Blob, string, ArrayBuffer, ArrayBufferView or a function
+       *                               which returns a new Readable stream whose offset is from data source beginning.
+       * @param contentLength - Length of body in bytes. Use Buffer.byteLength() to calculate body length for a
+       *                               string including non non-Base64/Hex-encoded characters.
+       * @param options - Options to configure the Block Blob Upload operation.
+       * @returns Block Blob upload response data and the corresponding BlockBlobClient instance.
+       */
       async uploadBlockBlob(blobName, body2, contentLength2, options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-uploadBlockBlob", options);
         try {
@@ -63067,6 +66676,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Marks the specified blob or snapshot for deletion. The blob is later deleted
+       * during garbage collection. Note that in order to delete a blob, you must delete
+       * all of its snapshots. You can delete both at the same time with the Delete
+       * Blob operation.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/delete-blob
+       *
+       * @param blobName -
+       * @param options - Options to Blob Delete operation.
+       * @returns Block blob deletion response data.
+       */
       async deleteBlob(blobName, options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-deleteBlob", options);
         try {
@@ -63085,6 +66705,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * listBlobFlatSegment returns a single segment of blobs starting from the
+       * specified Marker. Use an empty Marker to start enumeration from the beginning.
+       * After getting a segment, process it, and then call listBlobsFlatSegment again
+       * (passing the the previously-returned Marker) to get the next segment.
+       * @see https://docs.microsoft.com/rest/api/storageservices/list-blobs
+       *
+       * @param marker - A string value that identifies the portion of the list to be returned with the next list operation.
+       * @param options - Options to Container List Blob Flat Segment operation.
+       */
       async listBlobFlatSegment(marker2, options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-listBlobFlatSegment", options);
         try {
@@ -63108,6 +66738,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * listBlobHierarchySegment returns a single segment of blobs starting from
+       * the specified Marker. Use an empty Marker to start enumeration from the
+       * beginning. After getting a segment, process it, and then call listBlobsHierarchicalSegment
+       * again (passing the the previously-returned Marker) to get the next segment.
+       * @see https://docs.microsoft.com/rest/api/storageservices/list-blobs
+       *
+       * @param delimiter - The character or string used to define the virtual hierarchy
+       * @param marker - A string value that identifies the portion of the list to be returned with the next list operation.
+       * @param options - Options to Container List Blob Hierarchy Segment operation.
+       */
       async listBlobHierarchySegment(delimiter2, marker2, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("ContainerClient-listBlobHierarchySegment", options);
@@ -63141,6 +66782,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns an AsyncIterableIterator for ContainerListBlobFlatSegmentResponse
+       *
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the ContinuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The ContinuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to list blobs operation.
+       */
       listSegments(marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listSegments_1() {
           let listBlobsFlatSegmentResponse;
@@ -63153,6 +66806,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator of {@link BlobItem} objects
+       *
+       * @param options - Options to list blobs operation.
+       */
       listItems(options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listItems_1() {
           var e_1, _a;
@@ -63175,6 +66833,76 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to list all the blobs
+       * under the specified account.
+       *
+       * .byPage() returns an async iterable iterator to list the blobs in pages.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * // Get the containerClient before you run these snippets,
+       * // Can be obtained from `blobServiceClient.getContainerClient("<your-container-name>");`
+       * let i = 1;
+       * for await (const blob of containerClient.listBlobsFlat()) {
+       *   console.log(`Blob ${i++}: ${blob.name}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * let iter = containerClient.listBlobsFlat();
+       * let blobItem = await iter.next();
+       * while (!blobItem.done) {
+       *   console.log(`Blob ${i++}: ${blobItem.value.name}`);
+       *   blobItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of containerClient.listBlobsFlat().byPage({ maxPageSize: 20 })) {
+       *   for (const blob of response.segment.blobItems) {
+       *     console.log(`Blob ${i++}: ${blob.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = containerClient.listBlobsFlat().byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 blob names
+       * for (const blob of response.segment.blobItems) {
+       *   console.log(`Blob ${i++}: ${blob.name}`);
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       *
+       * // Passing next marker as continuationToken
+       *
+       * iterator = containerClient.listBlobsFlat().byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints 10 blob names
+       * for (const blob of response.segment.blobItems) {
+       *   console.log(`Blob ${i++}: ${blob.name}`);
+       * }
+       * ```
+       *
+       * @param options - Options to list blobs.
+       * @returns An asyncIterableIterator that supports paging.
+       */
       listBlobsFlat(options = {}) {
         const include2 = [];
         if (options.includeCopy) {
@@ -63213,17 +66941,39 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         const updatedOptions = Object.assign(Object.assign({}, options), include2.length > 0 ? { include: include2 } : {});
         const iter = this.listItems(updatedOptions);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.listSegments(settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, updatedOptions));
           }
         };
       }
+      /**
+       * Returns an AsyncIterableIterator for ContainerListBlobHierarchySegmentResponse
+       *
+       * @param delimiter - The character or string used to define the virtual hierarchy
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the ContinuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The ContinuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to list blobs operation.
+       */
       listHierarchySegments(delimiter2, marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listHierarchySegments_1() {
           let listBlobsHierarchySegmentResponse;
@@ -63236,6 +66986,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator for {@link BlobPrefix} and {@link BlobItem} objects.
+       *
+       * @param delimiter - The character or string used to define the virtual hierarchy
+       * @param options - Options to list blobs operation.
+       */
       listItemsByHierarchy(delimiter2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listItemsByHierarchy_1() {
           var e_2, _a;
@@ -63266,6 +67022,84 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to list all the blobs by hierarchy.
+       * under the specified account.
+       *
+       * .byPage() returns an async iterable iterator to list the blobs by hierarchy in pages.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * for await (const item of containerClient.listBlobsByHierarchy("/")) {
+       *   if (item.kind === "prefix") {
+       *     console.log(`\tBlobPrefix: ${item.name}`);
+       *   } else {
+       *     console.log(`\tBlobItem: name - ${item.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let iter = containerClient.listBlobsByHierarchy("/", { prefix: "prefix1/" });
+       * let entity = await iter.next();
+       * while (!entity.done) {
+       *   let item = entity.value;
+       *   if (item.kind === "prefix") {
+       *     console.log(`\tBlobPrefix: ${item.name}`);
+       *   } else {
+       *     console.log(`\tBlobItem: name - ${item.name}`);
+       *   }
+       *   entity = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * console.log("Listing blobs by hierarchy by page");
+       * for await (const response of containerClient.listBlobsByHierarchy("/").byPage()) {
+       *   const segment = response.segment;
+       *   if (segment.blobPrefixes) {
+       *     for (const prefix of segment.blobPrefixes) {
+       *       console.log(`\tBlobPrefix: ${prefix.name}`);
+       *     }
+       *   }
+       *   for (const blob of response.segment.blobItems) {
+       *     console.log(`\tBlobItem: name - ${blob.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a max page size:
+       *
+       * ```js
+       * console.log("Listing blobs by hierarchy by page, specifying a prefix and a max page size");
+       *
+       * let i = 1;
+       * for await (const response of containerClient
+       *   .listBlobsByHierarchy("/", { prefix: "prefix2/sub1/" })
+       *   .byPage({ maxPageSize: 2 })) {
+       *   console.log(`Page ${i++}`);
+       *   const segment = response.segment;
+       *
+       *   if (segment.blobPrefixes) {
+       *     for (const prefix of segment.blobPrefixes) {
+       *       console.log(`\tBlobPrefix: ${prefix.name}`);
+       *     }
+       *   }
+       *
+       *   for (const blob of response.segment.blobItems) {
+       *     console.log(`\tBlobItem: name - ${blob.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * @param delimiter - The character or string used to define the virtual hierarchy
+       * @param options - Options to list blobs operation.
+       */
       listBlobsByHierarchy(delimiter2, options = {}) {
         if (delimiter2 === "") {
           throw new RangeError("delimiter should contain one or more characters");
@@ -63307,17 +67141,43 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         const updatedOptions = Object.assign(Object.assign({}, options), include2.length > 0 ? { include: include2 } : {});
         const iter = this.listItemsByHierarchy(delimiter2, updatedOptions);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           async next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.listHierarchySegments(delimiter2, settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, updatedOptions));
           }
         };
       }
+      /**
+       * The Filter Blobs operation enables callers to list blobs in the container whose tags
+       * match a given search expression.
+       *
+       * @param tagFilterSqlExpression - The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                        The given expression must evaluate to true for a blob to be returned in the results.
+       *                                        The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                        however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the continuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The continuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to find blobs by tags.
+       */
       async findBlobsByTagsSegment(tagFilterSqlExpression, marker2, options = {}) {
         const { span, updatedOptions } = createSpan("ContainerClient-findBlobsByTagsSegment", options);
         try {
@@ -63341,6 +67201,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns an AsyncIterableIterator for ContainerFindBlobsByTagsSegmentResponse.
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the continuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The continuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to find blobs by tags.
+       */
       findBlobsByTagsSegments(tagFilterSqlExpression, marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* findBlobsByTagsSegments_1() {
           let response;
@@ -63354,6 +67230,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator for blobs.
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param options - Options to findBlobsByTagsItems.
+       */
       findBlobsByTagsItems(tagFilterSqlExpression, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* findBlobsByTagsItems_1() {
           var e_3, _a;
@@ -63376,16 +67261,102 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to find all blobs with specified tag
+       * under the specified container.
+       *
+       * .byPage() returns an async iterable iterator to list the blobs in pages.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * let i = 1;
+       * for await (const blob of containerClient.findBlobsByTags("tagkey='tagvalue'")) {
+       *   console.log(`Blob ${i++}: ${blob.name}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * const iter = containerClient.findBlobsByTags("tagkey='tagvalue'");
+       * let blobItem = await iter.next();
+       * while (!blobItem.done) {
+       *   console.log(`Blob ${i++}: ${blobItem.value.name}`);
+       *   blobItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of containerClient.findBlobsByTags("tagkey='tagvalue'").byPage({ maxPageSize: 20 })) {
+       *   if (response.blobs) {
+       *     for (const blob of response.blobs) {
+       *       console.log(`Blob ${i++}: ${blob.name}`);
+       *     }
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = containerClient.findBlobsByTags("tagkey='tagvalue'").byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 blob names
+       * if (response.blobs) {
+       *   for (const blob of response.blobs) {
+       *     console.log(`Blob ${i++}: ${blob.name}`);
+       *   }
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       * // Passing next marker as continuationToken
+       * iterator = containerClient
+       *   .findBlobsByTags("tagkey='tagvalue'")
+       *   .byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints blob names
+       * if (response.blobs) {
+       *   for (const blob of response.blobs) {
+       *      console.log(`Blob ${i++}: ${blob.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param options - Options to find blobs by tags.
+       */
       findBlobsByTags(tagFilterSqlExpression, options = {}) {
         const listSegmentOptions = Object.assign({}, options);
         const iter = this.findBlobsByTagsItems(tagFilterSqlExpression, listSegmentOptions);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.findBlobsByTagsSegments(tagFilterSqlExpression, settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, listSegmentOptions));
           }
@@ -63411,6 +67382,17 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           throw new Error("Unable to extract containerName with provided information.");
         }
       }
+      /**
+       * Only available for ContainerClient constructed with a shared key credential.
+       *
+       * Generates a Blob Container Service Shared Access Signature (SAS) URI based on the client properties
+       * and parameters passed in. The SAS is signed by the shared key credential of the client.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas
+       *
+       * @param options - Optional parameters.
+       * @returns The SAS URI consisting of the URI to the resource represented by this client, followed by the generated SAS token.
+       */
       generateSasUrl(options) {
         return new Promise((resolve) => {
           if (!(this.credential instanceof StorageSharedKeyCredential)) {
@@ -63420,6 +67402,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           resolve(appendToURLQuery(this.url, sas));
         });
       }
+      /**
+       * Creates a BlobBatchClient object to conduct batch operations.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch
+       *
+       * @returns A new BlobBatchClient object for this container.
+       */
       getBlobBatchClient() {
         return new BlobBatchClient(this.url, this.pipeline);
       }
@@ -63440,6 +67429,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.setImmutabilityPolicy = false;
         this.permanentDelete = false;
       }
+      /**
+       * Parse initializes the AccountSASPermissions fields from a string.
+       *
+       * @param permissions -
+       */
       static parse(permissions) {
         const accountSASPermissions = new AccountSASPermissions();
         for (const c of permissions) {
@@ -63489,6 +67483,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return accountSASPermissions;
       }
+      /**
+       * Creates a {@link AccountSASPermissions} from a raw object which contains same keys as it
+       * and boolean values for them.
+       *
+       * @param permissionLike -
+       */
       static from(permissionLike) {
         const accountSASPermissions = new AccountSASPermissions();
         if (permissionLike.read) {
@@ -63532,6 +67532,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return accountSASPermissions;
       }
+      /**
+       * Produces the SAS permissions string for an Azure Storage account.
+       * Call this method to set AccountSASSignatureValues Permissions field.
+       *
+       * Using this method will guarantee the resource types are in
+       * an order accepted by the service.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-an-account-sas
+       *
+       */
       toString() {
         const permissions = [];
         if (this.read) {
@@ -63582,6 +67592,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.container = false;
         this.object = false;
       }
+      /**
+       * Creates an {@link AccountSASResourceTypes} from the specified resource types string. This method will throw an
+       * Error if it encounters a character that does not correspond to a valid resource type.
+       *
+       * @param resourceTypes -
+       */
       static parse(resourceTypes) {
         const accountSASResourceTypes = new AccountSASResourceTypes();
         for (const c of resourceTypes) {
@@ -63601,6 +67617,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return accountSASResourceTypes;
       }
+      /**
+       * Converts the given resource types to a string.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-an-account-sas
+       *
+       */
       toString() {
         const resourceTypes = [];
         if (this.service) {
@@ -63622,6 +67644,12 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         this.queue = false;
         this.table = false;
       }
+      /**
+       * Creates an {@link AccountSASServices} from the specified services string. This method will throw an
+       * Error if it encounters a character that does not correspond to a valid service.
+       *
+       * @param services -
+       */
       static parse(services) {
         const accountSASServices = new AccountSASServices();
         for (const c of services) {
@@ -63644,6 +67672,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         }
         return accountSASServices;
       }
+      /**
+       * Converts the given services to a string.
+       *
+       */
       toString() {
         const services = [];
         if (this.blob) {
@@ -63662,30 +67694,30 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
       }
     };
     function generateAccountSASQueryParameters(accountSASSignatureValues, sharedKeyCredential) {
-      const version2 = accountSASSignatureValues.version ? accountSASSignatureValues.version : SERVICE_VERSION;
-      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.setImmutabilityPolicy && version2 < "2020-08-04") {
+      const version4 = accountSASSignatureValues.version ? accountSASSignatureValues.version : SERVICE_VERSION;
+      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.setImmutabilityPolicy && version4 < "2020-08-04") {
         throw RangeError("'version' must be >= '2020-08-04' when provided 'i' permission.");
       }
-      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.deleteVersion && version2 < "2019-10-10") {
+      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.deleteVersion && version4 < "2019-10-10") {
         throw RangeError("'version' must be >= '2019-10-10' when provided 'x' permission.");
       }
-      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.permanentDelete && version2 < "2019-10-10") {
+      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.permanentDelete && version4 < "2019-10-10") {
         throw RangeError("'version' must be >= '2019-10-10' when provided 'y' permission.");
       }
-      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.tag && version2 < "2019-12-12") {
+      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.tag && version4 < "2019-12-12") {
         throw RangeError("'version' must be >= '2019-12-12' when provided 't' permission.");
       }
-      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.filter && version2 < "2019-12-12") {
+      if (accountSASSignatureValues.permissions && accountSASSignatureValues.permissions.filter && version4 < "2019-12-12") {
         throw RangeError("'version' must be >= '2019-12-12' when provided 'f' permission.");
       }
-      if (accountSASSignatureValues.encryptionScope && version2 < "2020-12-06") {
+      if (accountSASSignatureValues.encryptionScope && version4 < "2020-12-06") {
         throw RangeError("'version' must be >= '2020-12-06' when provided 'encryptionScope' in SAS.");
       }
       const parsedPermissions = AccountSASPermissions.parse(accountSASSignatureValues.permissions.toString());
       const parsedServices = AccountSASServices.parse(accountSASSignatureValues.services).toString();
       const parsedResourceTypes = AccountSASResourceTypes.parse(accountSASSignatureValues.resourceTypes).toString();
       let stringToSign;
-      if (version2 >= "2020-12-06") {
+      if (version4 >= "2020-12-06") {
         stringToSign = [
           sharedKeyCredential.accountName,
           parsedPermissions,
@@ -63695,9 +67727,10 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           truncatedISO8061Date(accountSASSignatureValues.expiresOn, false),
           accountSASSignatureValues.ipRange ? ipRangeToString(accountSASSignatureValues.ipRange) : "",
           accountSASSignatureValues.protocol ? accountSASSignatureValues.protocol : "",
-          version2,
+          version4,
           accountSASSignatureValues.encryptionScope ? accountSASSignatureValues.encryptionScope : "",
           ""
+          // Account SAS requires an additional newline character
         ].join("\n");
       } else {
         stringToSign = [
@@ -63709,12 +67742,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           truncatedISO8061Date(accountSASSignatureValues.expiresOn, false),
           accountSASSignatureValues.ipRange ? ipRangeToString(accountSASSignatureValues.ipRange) : "",
           accountSASSignatureValues.protocol ? accountSASSignatureValues.protocol : "",
-          version2,
+          version4,
           ""
+          // Account SAS requires an additional newline character
         ].join("\n");
       }
       const signature = sharedKeyCredential.computeHMACSHA256(stringToSign);
-      return new SASQueryParameters(version2, signature, parsedPermissions.toString(), parsedServices, parsedResourceTypes, accountSASSignatureValues.protocol, accountSASSignatureValues.startsOn, accountSASSignatureValues.expiresOn, accountSASSignatureValues.ipRange, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, accountSASSignatureValues.encryptionScope);
+      return new SASQueryParameters(version4, signature, parsedPermissions.toString(), parsedServices, parsedResourceTypes, accountSASSignatureValues.protocol, accountSASSignatureValues.startsOn, accountSASSignatureValues.expiresOn, accountSASSignatureValues.ipRange, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, accountSASSignatureValues.encryptionScope);
     }
     var BlobServiceClient = class extends StorageClient {
       constructor(url2, credentialOrPipeline, options) {
@@ -63729,6 +67763,18 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         super(url2, pipeline);
         this.serviceContext = new Service(this.storageClientContext);
       }
+      /**
+       *
+       * Creates an instance of BlobServiceClient from connection string.
+       *
+       * @param connectionString - Account connection string or a SAS connection string of an Azure storage account.
+       *                                  [ Note - Account connection string can only be used in NODE.JS runtime. ]
+       *                                  Account connection string example -
+       *                                  `DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=accountKey;EndpointSuffix=core.windows.net`
+       *                                  SAS connection string example -
+       *                                  `BlobEndpoint=https://myaccount.blob.core.windows.net/;QueueEndpoint=https://myaccount.queue.core.windows.net/;FileEndpoint=https://myaccount.file.core.windows.net/;TableEndpoint=https://myaccount.table.core.windows.net/;SharedAccessSignature=sasString`
+       * @param options - Optional. Options to configure the HTTP pipeline.
+       */
       static fromConnectionString(connectionString, options) {
         options = options || {};
         const extractedCreds = extractConnectionStringParts(connectionString);
@@ -63750,9 +67796,28 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           throw new Error("Connection string must be either an Account connection string or a SAS connection string");
         }
       }
+      /**
+       * Creates a {@link ContainerClient} object
+       *
+       * @param containerName - A container name
+       * @returns A new ContainerClient object for the given container name.
+       *
+       * Example usage:
+       *
+       * ```js
+       * const containerClient = blobServiceClient.getContainerClient("<container name>");
+       * ```
+       */
       getContainerClient(containerName) {
         return new ContainerClient(appendToURLPath(this.url, encodeURIComponent(containerName)), this.pipeline);
       }
+      /**
+       * Create a Blob container.
+       *
+       * @param containerName - Name of the container to create.
+       * @param options - Options to configure Container Create operation.
+       * @returns Container creation response and the corresponding container client.
+       */
       async createContainer(containerName, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-createContainer", options);
         try {
@@ -63772,6 +67837,13 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Deletes a Blob container.
+       *
+       * @param containerName - Name of the container to delete.
+       * @param options - Options to configure Container Delete operation.
+       * @returns Container deletion response.
+       */
       async deleteContainer(containerName, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-deleteContainer", options);
         try {
@@ -63787,6 +67859,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Restore a previously deleted Blob container.
+       * This API is only functional if Container Soft Delete is enabled for the storage account associated with the container.
+       *
+       * @param deletedContainerName - Name of the previously deleted container.
+       * @param deletedContainerVersion - Version of the previously deleted container, used to uniquely identify the deleted container.
+       * @param options - Options to configure Container Restore operation.
+       * @returns Container deletion response.
+       */
       async undeleteContainer(deletedContainerName2, deletedContainerVersion2, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-undeleteContainer", options);
         try {
@@ -63807,6 +67888,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Rename an existing Blob Container.
+       *
+       * @param sourceContainerName - The name of the source container.
+       * @param destinationContainerName - The new name of the container.
+       * @param options - Options to configure Container Rename operation.
+       */
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+      // @ts-ignore Need to hide this interface for now. Make it public and turn on the live tests for it when the service is ready.
       async renameContainer(sourceContainerName2, destinationContainerName, options = {}) {
         var _a;
         const { span, updatedOptions } = createSpan("BlobServiceClient-renameContainer", options);
@@ -63825,6 +67915,14 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Gets the properties of a storage account’s Blob service, including properties
+       * for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties
+       *
+       * @param options - Options to the Service Get Properties operation.
+       * @returns Response data for the Service Get Properties operation.
+       */
       async getProperties(options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-getProperties", options);
         try {
@@ -63839,6 +67937,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Sets properties for a storage account’s Blob service endpoint, including properties
+       * for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules and soft delete settings.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-service-properties
+       *
+       * @param properties -
+       * @param options - Options to the Service Set Properties operation.
+       * @returns Response data for the Service Set Properties operation.
+       */
       async setProperties(properties, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-setProperties", options);
         try {
@@ -63853,6 +67960,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Retrieves statistics related to replication for the Blob service. It is only
+       * available on the secondary location endpoint when read-access geo-redundant
+       * replication is enabled for the storage account.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats
+       *
+       * @param options - Options to the Service Get Statistics operation.
+       * @returns Response data for the Service Get Statistics operation.
+       */
       async getStatistics(options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-getStatistics", options);
         try {
@@ -63867,6 +67983,16 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The Get Account Information operation returns the sku name and account kind
+       * for the specified account.
+       * The Get Account Information operation is available on service versions beginning
+       * with version 2018-03-28.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information
+       *
+       * @param options - Options to the Service Get Account Info operation.
+       * @returns Response data for the Service Get Account Info operation.
+       */
       async getAccountInfo(options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-getAccountInfo", options);
         try {
@@ -63881,6 +68007,20 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns a list of the containers under the specified account.
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/list-containers2
+       *
+       * @param marker - A string value that identifies the portion of
+       *                        the list of containers to be returned with the next listing operation. The
+       *                        operation returns the continuationToken value within the response body if the
+       *                        listing operation did not return all containers remaining to be listed
+       *                        with the current page. The continuationToken value can be used as the value for
+       *                        the marker parameter in a subsequent call to request the next page of list
+       *                        items. The marker value is opaque to the client.
+       * @param options - Options to the Service List Container Segment operation.
+       * @returns Response data for the Service List Container Segment operation.
+       */
       async listContainersSegment(marker2, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-listContainersSegment", options);
         try {
@@ -63895,6 +68035,24 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * The Filter Blobs operation enables callers to list blobs across all containers whose tags
+       * match a given search expression. Filter blobs searches across all containers within a
+       * storage account but can be scoped within the expression to a single container.
+       *
+       * @param tagFilterSqlExpression - The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                        The given expression must evaluate to true for a blob to be returned in the results.
+       *                                        The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                        however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the continuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The continuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to find blobs by tags.
+       */
       async findBlobsByTagsSegment(tagFilterSqlExpression, marker2, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-findBlobsByTagsSegment", options);
         try {
@@ -63918,6 +68076,22 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Returns an AsyncIterableIterator for ServiceFindBlobsByTagsSegmentResponse.
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param marker - A string value that identifies the portion of
+       *                          the list of blobs to be returned with the next listing operation. The
+       *                          operation returns the continuationToken value within the response body if the
+       *                          listing operation did not return all blobs remaining to be listed
+       *                          with the current page. The continuationToken value can be used as the value for
+       *                          the marker parameter in a subsequent call to request the next page of list
+       *                          items. The marker value is opaque to the client.
+       * @param options - Options to find blobs by tags.
+       */
       findBlobsByTagsSegments(tagFilterSqlExpression, marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* findBlobsByTagsSegments_1() {
           let response;
@@ -63931,6 +68105,15 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator for blobs.
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param options - Options to findBlobsByTagsItems.
+       */
       findBlobsByTagsItems(tagFilterSqlExpression, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* findBlobsByTagsItems_1() {
           var e_1, _a;
@@ -63953,21 +68136,121 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to find all blobs with specified tag
+       * under the specified account.
+       *
+       * .byPage() returns an async iterable iterator to list the blobs in pages.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * let i = 1;
+       * for await (const blob of blobServiceClient.findBlobsByTags("tagkey='tagvalue'")) {
+       *   console.log(`Blob ${i++}: ${container.name}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * const iter = blobServiceClient.findBlobsByTags("tagkey='tagvalue'");
+       * let blobItem = await iter.next();
+       * while (!blobItem.done) {
+       *   console.log(`Blob ${i++}: ${blobItem.value.name}`);
+       *   blobItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of blobServiceClient.findBlobsByTags("tagkey='tagvalue'").byPage({ maxPageSize: 20 })) {
+       *   if (response.blobs) {
+       *     for (const blob of response.blobs) {
+       *       console.log(`Blob ${i++}: ${blob.name}`);
+       *     }
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = blobServiceClient.findBlobsByTags("tagkey='tagvalue'").byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 blob names
+       * if (response.blobs) {
+       *   for (const blob of response.blobs) {
+       *     console.log(`Blob ${i++}: ${blob.name}`);
+       *   }
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       * // Passing next marker as continuationToken
+       * iterator = blobServiceClient
+       *   .findBlobsByTags("tagkey='tagvalue'")
+       *   .byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints blob names
+       * if (response.blobs) {
+       *   for (const blob of response.blobs) {
+       *      console.log(`Blob ${i++}: ${blob.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * @param tagFilterSqlExpression -  The where parameter enables the caller to query blobs whose tags match a given expression.
+       *                                         The given expression must evaluate to true for a blob to be returned in the results.
+       *                                         The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+       *                                         however, only a subset of the OData filter syntax is supported in the Blob service.
+       * @param options - Options to find blobs by tags.
+       */
       findBlobsByTags(tagFilterSqlExpression, options = {}) {
         const listSegmentOptions = Object.assign({}, options);
         const iter = this.findBlobsByTagsItems(tagFilterSqlExpression, listSegmentOptions);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.findBlobsByTagsSegments(tagFilterSqlExpression, settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, listSegmentOptions));
           }
         };
       }
+      /**
+       * Returns an AsyncIterableIterator for ServiceListContainersSegmentResponses
+       *
+       * @param marker - A string value that identifies the portion of
+       *                        the list of containers to be returned with the next listing operation. The
+       *                        operation returns the continuationToken value within the response body if the
+       *                        listing operation did not return all containers remaining to be listed
+       *                        with the current page. The continuationToken value can be used as the value for
+       *                        the marker parameter in a subsequent call to request the next page of list
+       *                        items. The marker value is opaque to the client.
+       * @param options - Options to list containers operation.
+       */
       listSegments(marker2, options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listSegments_1() {
           let listContainersSegmentResponse;
@@ -63981,6 +68264,11 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an AsyncIterableIterator for Container Items
+       *
+       * @param options - Options to list containers operation.
+       */
       listItems(options = {}) {
         return tslib.__asyncGenerator(this, arguments, function* listItems_1() {
           var e_2, _a;
@@ -64003,6 +68291,80 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           }
         });
       }
+      /**
+       * Returns an async iterable iterator to list all the containers
+       * under the specified account.
+       *
+       * .byPage() returns an async iterable iterator to list the containers in pages.
+       *
+       * Example using `for await` syntax:
+       *
+       * ```js
+       * let i = 1;
+       * for await (const container of blobServiceClient.listContainers()) {
+       *   console.log(`Container ${i++}: ${container.name}`);
+       * }
+       * ```
+       *
+       * Example using `iter.next()`:
+       *
+       * ```js
+       * let i = 1;
+       * const iter = blobServiceClient.listContainers();
+       * let containerItem = await iter.next();
+       * while (!containerItem.done) {
+       *   console.log(`Container ${i++}: ${containerItem.value.name}`);
+       *   containerItem = await iter.next();
+       * }
+       * ```
+       *
+       * Example using `byPage()`:
+       *
+       * ```js
+       * // passing optional maxPageSize in the page settings
+       * let i = 1;
+       * for await (const response of blobServiceClient.listContainers().byPage({ maxPageSize: 20 })) {
+       *   if (response.containerItems) {
+       *     for (const container of response.containerItems) {
+       *       console.log(`Container ${i++}: ${container.name}`);
+       *     }
+       *   }
+       * }
+       * ```
+       *
+       * Example using paging with a marker:
+       *
+       * ```js
+       * let i = 1;
+       * let iterator = blobServiceClient.listContainers().byPage({ maxPageSize: 2 });
+       * let response = (await iterator.next()).value;
+       *
+       * // Prints 2 container names
+       * if (response.containerItems) {
+       *   for (const container of response.containerItems) {
+       *     console.log(`Container ${i++}: ${container.name}`);
+       *   }
+       * }
+       *
+       * // Gets next marker
+       * let marker = response.continuationToken;
+       * // Passing next marker as continuationToken
+       * iterator = blobServiceClient
+       *   .listContainers()
+       *   .byPage({ continuationToken: marker, maxPageSize: 10 });
+       * response = (await iterator.next()).value;
+       *
+       * // Prints 10 container names
+       * if (response.containerItems) {
+       *   for (const container of response.containerItems) {
+       *      console.log(`Container ${i++}: ${container.name}`);
+       *   }
+       * }
+       * ```
+       *
+       * @param options - Options to list containers.
+       * @returns An asyncIterableIterator that supports paging.
+       */
       listContainers(options = {}) {
         if (options.prefix === "") {
           options.prefix = void 0;
@@ -64020,17 +68382,37 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         const listSegmentOptions = Object.assign(Object.assign({}, options), include2.length > 0 ? { include: include2 } : {});
         const iter = this.listItems(listSegmentOptions);
         return {
+          /**
+           * The next method, part of the iteration protocol
+           */
           next() {
             return iter.next();
           },
+          /**
+           * The connection to the async iterator, part of the iteration protocol
+           */
           [Symbol.asyncIterator]() {
             return this;
           },
+          /**
+           * Return an AsyncIterableIterator that works a page at a time
+           */
           byPage: (settings = {}) => {
             return this.listSegments(settings.continuationToken, Object.assign({ maxPageSize: settings.maxPageSize }, listSegmentOptions));
           }
         };
       }
+      /**
+       * ONLY AVAILABLE WHEN USING BEARER TOKEN AUTHENTICATION (TokenCredential).
+       *
+       * Retrieves a user delegation key for the Blob service. This is only a valid operation when using
+       * bearer token authentication.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/get-user-delegation-key
+       *
+       * @param startsOn -      The start time for the user delegation SAS. Must be within 7 days of the current time
+       * @param expiresOn -     The end time for the user delegation SAS. Must be within 7 days of the current time
+       */
       async getUserDelegationKey(startsOn, expiresOn2, options = {}) {
         const { span, updatedOptions } = createSpan("BlobServiceClient-getUserDelegationKey", options);
         try {
@@ -64059,15 +68441,36 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           span.end();
         }
       }
+      /**
+       * Creates a BlobBatchClient object to conduct batch operations.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch
+       *
+       * @returns A new BlobBatchClient object for this service.
+       */
       getBlobBatchClient() {
         return new BlobBatchClient(this.url, this.pipeline);
       }
+      /**
+       * Only available for BlobServiceClient constructed with a shared key credential.
+       *
+       * Generates a Blob account Shared Access Signature (SAS) URI based on the client properties
+       * and parameters passed in. The SAS is signed by the shared key credential of the client.
+       *
+       * @see https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas
+       *
+       * @param expiresOn - Optional. The time at which the shared access signature becomes invalid. Default to an hour later if not provided.
+       * @param permissions - Specifies the list of permissions to be associated with the SAS.
+       * @param resourceTypes - Specifies the resource types associated with the shared access signature.
+       * @param options - Optional parameters.
+       * @returns An account SAS URI consisting of the URI to the resource represented by this client, followed by the generated SAS token.
+       */
       generateAccountSasUrl(expiresOn2, permissions = AccountSASPermissions.parse("r"), resourceTypes = "sco", options = {}) {
         if (!(this.credential instanceof StorageSharedKeyCredential)) {
           throw RangeError("Can only generate the account SAS when the client is initialized with a shared key credential");
         }
         if (expiresOn2 === void 0) {
-          const now = new Date();
+          const now = /* @__PURE__ */ new Date();
           expiresOn2 = new Date(now.getTime() + 3600 * 1e3);
         }
         const sas = generateAccountSASQueryParameters(Object.assign({
@@ -64154,7 +68557,7 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
 var require_requestUtils = __commonJS({
   "node_modules/@actions/cache/lib/internal/requestUtils.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -64181,7 +68584,7 @@ var require_requestUtils = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -64194,7 +68597,7 @@ var require_requestUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
+    var core4 = __importStar2(require_core());
     var http_client_1 = require_lib();
     var constants_1 = require_constants();
     function isSuccessStatusCode(statusCode) {
@@ -64224,12 +68627,12 @@ var require_requestUtils = __commonJS({
     }
     exports.isRetryableStatusCode = isRetryableStatusCode;
     function sleep(milliseconds) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
       });
     }
     function retry(name, method, getStatusCode, maxAttempts = constants_1.DefaultRetryAttempts, delay = constants_1.DefaultRetryDelay, onError = void 0) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         let errorMessage = "";
         let attempt = 1;
         while (attempt <= maxAttempts) {
@@ -64268,13 +68671,15 @@ var require_requestUtils = __commonJS({
     }
     exports.retry = retry;
     function retryTypedResponse(name, method, maxAttempts = constants_1.DefaultRetryAttempts, delay = constants_1.DefaultRetryDelay) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return yield retry(
           name,
           method,
           (response) => response.statusCode,
           maxAttempts,
           delay,
+          // If the error object contains the statusCode property, extract it and return
+          // an TypedResponse<T> so it can be processed by the retry logic.
           (error) => {
             if (error instanceof http_client_1.HttpClientError) {
               return {
@@ -64292,7 +68697,7 @@ var require_requestUtils = __commonJS({
     }
     exports.retryTypedResponse = retryTypedResponse;
     function retryHttpClientResponse(name, method, maxAttempts = constants_1.DefaultRetryAttempts, delay = constants_1.DefaultRetryDelay) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         return yield retry(name, method, (response) => response.message.statusCode, maxAttempts, delay);
       });
     }
@@ -64304,7 +68709,7 @@ var require_requestUtils = __commonJS({
 var require_downloadUtils = __commonJS({
   "node_modules/@actions/cache/lib/internal/downloadUtils.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -64331,7 +68736,7 @@ var require_downloadUtils = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -64344,19 +68749,19 @@ var require_downloadUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
+    var core4 = __importStar2(require_core());
     var http_client_1 = require_lib();
-    var storage_blob_1 = require_dist11();
-    var buffer = __importStar(require("buffer"));
-    var fs2 = __importStar(require("fs"));
-    var stream = __importStar(require("stream"));
-    var util = __importStar(require("util"));
-    var utils = __importStar(require_cacheUtils());
+    var storage_blob_1 = require_dist9();
+    var buffer = __importStar2(require("buffer"));
+    var fs2 = __importStar2(require("fs"));
+    var stream = __importStar2(require("stream"));
+    var util = __importStar2(require("util"));
+    var utils = __importStar2(require_cacheUtils());
     var constants_1 = require_constants();
     var requestUtils_1 = require_requestUtils();
-    var abort_controller_1 = require_dist3();
+    var abort_controller_1 = require_dist();
     function pipeResponseToStream(response, output) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const pipeline = util.promisify(stream.pipeline);
         yield pipeline(response.message, output);
       });
@@ -64371,6 +68776,12 @@ var require_downloadUtils = __commonJS({
         this.displayedComplete = false;
         this.startTime = Date.now();
       }
+      /**
+       * Progress to the next segment. Only call this method when the previous segment
+       * is complete.
+       *
+       * @param segmentSize the length of the next segment
+       */
       nextSegment(segmentSize) {
         this.segmentOffset = this.segmentOffset + this.segmentSize;
         this.segmentIndex = this.segmentIndex + 1;
@@ -64378,15 +68789,30 @@ var require_downloadUtils = __commonJS({
         this.receivedBytes = 0;
         core4.debug(`Downloading segment at offset ${this.segmentOffset} with length ${this.segmentSize}...`);
       }
+      /**
+       * Sets the number of bytes received for the current segment.
+       *
+       * @param receivedBytes the number of bytes received
+       */
       setReceivedBytes(receivedBytes) {
         this.receivedBytes = receivedBytes;
       }
+      /**
+       * Returns the total number of bytes transferred.
+       */
       getTransferredBytes() {
         return this.segmentOffset + this.receivedBytes;
       }
+      /**
+       * Returns true if the download is complete.
+       */
       isDone() {
         return this.getTransferredBytes() === this.contentLength;
       }
+      /**
+       * Prints the current download stats. Once the download completes, this will print one
+       * last line and then stop.
+       */
       display() {
         if (this.displayedComplete) {
           return;
@@ -64400,11 +68826,19 @@ var require_downloadUtils = __commonJS({
           this.displayedComplete = true;
         }
       }
+      /**
+       * Returns a function used to handle TransferProgressEvents.
+       */
       onProgress() {
         return (progress) => {
           this.setReceivedBytes(progress.loadedBytes);
         };
       }
+      /**
+       * Starts the timer that displays the stats.
+       *
+       * @param delayInMs the delay between each write
+       */
       startDisplayTimer(delayInMs = 1e3) {
         const displayCallback = () => {
           this.display();
@@ -64414,6 +68848,11 @@ var require_downloadUtils = __commonJS({
         };
         this.timeoutHandle = setTimeout(displayCallback, delayInMs);
       }
+      /**
+       * Stops the timer that displays the stats. As this typically indicates the download
+       * is complete, this will display one last line, unless the last line has already
+       * been written.
+       */
       stopDisplayTimer() {
         if (this.timeoutHandle) {
           clearTimeout(this.timeoutHandle);
@@ -64424,10 +68863,10 @@ var require_downloadUtils = __commonJS({
     };
     exports.DownloadProgress = DownloadProgress;
     function downloadCacheHttpClient(archiveLocation, archivePath) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const writeStream = fs2.createWriteStream(archivePath);
         const httpClient = new http_client_1.HttpClient("actions/cache");
-        const downloadResponse = yield requestUtils_1.retryHttpClientResponse("downloadCache", () => __awaiter(this, void 0, void 0, function* () {
+        const downloadResponse = yield requestUtils_1.retryHttpClientResponse("downloadCache", () => __awaiter2(this, void 0, void 0, function* () {
           return httpClient.get(archiveLocation);
         }));
         downloadResponse.message.socket.setTimeout(constants_1.SocketTimeout, () => {
@@ -64450,9 +68889,11 @@ var require_downloadUtils = __commonJS({
     exports.downloadCacheHttpClient = downloadCacheHttpClient;
     function downloadCacheStorageSDK(archiveLocation, archivePath, options) {
       var _a;
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const client = new storage_blob_1.BlockBlobClient(archiveLocation, void 0, {
           retryOptions: {
+            // Override the timeout used when downloading each 4 MB chunk
+            // The default is 2 min / MB, which is way too slow
             tryTimeoutInMs: options.timeoutInMs
           }
         });
@@ -64493,7 +68934,7 @@ var require_downloadUtils = __commonJS({
       });
     }
     exports.downloadCacheStorageSDK = downloadCacheStorageSDK;
-    var promiseWithTimeout = (timeoutMs, promise) => __awaiter(void 0, void 0, void 0, function* () {
+    var promiseWithTimeout = (timeoutMs, promise) => __awaiter2(void 0, void 0, void 0, function* () {
       let timeoutHandle;
       const timeoutPromise = new Promise((resolve) => {
         timeoutHandle = setTimeout(() => resolve("timeout"), timeoutMs);
@@ -64510,7 +68951,7 @@ var require_downloadUtils = __commonJS({
 var require_options = __commonJS({
   "node_modules/@actions/cache/lib/options.js"(exports) {
     "use strict";
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -64523,7 +68964,7 @@ var require_options = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
+    var core4 = __importStar2(require_core());
     function getUploadOptions(copy) {
       const result = {
         uploadConcurrency: 4,
@@ -64582,7 +69023,7 @@ var require_options = __commonJS({
 var require_cacheHttpClient = __commonJS({
   "node_modules/@actions/cache/lib/internal/cacheHttpClient.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -64609,7 +69050,7 @@ var require_cacheHttpClient = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -64622,13 +69063,13 @@ var require_cacheHttpClient = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
+    var core4 = __importStar2(require_core());
     var http_client_1 = require_lib();
     var auth_1 = require_auth();
-    var crypto = __importStar(require("crypto"));
-    var fs2 = __importStar(require("fs"));
+    var crypto7 = __importStar2(require("crypto"));
+    var fs2 = __importStar2(require("fs"));
     var url_1 = require("url");
-    var utils = __importStar(require_cacheUtils());
+    var utils = __importStar2(require_cacheUtils());
     var constants_1 = require_constants();
     var downloadUtils_1 = require_downloadUtils();
     var options_1 = require_options();
@@ -64662,15 +69103,15 @@ var require_cacheHttpClient = __commonJS({
     function getCacheVersion(paths, compressionMethod) {
       const components = paths.concat(!compressionMethod || compressionMethod === constants_1.CompressionMethod.Gzip ? [] : [compressionMethod]);
       components.push(versionSalt);
-      return crypto.createHash("sha256").update(components.join("|")).digest("hex");
+      return crypto7.createHash("sha256").update(components.join("|")).digest("hex");
     }
     exports.getCacheVersion = getCacheVersion;
     function getCacheEntry(keys, paths, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const httpClient = createHttpClient();
-        const version = getCacheVersion(paths, options === null || options === void 0 ? void 0 : options.compressionMethod);
-        const resource = `cache?keys=${encodeURIComponent(keys.join(","))}&version=${version}`;
-        const response = yield requestUtils_1.retryTypedResponse("getCacheEntry", () => __awaiter(this, void 0, void 0, function* () {
+        const version3 = getCacheVersion(paths, options === null || options === void 0 ? void 0 : options.compressionMethod);
+        const resource = `cache?keys=${encodeURIComponent(keys.join(","))}&version=${version3}`;
+        const response = yield requestUtils_1.retryTypedResponse("getCacheEntry", () => __awaiter2(this, void 0, void 0, function* () {
           return httpClient.getJson(getCacheApiUrl(resource));
         }));
         if (response.statusCode === 204) {
@@ -64692,7 +69133,7 @@ var require_cacheHttpClient = __commonJS({
     }
     exports.getCacheEntry = getCacheEntry;
     function downloadCache(archiveLocation, archivePath, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const archiveUrl = new url_1.URL(archiveLocation);
         const downloadOptions = options_1.getDownloadOptions(options);
         if (downloadOptions.useAzureSdk && archiveUrl.hostname.endsWith(".blob.core.windows.net")) {
@@ -64704,15 +69145,15 @@ var require_cacheHttpClient = __commonJS({
     }
     exports.downloadCache = downloadCache;
     function reserveCache(key, paths, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const httpClient = createHttpClient();
-        const version = getCacheVersion(paths, options === null || options === void 0 ? void 0 : options.compressionMethod);
+        const version3 = getCacheVersion(paths, options === null || options === void 0 ? void 0 : options.compressionMethod);
         const reserveCacheRequest = {
           key,
-          version,
+          version: version3,
           cacheSize: options === null || options === void 0 ? void 0 : options.cacheSize
         };
-        const response = yield requestUtils_1.retryTypedResponse("reserveCache", () => __awaiter(this, void 0, void 0, function* () {
+        const response = yield requestUtils_1.retryTypedResponse("reserveCache", () => __awaiter2(this, void 0, void 0, function* () {
           return httpClient.postJson(getCacheApiUrl("caches"), reserveCacheRequest);
         }));
         return response;
@@ -64723,13 +69164,13 @@ var require_cacheHttpClient = __commonJS({
       return `bytes ${start}-${end}/*`;
     }
     function uploadChunk(httpClient, resourceUrl, openStream, start, end) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         core4.debug(`Uploading chunk of size ${end - start + 1} bytes at offset ${start} with content range: ${getContentRange(start, end)}`);
         const additionalHeaders = {
           "Content-Type": "application/octet-stream",
           "Content-Range": getContentRange(start, end)
         };
-        const uploadChunkResponse = yield requestUtils_1.retryHttpClientResponse(`uploadChunk (start: ${start}, end: ${end})`, () => __awaiter(this, void 0, void 0, function* () {
+        const uploadChunkResponse = yield requestUtils_1.retryHttpClientResponse(`uploadChunk (start: ${start}, end: ${end})`, () => __awaiter2(this, void 0, void 0, function* () {
           return httpClient.sendStream("PATCH", resourceUrl, openStream(), additionalHeaders);
         }));
         if (!requestUtils_1.isSuccessStatusCode(uploadChunkResponse.message.statusCode)) {
@@ -64738,7 +69179,7 @@ var require_cacheHttpClient = __commonJS({
       });
     }
     function uploadFile(httpClient, cacheId, archivePath, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const fileSize = utils.getArchiveFileSizeInBytes(archivePath);
         const resourceUrl = getCacheApiUrl(`caches/${cacheId.toString()}`);
         const fd = fs2.openSync(archivePath, "r");
@@ -64749,7 +69190,7 @@ var require_cacheHttpClient = __commonJS({
         core4.debug("Awaiting all uploads");
         let offset = 0;
         try {
-          yield Promise.all(parallelUploads.map(() => __awaiter(this, void 0, void 0, function* () {
+          yield Promise.all(parallelUploads.map(() => __awaiter2(this, void 0, void 0, function* () {
             while (offset < fileSize) {
               const chunkSize = Math.min(fileSize - offset, maxChunkSize);
               const start = offset;
@@ -64772,15 +69213,15 @@ var require_cacheHttpClient = __commonJS({
       });
     }
     function commitCache(httpClient, cacheId, filesize) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const commitCacheRequest = { size: filesize };
-        return yield requestUtils_1.retryTypedResponse("commitCache", () => __awaiter(this, void 0, void 0, function* () {
+        return yield requestUtils_1.retryTypedResponse("commitCache", () => __awaiter2(this, void 0, void 0, function* () {
           return httpClient.postJson(getCacheApiUrl(`caches/${cacheId.toString()}`), commitCacheRequest);
         }));
       });
     }
     function saveCache4(cacheId, archivePath, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const httpClient = createHttpClient();
         core4.debug("Upload cache");
         yield uploadFile(httpClient, cacheId, archivePath, options);
@@ -64802,7 +69243,7 @@ var require_cacheHttpClient = __commonJS({
 var require_tar = __commonJS({
   "node_modules/@actions/cache/lib/internal/tar.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -64829,7 +69270,7 @@ var require_tar = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -64843,14 +69284,14 @@ var require_tar = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     var exec_1 = require_exec();
-    var io = __importStar(require_io());
+    var io = __importStar2(require_io());
     var fs_1 = require("fs");
-    var path = __importStar(require("path"));
-    var utils = __importStar(require_cacheUtils());
+    var path = __importStar2(require("path"));
+    var utils = __importStar2(require_cacheUtils());
     var constants_1 = require_constants();
     var IS_WINDOWS2 = process.platform === "win32";
     function getTarPath(args, compressionMethod) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         switch (process.platform) {
           case "win32": {
             const systemTar = `${process.env["windir"]}\\System32\\tar.exe`;
@@ -64878,7 +69319,7 @@ var require_tar = __commonJS({
       });
     }
     function execTar(args, compressionMethod, cwd) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         try {
           yield exec_1.exec(`"${yield getTarPath(args, compressionMethod)}"`, args, { cwd });
         } catch (error) {
@@ -64904,7 +69345,7 @@ var require_tar = __commonJS({
       }
     }
     function listTar(archivePath, compressionMethod) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const args = [
           ...getCompressionProgram(compressionMethod),
           "-tf",
@@ -64916,7 +69357,7 @@ var require_tar = __commonJS({
     }
     exports.listTar = listTar;
     function extractTar(archivePath, compressionMethod) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const workingDirectory = getWorkingDirectory();
         yield io.mkdirP(workingDirectory);
         const args = [
@@ -64932,7 +69373,7 @@ var require_tar = __commonJS({
     }
     exports.extractTar = extractTar;
     function createTar(archiveFolder, sourceDirectories, compressionMethod) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         const manifestFilename = "manifest.txt";
         const cacheFileName = utils.getCacheFileName(compressionMethod);
         fs_1.writeFileSync(path.join(archiveFolder, manifestFilename), sourceDirectories.join("\n"));
@@ -64974,7 +69415,7 @@ var require_tar = __commonJS({
 var require_cache = __commonJS({
   "node_modules/@actions/cache/lib/cache.js"(exports) {
     "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
           resolve(value);
@@ -65001,7 +69442,7 @@ var require_cache = __commonJS({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    var __importStar = exports && exports.__importStar || function(mod) {
+    var __importStar2 = exports && exports.__importStar || function(mod) {
       if (mod && mod.__esModule)
         return mod;
       var result = {};
@@ -65014,10 +69455,10 @@ var require_cache = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core4 = __importStar(require_core());
-    var path = __importStar(require("path"));
-    var utils = __importStar(require_cacheUtils());
-    var cacheHttpClient = __importStar(require_cacheHttpClient());
+    var core4 = __importStar2(require_core());
+    var path = __importStar2(require("path"));
+    var utils = __importStar2(require_cacheUtils());
+    var cacheHttpClient = __importStar2(require_cacheHttpClient());
     var tar_1 = require_tar();
     var ValidationError = class extends Error {
       constructor(message) {
@@ -65054,7 +69495,7 @@ var require_cache = __commonJS({
     }
     exports.isFeatureAvailable = isFeatureAvailable;
     function restoreCache2(paths, primaryKey, restoreKeys, options) {
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         checkPaths(paths);
         restoreKeys = restoreKeys || [];
         const keys = [primaryKey, ...restoreKeys];
@@ -65106,7 +69547,7 @@ var require_cache = __commonJS({
     exports.restoreCache = restoreCache2;
     function saveCache4(paths, key, options) {
       var _a, _b, _c, _d, _e;
-      return __awaiter(this, void 0, void 0, function* () {
+      return __awaiter2(this, void 0, void 0, function* () {
         checkPaths(paths);
         checkKey(key);
         const compressionMethod = yield utils.getCompressionMethod();
@@ -65292,106 +69733,216 @@ run2();
 0 && (module.exports = {
   run
 });
-/*!
- * Copyright (c) 2015, Salesforce.com, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *
- * 3. Neither the name of Salesforce.com nor the names of its contributors may
- * be used to endorse or promote products derived from this software without
- * specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
-/*!
- * Copyright (c) 2015-2020, Salesforce.com, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *
- * 3. Neither the name of Salesforce.com nor the names of its contributors may
- * be used to endorse or promote products derived from this software without
- * specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
-/*!
- * Copyright (c) 2018, Salesforce.com, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *
- * 3. Neither the name of Salesforce.com nor the names of its contributors may
- * be used to endorse or promote products derived from this software without
- * specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
-/*!
- * mime-db
- * Copyright(c) 2014 Jonathan Ong
- * Copyright(c) 2015-2022 Douglas Christopher Wilson
- * MIT Licensed
- */
-/*!
- * mime-types
- * Copyright(c) 2014 Jonathan Ong
- * Copyright(c) 2015 Douglas Christopher Wilson
- * MIT Licensed
- */
-/*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+/*! Bundled license information:
+
+sax/lib/sax.js:
+  (*! http://mths.be/fromcodepoint v0.1.0 by @mathias *)
+
+tough-cookie/lib/pubsuffix-psl.js:
+  (*!
+   * Copyright (c) 2018, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+tough-cookie/lib/store.js:
+  (*!
+   * Copyright (c) 2015, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+tough-cookie/lib/permuteDomain.js:
+  (*!
+   * Copyright (c) 2015, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+tough-cookie/lib/pathMatch.js:
+  (*!
+   * Copyright (c) 2015, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+tough-cookie/lib/memstore.js:
+  (*!
+   * Copyright (c) 2015, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+tough-cookie/lib/cookie.js:
+  (*!
+   * Copyright (c) 2015-2020, Salesforce.com, Inc.
+   * All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions are met:
+   *
+   * 1. Redistributions of source code must retain the above copyright notice,
+   * this list of conditions and the following disclaimer.
+   *
+   * 2. Redistributions in binary form must reproduce the above copyright notice,
+   * this list of conditions and the following disclaimer in the documentation
+   * and/or other materials provided with the distribution.
+   *
+   * 3. Neither the name of Salesforce.com nor the names of its contributors may
+   * be used to endorse or promote products derived from this software without
+   * specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   * POSSIBILITY OF SUCH DAMAGE.
+   *)
+
+mime-db/index.js:
+  (*!
+   * mime-db
+   * Copyright(c) 2014 Jonathan Ong
+   * Copyright(c) 2015-2022 Douglas Christopher Wilson
+   * MIT Licensed
+   *)
+
+mime-types/index.js:
+  (*!
+   * mime-types
+   * Copyright(c) 2014 Jonathan Ong
+   * Copyright(c) 2015 Douglas Christopher Wilson
+   * MIT Licensed
+   *)
+*/
